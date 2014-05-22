@@ -54,9 +54,10 @@ module.exports = function(input, inputMap) {
 	}
 	function processMap(map, context, callback) {
 		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
+			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
 			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
 			async.map(missingSources, function(source, callback) {
-				resolve(context, loaderUtils.urlToRequest(source), function(err, result) {
+				resolve(context, loaderUtils.urlToRequest(sourcePrefix + source), function(err, result) {
 					if(err) {
 						emitWarning("Cannot find source file '" + source + "': " + err);
 						return callback(null, null);
