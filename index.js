@@ -56,7 +56,7 @@ module.exports = function(input, inputMap) {
 		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
 			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
 			map.sources = map.sources.map(function(s) { return sourcePrefix + s; });
-			map.sourceRoot = undefined;
+			delete map.sourceRoot;
 			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
 			async.map(missingSources, function(source, callback) {
 				resolve(context, loaderUtils.urlToRequest(source), function(err, result) {
