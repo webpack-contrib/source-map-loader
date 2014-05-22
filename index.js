@@ -20,6 +20,7 @@ module.exports = function(input, inputMap) {
 	this.cacheable && this.cacheable();
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
+	var emitWarning = this.emitWarning || function() {};
 	var match = input.match(regex1) || input.match(regex2);
 	if(match) {
 		var url = match[1];
@@ -29,41 +30,63 @@ module.exports = function(input, inputMap) {
 			processMap(JSON.parse((new Buffer(dataUrlMatch[1], "base64")).toString()), this.context, callback);
 		} else {
 			resolve(this.context, loaderUtils.urlToRequest(url), function(err, result) {
-				if(err) return callback(err);
+				if(err) {
+					emitWarning("Cannot find SourceMap '" + url + "': " + err);
+					return untouched();
+				}
 				addDependency(result);
 				fs.readFile(result, "utf-8", function(err, content) {
-					if(err) return callback(err);
+					if(err) {
+						emitWarning("Cannot open SourceMap '" + result + "': " + err);
+						return untouched();
+					}
 					processMap(JSON.parse(content), path.dirname(result), callback);
 				});
 			}.bind(this));
 			return;
 		}
 	} else {
-		this.callback(null, input, inputMap);
+		var callback = this.callback;
+		return untouched();
+	}
+	function untouched() {
+		callback(null, input, inputMap);
 	}
 	function processMap(map, context, callback) {
 		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
 			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
 			async.map(missingSources, function(source, callback) {
 				resolve(context, loaderUtils.urlToRequest(source), function(err, result) {
-					if(err) return callback(null, null);
+					if(err) {
+						emitWarning("Cannot find source file '" + source + "': " + err);
+						return callback(null, null);
+					}
 					addDependency(result);
 					fs.readFile(result, "utf-8", function(err, content) {
-						if(err) return callback(null, null);
-						callback(null, content);
+						if(err) {
+							emitWarning("Cannot open source file '" + result + "': " + err);
+							return callback(null, null);
+						}
+						callback(null, {
+							source: result,
+							content: content
+						});
 					});
 				});
-			}, function(err, sourcesContent) {
-				map.sourcesContent = map.sourcesContent ? map.sourcesContent.concat(sourcesContent) : sourcesContent;
+			}, function(err, info) {
+				map.sourcesContent = map.sourcesContent || [];
+				info.forEach(function(res) {
+					if(res) {
+						map.sources[map.sourcesContent.length] = res.source;
+						map.sourcesContent.push(res.content);
+					} else {
+						map.sourcesContent.push(null);
+					}
+				});
 				processMap(map, context, callback);
 			});
 			return;
 		}
-		async.map(map.sources, function(url, callback) {
-			resolve(context, loaderUtils.urlToRequest(url), callback);
-		}, function(err, sources) {
-			map.sources = sources;
-			callback(null, input.replace(match[0], match[2]), map);
-		});
+		callback(null, input.replace(match[0], match[2]), map);
 	}
 }
