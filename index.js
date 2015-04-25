@@ -8,7 +8,7 @@ var path = require("path");
 var async = require("async");
 var loaderUtils = require("loader-utils");
 
-var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*(.*)",
+var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)",
 	// Matches /* ... */ comments
 	regex1 = new RegExp("/\\*"+baseRegex+"\\s*\\*/"),
 	// Matches // .... comments
