@@ -90,6 +90,6 @@ module.exports = function(input, inputMap) {
 			});
 			return;
 		}
-		callback(null, input.replace(match[0], match[2]), map);
+		callback(null, input.replace(match[0], ''), map);
 	}
 }
