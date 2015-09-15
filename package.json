@@ -3,11 +3,21 @@
   "version": "0.1.5",
   "author": "Tobias Koppers @sokra",
   "description": "extracts inlined source map and offers it to webpack",
+  "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha -R spec"
+    "prepublish": "scripts/prepublish.sh",
+    "build": "scripts/build.sh",
+    "test": "scripts/test.sh",
+    "clean": "scripts/clean.sh",
+    "lint": "scripts/lint.sh",
+    "status": "scripts/status.sh"
   },
   "devDependencies": {
-    "should": "^7.1.0",
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.0",
+    "chai": "^3.2.0",
+    "eslint": "^1.2.1",
+    "isparta": "^3.0.4",
     "mocha": "^2.3.2"
   },
   "repository": {

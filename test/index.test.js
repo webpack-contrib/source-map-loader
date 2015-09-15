@@ -1,144 +1,151 @@
-var path = require("path");
-var fs = require("fs");
-var should = require("should");
-var loader = require("../");
+import path from 'path';
+import fs from 'fs';
+import loader from '../src';
+import {expect} from 'chai';
 
-function execLoader(filename, callback) {
-	var async = false;
-	var deps = [];
-	var warns = [];
-	var context = {
-		context: path.dirname(filename),
-		resolve: function(context, request, callback) {
-			process.nextTick(function() {
-				var p = path.join(context, request);
-				if(fs.existsSync(p))
-					callback(null, p);
-				else
-					callback(new Error("File not found"));
-			});
-		},
-		addDependency: function(dep) {
-			deps.push(dep);
-		},
-		emitWarning: function(warn) {
-			warns.push(warn);
-		},
-		callback: function(err, res, map) {
-			async = true;
-			callback(err, res, map, deps, warns);
-		},
-		async: function() {
-			async = true;
-			return this.callback;
-		}
-	};
-	var res = loader.call(context, fs.readFileSync(filename, "utf-8"));
-	if(!async) return callback(null, res, null, deps, warns);
-}
+const execLoader = (filename, callback) => {
+  let async = false;
+  const deps = [];
+  const warns = [];
+  const context = {
+    context: path.dirname(filename),
+    resolve(context, request, callback) {
+      process.nextTick(() => {
+        const p = path.join(context, request);
+        if (fs.existsSync(p)) {
+          callback(null, p);
+        } else {
+          callback(new Error('File not found'));
+        }
+      });
+    },
+    addDependency(dep) {
+      deps.push(dep);
+    },
+    emitWarning(warn) {
+      warns.push(warn);
+    },
+    callback(err, res, map) {
+      async = true;
+      callback(err, res, map, deps, warns);
+    },
+    async() {
+      async = true;
+      return this.callback;
+    }
+  };
+  const res = loader.call(context, fs.readFileSync(filename, 'utf-8'));
+  if (!async) return callback(null, res, null, deps, warns);
+};
 
-describe("source-map-loader", function() {
-	it("should leave normal files untouched", function(done) {
-		execLoader(path.join(__dirname, "fixtures", "normal-file.js"), function(err, res, map, deps, warns) {
-			should.equal(err, null);
-			warns.should.be.eql([]);
-			should.equal(res, "without SourceMap"),
-			should.equal(map, null);
-			deps.should.be.eql([]);
-			done();
-		});
-	});
-	it("should process inlined SourceMaps", function(done) {
-		execLoader(path.join(__dirname, "fixtures", "inline-source-map.js"), function(err, res, map, deps, warns) {
-			should.equal(err, null);
-			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\n// comment"),
-			map.should.be.eql({
-				"version":3,
-				"file":"inline-source-map.js",
-				"sources":[
-					"inline-source-map.txt"
-				],
-				"sourcesContent":["with SourceMap"],
-				"mappings":"AAAA"
-			});
-			deps.should.be.eql([]);
-			done();
-		});
-	});
-	it("should process external SourceMaps", function(done) {
-		execLoader(path.join(__dirname, "fixtures", "external-source-map.js"), function(err, res, map, deps, warns) {
-			should.equal(err, null);
-			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\n// comment"),
-			map.should.be.eql({
-				"version":3,
-				"file":"external-source-map.js",
-				"sources":[
-					"external-source-map.txt"
-				],
-				"sourcesContent":["with SourceMap"],
-				"mappings":"AAAA"
-			});
-			deps.should.be.eql([
-				path.join(__dirname, "fixtures", "external-source-map.map")
-			]);
-			done();
-		});
-	});
-	it("should process external SourceMaps (external sources)", function(done) {
-		execLoader(path.join(__dirname, "fixtures", "external-source-map2.js"), function(err, res, map, deps, warns) {
-			should.equal(err, null);
-			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\n// comment"),
-			map.should.be.eql({
-				"version":3,
-				"file":"external-source-map2.js",
-				"sources":[
-					path.join(__dirname, "fixtures", "external-source-map2.txt")
-				],
-				"sourcesContent":["with SourceMap"],
-				"mappings":"AAAA"
-			});
-			deps.should.be.eql([
-				path.join(__dirname, "fixtures", "data", "external-source-map2.map"),
-				path.join(__dirname, "fixtures", "external-source-map2.txt")
-			]);
-			done();
-		});
-	});
-	it("should warn on missing SourceMap", function(done) {
-		execLoader(path.join(__dirname, "fixtures", "missing-source-map.js"), function(err, res, map, deps, warns) {
-			should.equal(err, null);
-			warns.should.be.eql([
-				"Cannot find SourceMap 'missing-source-map.map': Error: File not found"
-			]);
-			should.equal(res, "with SourceMap\n//#sourceMappingURL=missing-source-map.map\n// comment"),
-			should.equal(map, null);
-			deps.should.be.eql([]);
-			done();
-		});
-	});
-	it("should warn on missing source file", function(done) {
-		execLoader(path.join(__dirname, "fixtures", "missing-source-map2.js"), function(err, res, map, deps, warns) {
-			should.equal(err, null);
-			warns.should.be.eql([
-				"Cannot find source file 'missing-source-map2.txt': Error: File not found"
-			]);
-			should.equal(res, "with SourceMap\n// comment"),
-			map.should.be.eql({
-				"version":3,
-				"file":"missing-source-map2.js",
-				"sources":[
-					"missing-source-map2.txt"
-				],
-				"sourcesContent":[null],
-				"mappings":"AAAA"
-			});
-			deps.should.be.eql([
-				path.join(__dirname, "fixtures", "missing-source-map2.map")
-			]);
-			done();
-		});
-	});
+describe('source-map-loader', () => {
+  let sourceMaps;
+  const originalCode = 'let sourceMaps = true;\n';
+  const compiledCode = '"use strict";\n\nvar sourceMaps = true;\n\n';
+
+  beforeEach(() => {
+    sourceMaps = {
+      version: 3,
+      sources: ['test.es6.js'],
+      names: [],
+      mappings: ';;AAAA,IAAI,UAAU,GAAG,IAAI,CAAC',
+      file: 'test.es5.js',
+      sourcesContent: [originalCode]
+    };
+  });
+
+  it('should leave normal files untouched', done => {
+    const [sourceContent] = sourceMaps.sourcesContent;
+
+    execLoader(path.join(__dirname, 'fixtures', 'test.es6.js'), (err, res, map, deps, warns) => {
+      expect(err).to.be.null;
+      expect(warns).to.eql([]);
+      expect(res).to.equal(sourceContent);
+      expect(map).to.be.undefined;
+      expect(deps).to.eql([]);
+      done();
+    });
+  });
+
+  it('should process inlined SourceMaps', done => {
+    const file = 'test.es5.inline.js';
+    sourceMaps.file = file;
+
+    execLoader(path.join(__dirname, 'fixtures', file), (err, res, map, deps, warns) => {
+      expect(err).to.be.null;
+      expect(warns).to.eql([]);
+      expect(res).to.equal(compiledCode);
+      expect(map).to.eql(sourceMaps);
+      expect(deps).to.eql([]);
+      done();
+    });
+  });
+
+  it('should process external SourceMaps', done => {
+    const file = 'test.es5.js';
+    sourceMaps.file = file;
+
+    execLoader(path.join(__dirname, 'fixtures', file), (err, res, map, deps, warns) => {
+      expect(err).to.be.null;
+      expect(warns).to.eql([]);
+      expect(res).to.equal(compiledCode);
+      expect(map).to.eql(sourceMaps);
+      expect(deps).to.eql([
+        path.join(__dirname, 'fixtures', 'test.es5.map')
+      ]);
+      done();
+    });
+  });
+
+  it('should process external SourceMaps (external sources)', done => {
+    const file = 'test.es5.external.js';
+    const sourceMapSourcesFile = path.join(__dirname, 'fixtures', 'external.map.txt');
+    const sourceMapFile = path.join(__dirname, 'fixtures', 'test.es5.external.map');
+    sourceMaps.file = file;
+    sourceMaps.sources = [sourceMapSourcesFile];
+
+    execLoader(path.join(__dirname, 'fixtures', file), (err, res, map, deps, warns) => {
+      expect(err).to.be.null;
+      expect(warns).to.eql([]);
+      expect(res).to.equal(compiledCode);
+      expect(map).to.eql(sourceMaps);
+      expect(deps).to.eql([sourceMapFile, sourceMapSourcesFile]);
+      done();
+    });
+  });
+
+  it('should warn on missing SourceMap', done => {
+    const file = 'test.es5.missing.map.js';
+    sourceMaps.file = file;
+
+    execLoader(path.join(__dirname, 'fixtures', file), (err, res, map, deps, warns) => {
+      expect(err).to.be.null;
+      expect(warns).to.eql([
+        'Cannot find SourceMap test.es5.missing.map: Error: File not found'
+      ]);
+      expect(res).to.equal(compiledCode + '//# sourceMappingURL=test.es5.missing.map\n');
+      expect(map).to.be.undefined;
+      expect(deps).to.eql([]);
+      done();
+    });
+  });
+
+  it('should warn on missing source file', done => {
+    const file = 'test.es5.missing.external.map.js';
+    const sourceMapFile = path.join(__dirname, 'fixtures', 'test.es5.missing.external.map');
+    sourceMaps.file = file;
+    sourceMaps.sources = ['missing.external.map.txt'];
+    sourceMaps.sourcesContent = [null];
+
+    execLoader(path.join(__dirname, 'fixtures', file), (err, res, map, deps, warns) => {
+      expect(err).to.be.null;
+      expect(warns).to.eql([
+        'Cannot find source file missing.external.map.txt: Error: File not found'
+      ]);
+      expect(res).to.equal(compiledCode);
+      expect(map).to.eql(sourceMaps);
+      expect(deps).to.eql([sourceMapFile]);
+      done();
+    });
+  });
 });
