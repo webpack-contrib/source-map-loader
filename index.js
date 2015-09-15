@@ -2,7 +2,6 @@
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
 */
-var SourceMap = require("source-map");
 var fs = require("fs");
 var path = require("path");
 var async = require("async");

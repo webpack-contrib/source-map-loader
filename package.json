@@ -22,7 +22,6 @@
   ],
   "dependencies": {
     "loader-utils": "~0.2.2",
-    "source-map": "~0.5.0",
     "async": "^1.4.2"
   }
 }
