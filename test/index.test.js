@@ -46,7 +46,7 @@ describe('source-map-loader', () => {
   beforeEach(() => {
     sourceMaps = {
       version: 3,
-      sources: ['test.es6.js'],
+      sources: [path.join(__dirname, 'fixtures', 'test.es6.js')],
       names: [],
       mappings: ';;AAAA,IAAI,UAAU,GAAG,IAAI,CAAC',
       file: 'test.es5.js',
@@ -133,8 +133,9 @@ describe('source-map-loader', () => {
   it('should warn on missing source file', done => {
     const file = 'test.es5.missing.external.map.js';
     const sourceMapFile = path.join(__dirname, 'fixtures', 'test.es5.missing.external.map');
+    const sourceMapSourcesFile = path.join(__dirname, 'fixtures', 'missing.external.map.txt');
     sourceMaps.file = file;
-    sourceMaps.sources = ['missing.external.map.txt'];
+    sourceMaps.sources = [sourceMapSourcesFile];
     sourceMaps.sourcesContent = [null];
 
     execLoader(path.join(__dirname, 'fixtures', file), (err, res, map, deps, warns) => {
@@ -146,6 +147,51 @@ describe('source-map-loader', () => {
       expect(map).to.eql(sourceMaps);
       expect(deps).to.eql([sourceMapFile]);
       done();
+    });
+  });
+
+  it('should not overwrite sourceMaps that come from different packages/libraries', done => {
+    // Lets say we have two libs (`hi` and `echo`) that have been compiled from ES6 to ES5 and provide us
+    // their sourcemaps files. We want to be able to bundle them and load their sourcemaps, so we can debug not
+    // just our code but the libraries that provide us their sourcemaps.
+    // Because sourcemaps are generated with relative urls like this
+    //  "sources": [
+    //     "../index.js"
+    //   ],
+    // when a webpack bundle is generated, webpack will take the sourceMaps that `source-map-loader` emits
+    // and they will be ovewritten if the source files between the different libraries are named the same way.
+    //
+    // To avoid this problem it is necessary to process the sourceMaps's `sources` and give them the context
+    // of the library that is being processed
+
+    const echoLib = path.join(__dirname, 'fixtures', 'libs', 'echo', 'lib', 'index.js');
+    const hiLib = path.join(__dirname, 'fixtures', 'libs', 'hi', 'lib', 'index.js');
+
+    execLoader(echoLib, (err, res, map, deps, warns) => {
+      expect(err).to.be.null;
+      expect(warns).to.eql([]);
+      expect(map).to.eql({
+        version: 3,
+        sources: [echoLib],
+        names: [],
+        mappings: ';;;;;qBAAwB,IAAI;;AAAb,SAAS,IAAI,CAAC,CAAC,EAAE;AAC9B,SAAO,CAAC,CAAC;CACV',
+        file: 'index.js',
+        sourcesContent: ['export default function echo(a) {\n  return a;\n}\n']
+      });
+
+      execLoader(hiLib, (err, res, map, deps, warns) => {
+        expect(err).to.be.null;
+        expect(warns).to.eql([]);
+        expect(map).to.eql({
+          version: 3,
+          sources: [hiLib],
+          names: [],
+          mappings: ';;;;;qBAAwB,EAAE;;AAAX,SAAS,EAAE,CAAC,IAAI,EAAE;AAC/B,SAAO,CAAC,GAAG,CAAC,IAAI,CAAC,CAAC;CACnB',
+          file: 'index.js',
+          sourcesContent: ['export default function hi(name) {\n  console.log(name);\n}\n']
+        });
+        done();
+      });
     });
   });
 });
