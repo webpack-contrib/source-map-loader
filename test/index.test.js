@@ -141,4 +141,23 @@ describe("source-map-loader", function() {
 			done();
 		});
 	});
+
+	it("should process inlined SourceMaps with charset", function(done) {
+		execLoader(path.join(__dirname, "fixtures", "charset-inline-source-map.js"), function(err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			should.equal(res, "with SourceMap\n\n// comment"),
+			map.should.be.eql({
+				"version":3,
+				"file":"charset-inline-source-map.js",
+				"sources":[
+					"charset-inline-source-map.txt"
+				],
+				"sourcesContent":["with SourceMap"],
+				"mappings":"AAAA"
+			});
+			deps.should.be.eql([]);
+			done();
+		});
+	});
 });
