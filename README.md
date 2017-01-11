@@ -4,18 +4,19 @@ Extracts SourceMaps for source files that as added as `sourceMappingURL` comment
 
 ## Usage
 
-[Documentation: Using loaders](http://webpack.github.io/docs/using-loaders.html)
+[Documentation: Using loaders](https://webpack.js.org/concepts/#loaders)
 
 
-### example webpack config
+### Example webpack config
 
 ``` javascript
 module.exports = {
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: "source-map-loader"
+        use: ["source-map-loader"],
+        enforce: "pre"
       }
     ]
   }
