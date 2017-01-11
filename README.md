@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/arielschiavoni/source-map-loader.svg?branch=master)](https://travis-ci.org/arielschiavoni/source-map-loader)
+
 # source map loader for webpack
 
 Extracts SourceMaps for source files that as added as `sourceMappingURL` comment.

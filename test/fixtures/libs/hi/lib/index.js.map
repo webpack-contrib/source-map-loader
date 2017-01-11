@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../index.js"
+    ],
+    "names": [],
+    "mappings": ";;;;;qBAAwB,EAAE;;AAAX,SAAS,EAAE,CAAC,IAAI,EAAE;AAC/B,SAAO,CAAC,GAAG,CAAC,IAAI,CAAC,CAAC;CACnB",
+    "file": "index.js",
+    "sourcesContent": [
+        "export default function hi(name) {\n  console.log(name);\n}\n"
+    ]
+}

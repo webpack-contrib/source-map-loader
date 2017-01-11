@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "test.es6.js"
+    ],
+    "names": [],
+    "mappings": ";;AAAA,IAAI,UAAU,GAAG,IAAI,CAAC",
+    "file": "test.es5.js",
+    "sourcesContent": [
+        "let sourceMaps = true;\n"
+    ]
+}

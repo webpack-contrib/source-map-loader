@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "sources": [
+        "test.es6.js"
+    ],
+    "names": [],
+    "mappings": ";;AAAA,IAAI,UAAU,GAAG,IAAI,CAAC",
+    "file": "test.es5.missing.external.map.js",
+    "sources":["missing.external.map.txt"]
+}
