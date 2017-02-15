@@ -3,7 +3,7 @@ var fs = require("fs");
 var should = require("should");
 var loader = require("../");
 
-function execLoader(filename, callback) {
+function execLoader(filename, callback, includeModulePaths) {
 	var async = false;
 	var deps = [];
 	var warns = [];
@@ -31,7 +31,8 @@ function execLoader(filename, callback) {
 		async: function() {
 			async = true;
 			return this.callback;
-		}
+		},
+		query: includeModulePaths ? '?includeModulePaths' : null
 	};
 	// Remove CRs to make test line ending invariant
 	var fixtureContent = fs.readFileSync(filename, "utf-8").replace(/\r/g, '');
@@ -179,5 +180,26 @@ describe("source-map-loader", function() {
 			deps.should.be.eql([]);
 			done();
 		});
+	});
+
+	it("should prepend the full path from the current working directory to the module", function(done) {
+		execLoader(path.join(__dirname, "fixtures", "external-source-map.js"), function(err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			map.sources.should.be.eql([
+				"test/fixtures/external-source-map.txt"
+			]);
+			done();
+		}, true);
+	});
+	it("should prepend the full path from the current working directory to the module (external sources)", function(done) {
+		execLoader(path.join(__dirname, "fixtures", "external-source-map2.js"), function(err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			map.sources.should.be.eql([
+				"test/fixtures/external-source-map2.txt"
+			]);
+			done();
+		}, true);
 	});
 });
