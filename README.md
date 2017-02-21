@@ -75,11 +75,11 @@ This extracts all SourceMaps from all files. That's not so performance-wise so y
 </table>
 
 
-[npm]: https://img.shields.io/npm/v/sourcemap-loader.svg
-[npm-url]: https://npmjs.com/package/sourcemap-loader
+[npm]: https://img.shields.io/npm/v/source-map-loader.svg
+[npm-url]: https://npmjs.com/package/source-map-loader
 
-[deps]: https://david-dm.org/webpack-contrib/sourcemap-loader.svg
-[deps-url]: https://david-dm.org/webpack-contrib/sourcemap-loader
+[deps]: https://david-dm.org/webpack-contrib/source-map-loader.svg
+[deps-url]: https://david-dm.org/webpack-contrib/source-map-loader
 
 [chat]: https://img.shields.io/badge/gitter-webpack%2Fwebpack-brightgreen.svg
 [chat-url]: https://gitter.im/webpack/webpack
