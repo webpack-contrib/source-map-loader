@@ -15,7 +15,7 @@
 <h2 align="center">Install</h2>
 
 ```bash
-npm i -D sourcemap-loader
+npm i -D source-map-loader
 ```
 
 <h2 align="center">Usage</h2>
