@@ -33,7 +33,9 @@ function execLoader(filename, callback) {
 			return this.callback;
 		}
 	};
-	var res = loader.call(context, fs.readFileSync(filename, "utf-8"));
+	// Remove CRs to make test line ending invariant
+	var fixtureContent = fs.readFileSync(filename, "utf-8").replace(/\r/g, '');
+	var res = loader.call(context, fixtureContent);
 	if(!async) return callback(null, res, null, deps, warns);
 }
 
@@ -104,6 +106,24 @@ describe("source-map-loader", function() {
 				path.join(__dirname, "fixtures", "data", "external-source-map2.map"),
 				path.join(__dirname, "fixtures", "external-source-map2.txt")
 			]);
+			done();
+		});
+	});
+	it("should use last SourceMap directive", function (done) {
+		execLoader(path.join(__dirname, "fixtures", "multi-source-map.js"), function (err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			should.equal(res, "with SourceMap\nanInvalidDirective = \"\\n/*# sourceMappingURL=data:application/json;base64,\" + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + \" */\";\n// comment"),
+				map.should.be.eql({
+					"version": 3,
+					"file": "inline-source-map.js",
+					"sources": [
+						"inline-source-map.txt"
+					],
+					"sourcesContent": ["with SourceMap"],
+					"mappings": "AAAA"
+				});
+			deps.should.be.eql([]);
 			done();
 		});
 	});
