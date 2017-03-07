@@ -107,6 +107,24 @@ describe("source-map-loader", function() {
 			done();
 		});
 	});
+	it("should use last SourceMap directive", function (done) {
+		execLoader(path.join(__dirname, "fixtures", "multi-source-map.js"), function (err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			should.equal(res, "with SourceMap\nanInvalidDirective = \"\\n/*# sourceMappingURL=data:application/json;base64,\" + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + \" */\";\n// comment"),
+				map.should.be.eql({
+					"version": 3,
+					"file": "inline-source-map.js",
+					"sources": [
+						"inline-source-map.txt"
+					],
+					"sourcesContent": ["with SourceMap"],
+					"mappings": "AAAA"
+				});
+			deps.should.be.eql([]);
+			done();
+		});
+	});
 	it("should warn on missing SourceMap", function(done) {
 		execLoader(path.join(__dirname, "fixtures", "missing-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
