@@ -39,7 +39,7 @@ module.exports = {
 };
 ```
 
-This extracts all SourceMaps from all files. That's not so performance-wise so you may only want to apply the loader to relevant files.
+This extracts SourceMaps from all js files (including node_modules). This is not very performant, so you may want to only apply the loader to relevant files.
 
 <h2 align="center">Maintainers</h2>
 
