@@ -4,7 +4,8 @@
   "author": "Tobias Koppers @sokra",
   "description": "extracts inlined source map and offers it to webpack",
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha -R spec",
+    "travis:test": "mocha -R spec"
   },
   "devDependencies": {
     "should": "^3.3.1",
