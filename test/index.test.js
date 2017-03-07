@@ -33,7 +33,9 @@ function execLoader(filename, callback) {
 			return this.callback;
 		}
 	};
-	var res = loader.call(context, fs.readFileSync(filename, "utf-8"));
+	// Remove CRs to make test line ending invariant
+	var fixtureContent = fs.readFileSync(filename, "utf-8").replace(/\r/g, '');
+	var res = loader.call(context, fixtureContent);
 	if(!async) return callback(null, res, null, deps, warns);
 }
 
