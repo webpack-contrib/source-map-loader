@@ -22,7 +22,7 @@ module.exports = function(input, inputMap) {
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
 	var emitWarning = this.emitWarning || function() {};
-	var params = loaderUtils.parseQuery(this.query);
+	var params = loaderUtils.getOptions(this) || {};
 	var match = input.match(regex1) || input.match(regex2);
 	if(match) {
 		var url = match[1];
