@@ -1,15 +1,17 @@
 {
   "name": "source-map-loader",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "author": "Tobias Koppers @sokra",
   "description": "extracts inlined source map and offers it to webpack",
   "scripts": {
     "test": "mocha -R spec",
-    "travis:test": "mocha -R spec"
+    "travis:test": "mocha -R spec",
+    "release": "yarn run standard-version"
   },
   "devDependencies": {
+    "mocha": "^1.18.2",
     "should": "^3.3.1",
-    "mocha": "^1.18.2"
+    "standard-version": "^4.0.0"
   },
   "repository": {
     "type": "git",
