@@ -39,11 +39,11 @@ module.exports = {
 };
 ```
 
-`source-map-loader` extracts existing [sourcemaps](http://blog.teamtreehouse.com/introduction-source-maps) from all JavaScript entries.  This includes both inline sourcemaps as well as map data linked via URL. All map data is passed to WebPack for processing as per a chosen [source mapping style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.conf.js](https://webpack.js.org/configuration/).
+<p>`source-map-loader` extracts existing [sourcemaps](http://blog.teamtreehouse.com/introduction-source-maps) from all JavaScript entries.  This includes both inline sourcemaps as well as map data linked via URL. All map data is passed to WebPack for processing as per a chosen [source mapping style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.conf.js](https://webpack.js.org/configuration/).</p>
 
-This loader is especially useful when using 3rd-party libraries having their own source maps. If not extracted and processed into the map of the WebPack bundle, browsers may misinterpret map data. `source-map-loader` allows Webpack to maintain map data continuity across libraries so ease of debugging is preserved.
+<p>This loader is especially useful when including 3rd-party libraries having their own source maps. If not extracted and processed into the map of the WebPack bundle, browsers may misinterpret map data. `source-map-loader` allows Webpack to maintain map data continuity across libraries so ease of debugging is preserved.</p>
 
-`source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory. Be mindful in setting [include](https://webpack.js.org/configuration/module/#rule-include) and [exclude](https://webpack.js.org/configuration/module/#rule-exclude) rule conditions to maximize bundling performance.
+<p>`source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory. Be mindful in setting [include](https://webpack.js.org/configuration/module/#rule-include) and [exclude](https://webpack.js.org/configuration/module/#rule-exclude) rule conditions to maximize bundling performance.</p>
 
 <h2 align="center">Maintainers</h2>
 
