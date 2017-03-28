@@ -9,7 +9,7 @@ var async = require("async");
 var loaderUtils = require("loader-utils");
 
 // Matches only the last occurrence of sourceMappingURL
-var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\S\s]*sourceMappingURL)",
+var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourceMappingURL)",
 	// Matches /* ... */ comments
 	regex1 = new RegExp("/\\*"+baseRegex+"\\s*\\*/"),
 	// Matches // .... comments
