@@ -113,7 +113,7 @@ describe("source-map-loader", function() {
 		execLoader(path.join(__dirname, "fixtures", "multi-source-map.js"), function (err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\nanInvalidDirective = \"\\n/*# sourceMappingURL=data:application/json;base64,\" + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + \" */\";\n// comment"),
+			should.equal(res, "with SourceMap\nanInvalidDirective = \"\\n/*# sourceMappingURL=data:application/json;base64,\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\" */\";\n// comment"),
 				map.should.be.eql({
 					"version": 3,
 					"file": "inline-source-map.js",
