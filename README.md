@@ -39,7 +39,7 @@ module.exports = {
 };
 ```
 
-`source-map-loader` extracts existing [source maps](http://blog.teamtreehouse.com/introduction-source-maps) from all JavaScript entries.  This includes both inline source maps as well as source map data linked via URL. All source map data is passed to webpack for processing as per a chosen [source map style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.conf.js](https://webpack.js.org/configuration/).
+`source-map-loader` extracts existing [source maps](http://blog.teamtreehouse.com/introduction-source-maps) from all JavaScript entries. This includes both inline source maps as well as those linked via URL. All source map data is passed to webpack for processing as per a chosen [source map style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.conf.js](https://webpack.js.org/configuration/).
  +
  +This loader is especially useful when using 3rd-party libraries having their own source maps. If not extracted and processed into the souce map of the webpack bundle, browsers may misinterpret source map data. `source-map-loader` allows webpack to maintain source map data continuity across libraries so ease of debugging is preserved.
  +
