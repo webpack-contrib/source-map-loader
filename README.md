@@ -9,7 +9,7 @@
       src="https://cdn.rawgit.com/webpack/media/e7485eb2/logo/icon.svg">
   </a>
   <h1>Sourcemap Loader</h1>
-  <p>Extracts SourceMaps for source files that as added as `sourceMappingURL` comment.<p>
+  <p>Extracts source maps from existing source files (from their <code>sourceMappingURL</code>).<p>
 </div>
 
 <h2 align="center">Install</h2>
