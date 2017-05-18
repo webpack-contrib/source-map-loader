@@ -3,7 +3,6 @@
 	Author Tobias Koppers @sokra
 */
 var SourceMap = require("source-map");
-var fs = require("fs");
 var path = require("path");
 var async = require("async");
 var loaderUtils = require("loader-utils");
@@ -18,6 +17,8 @@ var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourc
 	regexDataUrl = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,(.*)/;
 
 module.exports = function(input, inputMap) {
+	var fs = this.fs || require("fs");
+
 	this.cacheable && this.cacheable();
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
