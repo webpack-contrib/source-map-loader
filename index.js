@@ -91,6 +91,13 @@ module.exports = function(input, inputMap) {
 			});
 			return;
 		}
+		var pwd = process.cwd();
+		if (context.substring(0, pwd.length) === pwd) {
+			context = context.substr(pwd.length + 1);
+		}
+		map.sources = map.sources.map(function(source) {
+			return path.join(context, source);
+		});
 		callback(null, input.replace(match[0], ''), map);
 	}
 }
