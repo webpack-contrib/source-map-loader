@@ -22,6 +22,7 @@ module.exports = function(input, inputMap) {
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
 	var emitWarning = this.emitWarning || function() {};
+	var params = loaderUtils.getOptions(this) || {};
 	var match = input.match(regex1) || input.match(regex2);
 	if(match) {
 		var url = match[1];
@@ -91,6 +92,21 @@ module.exports = function(input, inputMap) {
 			});
 			return;
 		}
+
+		if (params.includeModulePaths) {
+			// Ensure module paths include full path from current working directory
+			var pwd = process.cwd();
+			if (context.substring(0, pwd.length) === pwd) {
+				context = context.substr(pwd.length + 1);
+			}
+			map.sources = map.sources.map(function(source) {
+				if (source.substring(0, pwd.length) === pwd) {
+					return source.substr(pwd.length + 1);
+				}
+				return path.join(context, source);
+			});
+		}
+
 		callback(null, input.replace(match[0], ''), map);
 	}
 }

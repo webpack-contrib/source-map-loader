@@ -3,40 +3,58 @@ var fs = require("fs");
 var should = require("should");
 var loader = require("../");
 
-function execLoader(filename, callback) {
+function loaderRunner(filename, callback) {
 	var async = false;
 	var deps = [];
 	var warns = [];
-	var context = {
-		context: path.dirname(filename),
-		resolve: function(context, request, callback) {
-			process.nextTick(function() {
-				var p = path.join(context, request);
-				if(fs.existsSync(p))
-					callback(null, p);
-				else
-					callback(new Error("File not found"));
-			});
+
+	var runner = {
+		context: {
+			context: path.dirname(filename),
+			resolve: function(context, request, callback) {
+				process.nextTick(function() {
+					var p = path.join(context, request);
+					if(fs.existsSync(p))
+						callback(null, p);
+					else
+						callback(new Error("File not found"));
+				});
+			},
+			addDependency: function(dep) {
+				deps.push(dep);
+			},
+			emitWarning: function(warn) {
+				warns.push(warn);
+			},
+			callback: function(err, res, map) {
+				async = true;
+				callback(err, res, map, deps, warns);
+			},
+			async: function() {
+				async = true;
+				return this.callback;
+			}
 		},
-		addDependency: function(dep) {
-			deps.push(dep);
-		},
-		emitWarning: function(warn) {
-			warns.push(warn);
-		},
-		callback: function(err, res, map) {
-			async = true;
-			callback(err, res, map, deps, warns);
-		},
-		async: function() {
-			async = true;
-			return this.callback;
+		execute: function () {
+			// Remove CRs to make test line ending invariant
+			var fixtureContent = fs.readFileSync(filename, "utf-8").replace(/\r/g, '');
+			var res = loader.call(runner.context, fixtureContent);
+			if(!async) return callback(null, res, null, deps, warns);
 		}
 	};
-	// Remove CRs to make test line ending invariant
-	var fixtureContent = fs.readFileSync(filename, "utf-8").replace(/\r/g, '');
-	var res = loader.call(context, fixtureContent);
-	if(!async) return callback(null, res, null, deps, warns);
+
+	return runner;
+}
+
+function execLoader(filename, callback) {
+	var runner = loaderRunner(filename, callback);
+	return runner.execute();
+}
+
+function execModulePathLoader(filename, callback) {
+	var runner = loaderRunner(filename, callback);
+	runner.context.query = "?includeModulePaths";
+	return runner.execute();
 }
 
 describe("source-map-loader", function() {
@@ -177,6 +195,27 @@ describe("source-map-loader", function() {
 				"mappings":"AAAA"
 			});
 			deps.should.be.eql([]);
+			done();
+		});
+	});
+
+	it("should prepend the full path from the current working directory to the module", function(done) {
+		execModulePathLoader(path.join(__dirname, "fixtures", "external-source-map.js"), function(err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			map.sources.should.be.eql([
+				"test/fixtures/external-source-map.txt"
+			]);
+			done();
+		});
+	});
+	it("should prepend the full path from the current working directory to the module (external sources)", function(done) {
+		execModulePathLoader(path.join(__dirname, "fixtures", "external-source-map2.js"), function(err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			map.sources.should.be.eql([
+				"test/fixtures/external-source-map2.txt"
+			]);
 			done();
 		});
 	});
