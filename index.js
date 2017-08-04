@@ -21,8 +21,11 @@ module.exports = function(input, inputMap) {
 	this.cacheable && this.cacheable();
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
-	var emitWarning = this.emitWarning || function() {};
 	var params = loaderUtils.getOptions(this) || {};
+	var emitWarning = function() {}
+	if (params.quiet !== true && this.emitWarning) {
+		emitWarning = this.emitWarning
+	}
 	var match = input.match(regex1) || input.match(regex2);
 	if(match) {
 		var url = match[1];

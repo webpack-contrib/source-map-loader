@@ -51,6 +51,12 @@ function execLoader(filename, callback) {
 	return runner.execute();
 }
 
+function execLoaderQuiet(filename, callback) {
+	var runner = loaderRunner(filename, callback);
+	runner.context.query = "?quiet";
+	return runner.execute();
+}
+
 function execModulePathLoader(filename, callback) {
 	var runner = loaderRunner(filename, callback);
 	runner.context.query = "?includeModulePaths";
@@ -179,7 +185,28 @@ describe("source-map-loader", function() {
 			done();
 		});
 	});
-
+	it("should not warn on missing source file when disabled", function(done) {
+		execLoaderQuiet(path.join(__dirname, "fixtures", "missing-source-map2.js"), function(err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.not.be.eql([
+				"Cannot find source file 'missing-source-map2.txt': Error: File not found"
+			]);
+			should.equal(res, "with SourceMap\n// comment"),
+			map.should.be.eql({
+				"version":3,
+				"file":"missing-source-map2.js",
+				"sources":[
+					"missing-source-map2.txt"
+				],
+				"sourcesContent":[null],
+				"mappings":"AAAA"
+			});
+			deps.should.be.eql([
+				path.join(__dirname, "fixtures", "missing-source-map2.map")
+			]);
+			done();
+		});
+	});
 	it("should process inlined SourceMaps with charset", function(done) {
 		execLoader(path.join(__dirname, "fixtures", "charset-inline-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
