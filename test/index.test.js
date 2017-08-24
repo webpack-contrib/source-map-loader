@@ -72,7 +72,7 @@ describe("source-map-loader", function() {
 		execLoader(path.join(__dirname, "fixtures", "external-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "// comment"),
+			should.equal(res, "with SourceMap\n// comment\n"),
 			map.should.be.eql({
 				"version":3,
 				"file":"external-source-map.js",
@@ -92,7 +92,7 @@ describe("source-map-loader", function() {
 		execLoader(path.join(__dirname, "fixtures", "external-source-map2.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "// comment"),
+			should.equal(res, "with SourceMap\n// comment\n"),
 			map.should.be.eql({
 				"version":3,
 				"file":"external-source-map2.js",
@@ -133,7 +133,7 @@ describe("source-map-loader", function() {
 			warns.should.be.eql([
 				"Cannot find SourceMap 'missing-source-map.map': Error: File not found"
 			]);
-			should.equal(res, "//#sourceMappingURL=missing-source-map.map\n// comment"),
+			should.equal(res, "with SourceMap\n//#sourceMappingURL=missing-source-map.map\n// comment\n"),
 			should.equal(map, null);
 			deps.should.be.eql([]);
 			done();
@@ -145,7 +145,7 @@ describe("source-map-loader", function() {
 			warns.should.be.eql([
 				"Cannot find source file 'missing-source-map2.txt': Error: File not found"
 			]);
-			should.equal(res, "// comment"),
+			should.equal(res, "with SourceMap\n// comment\n"),
 			map.should.be.eql({
 				"version":3,
 				"file":"missing-source-map2.js",
