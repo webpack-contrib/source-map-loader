@@ -100,6 +100,17 @@ module.exports = function(input, inputMap) {
 			});
 			return;
 		}
+		// try to resolve relative paths in source paths and truncate the cwd
+        var cwd = process.cwd();
+        var shortContext = context.substr(0, cwd.length) === cwd
+            ? context.substr(cwd.length + 1)
+            : context;
+        map.sources = map.sources.map(function(s) {
+            var resolvedPath = path.resolve(shortContext, s);
+            return resolvedPath.substr(0, cwd.length) === cwd
+                ? resolvedPath.substr(cwd.length + 1)
+                : resolvedPath;
+        })
 		callback(null, input.replace(match[0], ''), map);
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "name": "source-map-loader",
+  "name": "@widen/source-map-loader",
   "version": "0.2.3",
   "author": "Tobias Koppers @sokra",
   "description": "extracts inlined source map and offers it to webpack",
@@ -15,7 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/webpack/source-map-loader.git"
+    "url": "git+https://github.com/widen/source-map-loader"
+  },
+  "publishConfig": {
+    "registry": "http://widen.jfrog.io/widen/api/npm/npm-virtual/"
   },
   "licenses": [
     {
