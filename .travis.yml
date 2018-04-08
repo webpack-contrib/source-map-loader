@@ -19,4 +19,4 @@ before_install:
   - nvm --version
   - node --version
 script:
-  - yarn run travis:$JOB_PART
+  - npm run travis:$JOB_PART
