@@ -204,33 +204,33 @@ describe("source-map-loader", function() {
 	});
 
 	it('should not overwrite sourceMaps that come from different packages/libraries', done => {
-    // Lets say we have a dependecy `echo` that have been compiled from ES6 to ES5 and provide us
-    // its sourcemaps files. We want to be able to bundle it together with its sourcemaps, so we can debug not
-    // just our code but the libraries that provide us their sourcemaps.
-    // Because sourcemaps are generated with relative urls like this
-    //  "sources": [
-    //     "../index.js"
-    //   ],
-    // when a webpack bundle is generated, webpack will take the sourceMaps that `source-map-loader` emits
-    // and they will be ovewritten if the source files between the different libraries are named the same way.
-    //
-    // To avoid this problem it is necessary to process the sourceMaps's `sources` and give them the context
-    // of the library that is being processed
+		// Lets say we have a dependency `echo` that have been compiled from ES6 to ES5 and provide us
+		// its sourcemaps files. We want to be able to bundle it together with its sourcemaps, so we can debug not
+		// just our code but the libraries that provide us their sourcemaps.
+		// Because sourcemaps are generated with relative urls like this
+		//  "sources": [
+		//     "../index.js"
+		//   ],
+		// when a webpack bundle is generated, webpack will take the sourceMaps that `source-map-loader` emits
+		// and they will be ovewritten if the source files between the different libraries are named the same way.
+		//
+		// To avoid this problem it is necessary to process the sourceMaps's `sources` and give them the context
+		// of the library that is being processed
 
-    const echoLib = path.join(__dirname, 'fixtures', 'libs', 'echo', 'lib', 'index.js');
+		const echoLib = path.join(__dirname, 'fixtures', 'libs', 'echo', 'lib', 'index.js');
 
-    execLoader(echoLib, (err, res, map, deps, warns) => {
-      should.equal(err, null);
+		execLoader(echoLib, (err, res, map, deps, warns) => {
+			should.equal(err, null);
 			warns.should.be.eql([]);
-      map.should.be.eql({
-        version: 3,
-        sources: [echoLib],
-        names: [],
-        mappings: ';;;;;qBAAwB,IAAI;;AAAb,SAAS,IAAI,CAAC,CAAC,EAAE;AAC9B,SAAO,CAAC,CAAC;CACV',
-        file: 'index.js',
-        sourcesContent: ['export default function echo(a) {\n  return a;\n}\n']
-      });
+			map.should.be.eql({
+				version: 3,
+				sources: [echoLib],
+				names: [],
+				mappings: ';;;;;qBAAwB,IAAI;;AAAb,SAAS,IAAI,CAAC,CAAC,EAAE;AAC9B,SAAO,CAAC,CAAC;CACV',
+				file: 'index.js',
+				sourcesContent: ['export default function echo(a) {\n  return a;\n}\n']
+			});
 			done();
-    });
-  });
+		});
+	});
 });
