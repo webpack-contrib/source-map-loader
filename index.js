@@ -35,7 +35,7 @@ module.exports = function(input, inputMap) {
 				map = JSON.parse(mapStr)
 			} catch (e) {
 				emitWarning("Cannot parse inline SourceMap '" + mapBase64.substr(0, 50) + "': " + e);
-				return untouched();				
+				return untouched();
 			}
 			processMap(map, this.context, callback);
 		} else {
@@ -100,6 +100,9 @@ module.exports = function(input, inputMap) {
 			});
 			return;
 		}
+
+		map.sources = map.sources.map(source => path.join(context, path.basename(source)));
+
 		callback(null, input.replace(match[0], ''), map);
 	}
 }
