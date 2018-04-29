@@ -101,7 +101,9 @@ module.exports = function(input, inputMap) {
 			return;
 		}
 
-		map.sources = map.sources.map(source => path.join(context, path.basename(source)));
+		map.sources = map.sources.map(function(source) {
+			return path.join(context, path.basename(source))
+		});
 
 		callback(null, input.replace(match[0], ''), map);
 	}

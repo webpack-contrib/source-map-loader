@@ -203,7 +203,7 @@ describe("source-map-loader", function() {
 		});
 	});
 
-	it('should not overwrite sourceMaps that come from different packages/libraries', done => {
+	it('should not overwrite sourceMaps that come from different packages/libraries', function(done) {
 		// Lets say we have a dependency `echo` that have been compiled from ES6 to ES5 and provide us
 		// its sourcemaps files. We want to be able to bundle it together with its sourcemaps, so we can debug not
 		// just our code but the libraries that provide us their sourcemaps.
@@ -217,9 +217,9 @@ describe("source-map-loader", function() {
 		// To avoid this problem it is necessary to process the sourceMaps's `sources` and give them the context
 		// of the library that is being processed
 
-		const echoLib = path.join(__dirname, 'fixtures', 'libs', 'echo', 'lib', 'index.js');
+		var echoLib = path.join(__dirname, 'fixtures', 'libs', 'echo', 'lib', 'index.js');
 
-		execLoader(echoLib, (err, res, map, deps, warns) => {
+		execLoader(echoLib, function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
 			map.should.be.eql({
