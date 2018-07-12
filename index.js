@@ -52,9 +52,9 @@ module.exports = function(input, inputMap) {
 					}
 					var map;
 					try {
-						map = JSON.parse(content)
+						map = JSON.parse(content);
 					} catch (e) {
-						emitWarning("Cannot parse SourceMap '" + result + "': " + e);
+						emitWarning("Cannot parse SourceMap '" + url + "': " + e);
 						return untouched();				
 					}
 					processMap(map, path.dirname(result), callback);
