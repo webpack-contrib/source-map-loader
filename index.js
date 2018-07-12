@@ -50,7 +50,14 @@ module.exports = function(input, inputMap) {
 						emitWarning("Cannot open SourceMap '" + result + "': " + err);
 						return untouched();
 					}
-					processMap(JSON.parse(content), path.dirname(result), callback);
+					var map;
+					try {
+						map = JSON.parse(content)
+					} catch (e) {
+						emitWarning("Cannot parse SourceMap '" + result + "': " + e);
+						return untouched();				
+					}
+					processMap(map, path.dirname(result), callback);
 				});
 			}.bind(this));
 			return;
