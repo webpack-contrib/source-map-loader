@@ -149,6 +149,20 @@ describe("source-map-loader", function() {
 			done();
 		});
 	});
+	it("should warn on invalid SourceMap", function (done) {
+		execLoader(path.join(__dirname, "fixtures", "invalid-source-map.js"), function (err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.matchEach(
+				new RegExp("Cannot parse SourceMap 'invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102")
+			);
+			should.equal(res, "with SourceMap\n//#sourceMappingURL=invalid-source-map.map\n// comment");
+			should.equal(map, null);
+			deps.should.be.eql([
+				path.join(__dirname, "fixtures", "invalid-source-map.map")
+			]);
+			done();
+		});
+	});
 	it("should warn on missing SourceMap", function(done) {
 		execLoader(path.join(__dirname, "fixtures", "missing-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
