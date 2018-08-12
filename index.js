@@ -22,6 +22,7 @@ module.exports = function(input, inputMap) {
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
 	var emitWarning = this.emitWarning || function() {};
+	var rootContext = this.rootContext || this.options.context;
 	var match = input.match(regex1) || input.match(regex2);
 	if(match) {
 		var url = match[1];
@@ -107,6 +108,8 @@ module.exports = function(input, inputMap) {
 			});
 			return;
 		}
+		var rootContextRelative = path.relative(rootContext, context);
+		map.sourceRoot = path.join(rootContextRelative, map.sourceRoot || '');
 		callback(null, input.replace(match[0], ''), map);
 	}
 }
