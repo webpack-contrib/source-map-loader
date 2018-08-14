@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.4"></a>
+## [0.2.4](https://github.com/webpack-contrib/source-map-loader/compare/v0.2.3...v0.2.4) (2018-08-14)
+
+
+### Bug Fixes
+
+* **index:** handle exception on loading invalid source maps ([#67](https://github.com/webpack-contrib/source-map-loader/issues/67)) ([78ad469](https://github.com/webpack-contrib/source-map-loader/commit/78ad469))
+* **index:** resolve source maps with root-relative paths correctly ([#68](https://github.com/webpack-contrib/source-map-loader/issues/68)) ([e2fdbfd](https://github.com/webpack-contrib/source-map-loader/commit/e2fdbfd))
+* **package:** 5 low severity vulnerabilities ([#72](https://github.com/webpack-contrib/source-map-loader/issues/72)) ([8262587](https://github.com/webpack-contrib/source-map-loader/commit/8262587))
+
+
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/webpack/source-map-loader/compare/v0.2.2...v0.2.3) (2017-10-23)
 
