@@ -2,7 +2,6 @@
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
 */
-var SourceMap = require("source-map");
 var fs = require("fs");
 var path = require("path");
 var async = require("async");
@@ -55,7 +54,7 @@ module.exports = function(input, inputMap) {
 						map = JSON.parse(content);
 					} catch (e) {
 						emitWarning("Cannot parse SourceMap '" + url + "': " + e);
-						return untouched();				
+						return untouched();
 					}
 					processMap(map, path.dirname(result), callback);
 				});

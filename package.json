@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "async": "^2.5.0",
-    "loader-utils": "^1.1.0",
-    "source-map": "^0.7.2"
+    "loader-utils": "^1.1.0"
   },
   "devDependencies": {
     "mocha": "^5.0.5",
