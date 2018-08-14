@@ -35,11 +35,11 @@ module.exports = function(input, inputMap) {
 				map = JSON.parse(mapStr)
 			} catch (e) {
 				emitWarning("Cannot parse inline SourceMap '" + mapBase64.substr(0, 50) + "': " + e);
-				return untouched();				
+				return untouched();
 			}
 			processMap(map, this.context, callback);
 		} else {
-			resolve(this.context, loaderUtils.urlToRequest(url), function(err, result) {
+			resolve(this.context, loaderUtils.urlToRequest(url, true), function(err, result) {
 				if(err) {
 					emitWarning("Cannot find SourceMap '" + url + "': " + err);
 					return untouched();
@@ -76,7 +76,7 @@ module.exports = function(input, inputMap) {
 			delete map.sourceRoot;
 			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
 			async.map(missingSources, function(source, callback) {
-				resolve(context, loaderUtils.urlToRequest(source), function(err, result) {
+				resolve(context, loaderUtils.urlToRequest(source, true), function(err, result) {
 					if(err) {
 						emitWarning("Cannot find source file '" + source + "': " + err);
 						return callback(null, null);
