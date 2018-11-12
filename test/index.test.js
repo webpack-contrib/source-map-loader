@@ -304,4 +304,36 @@ describe("source-map-loader", function() {
 			}
 		);
 	});
+
+	it("should support null value in sourcesContent", (done) => {
+		const javaScriptFilename = "null-sourcesContent-source-map.js";
+		const sourceFilename = "null-sourcesContent-source-map.txt";
+		const rootRelativeSourcePath = path.join(fixturesPath, sourceFilename);
+		const sourceMapPath = path.join(fixturesPath, "null-sourcesContent-source-map.map");
+
+		execLoader(
+			path.join(fixturesPath, javaScriptFilename),
+			(err, res, map, deps, warns) => {
+				should.equal(err, null);
+				warns.should.be.eql([]);
+				should.equal(res, "with SourceMap\n");
+				map.should.be.eql({
+					"version": 3,
+					"file": javaScriptFilename,
+					"sources": [
+						rootRelativeSourcePath
+					],
+					"sourcesContent": [
+						"with SourceMap"
+					],
+					"mappings": "AAAA"
+				});
+				deps.should.be.eql([
+					sourceMapPath,
+					rootRelativeSourcePath
+				]);
+				done();
+			}
+		);
+	});
 });
