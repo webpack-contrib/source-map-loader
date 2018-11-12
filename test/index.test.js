@@ -336,4 +336,36 @@ describe("source-map-loader", function() {
 			}
 		);
 	});
+
+	it("should resolve relative sources path even with sourcesContent", (done) => {
+		const javaScriptFilename = "relative-sourceRoot-sourcesContent-source-map.js";
+		const sourceFilename = "relative-sourceRoot-sourcesContent-source-map.txt";
+		const rootRelativeSourcePath = path.join(dataPath, sourceFilename);
+		const sourceMapPath = path.join(fixturesPath, "relative-sourceRoot-sourcesContent-source-map");
+
+		execLoader(
+			path.join(fixturesPath, javaScriptFilename),
+			(err, res, map, deps, warns) => {
+				should.equal(err, null);
+				warns.should.be.eql([]);
+				should.equal(res, "with SourceMap\n");
+				map.should.be.eql({
+					"version": 3,
+					"file": javaScriptFilename,
+					"sources": [
+						rootRelativeSourcePath
+					],
+					"sourcesContent": [
+						"with SourceMap"
+					],
+					"mappings": "AAAA"
+				});
+				deps.should.be.eql([
+					sourceMapPath,
+					rootRelativeSourcePath
+				]);
+				done();
+			}
+		);
+	});
 });
