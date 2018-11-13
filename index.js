@@ -38,7 +38,7 @@ module.exports = function(input, inputMap) {
 		callback = this.async();
 		if(dataUrlMatch) {
 			var mapBase64 = dataUrlMatch[1];
-			var mapStr = (new Buffer(mapBase64, "base64")).toString();
+			var mapStr = Buffer.from(mapBase64, "base64").toString();
 			var map;
 			try {
 				map = JSON.parse(mapStr)
