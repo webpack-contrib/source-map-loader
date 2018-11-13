@@ -47,7 +47,7 @@ describe("source-map-loader", function() {
 		execLoader(path.join(fixturesPath, "normal-file.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "without SourceMap"),
+			should.equal(res, "without SourceMap");
 			should.equal(map, null);
 			deps.should.be.eql([]);
 			done();
@@ -58,12 +58,12 @@ describe("source-map-loader", function() {
 		execLoader(path.join(fixturesPath, "inline-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\n// comment"),
+			should.equal(res, "with SourceMap\n// comment");
 			map.should.be.eql({
 				"version":3,
 				"file":"inline-source-map.js",
 				"sources":[
-					"inline-source-map.txt"
+					path.join(fixturesPath,"inline-source-map.txt")
 				],
 				"sourcesContent":["with SourceMap"],
 				"mappings":"AAAA"
@@ -77,12 +77,12 @@ describe("source-map-loader", function() {
 		execLoader(path.join(fixturesPath, "external-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\n// comment"),
+			should.equal(res, "with SourceMap\n// comment");
 			map.should.be.eql({
 				"version":3,
 				"file":"external-source-map.js",
 				"sources":[
-					"external-source-map.txt"
+					path.join(fixturesPath,"external-source-map.txt")
 				],
 				"sourcesContent":["with SourceMap"],
 				"mappings":"AAAA"
@@ -98,7 +98,7 @@ describe("source-map-loader", function() {
 		execLoader(path.join(fixturesPath, "external-source-map2.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\n// comment"),
+			should.equal(res, "with SourceMap\n// comment");
 			map.should.be.eql({
 				"version":3,
 				"file":"external-source-map2.js",
@@ -120,12 +120,12 @@ describe("source-map-loader", function() {
 		execLoader(path.join(fixturesPath, "multi-source-map.js"), function (err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\nanInvalidDirective = \"\\n/*# sourceMappingURL=data:application/json;base64,\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\" */\";\n// comment"),
+			should.equal(res, "with SourceMap\nanInvalidDirective = \"\\n/*# sourceMappingURL=data:application/json;base64,\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\" */\";\n// comment");
 				map.should.be.eql({
 					"version": 3,
 					"file": "inline-source-map.js",
 					"sources": [
-						"inline-source-map.txt"
+						path.join(fixturesPath,"inline-source-map.txt")
 					],
 					"sourcesContent": ["with SourceMap"],
 					"mappings": "AAAA"
@@ -197,7 +197,7 @@ describe("source-map-loader", function() {
 				"version":3,
 				"file":"missing-source-map2.js",
 				"sources":[
-					"missing-source-map2.txt"
+					path.join(fixturesPath,"missing-source-map2.txt")
 				],
 				"sourcesContent":[null],
 				"mappings":"AAAA"
@@ -213,12 +213,12 @@ describe("source-map-loader", function() {
 		execLoader(path.join(fixturesPath, "charset-inline-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
 			warns.should.be.eql([]);
-			should.equal(res, "with SourceMap\n// comment"),
+			should.equal(res, "with SourceMap\n// comment");
 			map.should.be.eql({
 				"version":3,
 				"file":"charset-inline-source-map.js",
 				"sources":[
-					"charset-inline-source-map.txt"
+					path.join(fixturesPath,"charset-inline-source-map.txt")
 				],
 				"sourcesContent":["with SourceMap"],
 				"mappings":"AAAA"
@@ -252,7 +252,7 @@ describe("source-map-loader", function() {
 			(err, res, map, deps, warns) => {
 				should.equal(err, null);
 				warns.should.be.eql([]);
-				should.equal(res, "with SourceMap\n// comment"),
+				should.equal(res, "with SourceMap\n// comment");
 				map.should.be.eql({
 					"version": 3,
 					"file": javaScriptFilename,
@@ -284,7 +284,7 @@ describe("source-map-loader", function() {
 			(err, res, map, deps, warns) => {
 				should.equal(err, null);
 				warns.should.be.eql([]);
-				should.equal(res, "with SourceMap\n// comment"),
+				should.equal(res, "with SourceMap\n// comment");
 				map.should.be.eql({
 					"version": 3,
 					"file": javaScriptFilename,
@@ -341,7 +341,7 @@ describe("source-map-loader", function() {
 		const javaScriptFilename = "relative-sourceRoot-sourcesContent-source-map.js";
 		const sourceFilename = "relative-sourceRoot-sourcesContent-source-map.txt";
 		const rootRelativeSourcePath = path.join(dataPath, sourceFilename);
-		const sourceMapPath = path.join(fixturesPath, "relative-sourceRoot-sourcesContent-source-map");
+		const sourceMapPath = path.join(fixturesPath, "relative-sourceRoot-sourcesContent-source-map.map");
 
 		execLoader(
 			path.join(fixturesPath, javaScriptFilename),
@@ -361,8 +361,7 @@ describe("source-map-loader", function() {
 					"mappings": "AAAA"
 				});
 				deps.should.be.eql([
-					sourceMapPath,
-					rootRelativeSourcePath
+					sourceMapPath
 				]);
 				done();
 			}

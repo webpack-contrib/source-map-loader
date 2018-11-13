@@ -4,7 +4,7 @@
 */
 var fs = require("fs");
 var path = require("path");
-var async = require("async");
+var loaderUtils = require("loader-utils");
 var urlUtils = require("url");
 
 // Matches only the last occurrence of sourceMappingURL
@@ -20,15 +20,22 @@ var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourc
 
 const FILE_SCHEME = "file:";
 
+const DEFAULT_OPTIONS = {
+	// Prevent the loader to rewrite all sources as absolute paths
+	keepRelativeSources: false
+};
+
 module.exports = function(input, inputMap) {
+	const options = Object.assign({}, DEFAULT_OPTIONS, loaderUtils.getOptions(this));
 	this.cacheable && this.cacheable();
 	var addDependency = this.addDependency;
 	var emitWarning = this.emitWarning || function() {};
 	var match = input.match(regex1) || input.match(regex2);
+	var callback;
 	if(match) {
 		var url = match[1];
 		var dataUrlMatch = regexDataUrl.exec(url);
-		var callback = this.async();
+		callback = this.async();
 		if(dataUrlMatch) {
 			var mapBase64 = dataUrlMatch[1];
 			var mapStr = (new Buffer(mapBase64, "base64")).toString();
@@ -64,7 +71,7 @@ module.exports = function(input, inputMap) {
 			}.bind(this));
 		}
 	} else {
-		var callback = this.callback;
+		callback = this.callback;
 		return untouched();
 	}
 	function untouched() {
@@ -87,43 +94,48 @@ module.exports = function(input, inputMap) {
 		resolveAbsolutePathCallback(null, path.resolve(context, filepath));
 	}
 	function processMap(map, context, callback) {
-		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
-			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
-			map.sources = map.sources.map(function(s) { return sourcePrefix + s; });
-			delete map.sourceRoot;
-			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
-			async.map(missingSources, function(source, callback) {
-				resolveAbsolutePath(context, source, function(err, absoluteFilepath) {
+		const sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
+		const sources = map.sources.map(function(s) { return sourcePrefix + s; });
+		delete map.sourceRoot;
+		const sourcesContent = map.sourcesContent || [];
+		const sourcesPromises = sources.map((source, sourceIndex) => new Promise((resolveSource) => {
+			resolveAbsolutePath(context, source, function(err, absoluteFilepath) {
+				if(err) {
+					emitWarning("Cannot find source file '" + source + "': " + err);
+					return resolveSource({
+						source: source,
+						content: sourcesContent[sourceIndex] != null ? sourcesContent[sourceIndex] : null
+					});
+				}
+				if(sourcesContent[sourceIndex] != null) {
+					return resolveSource({
+						source: absoluteFilepath,
+						content: sourcesContent[sourceIndex]
+					});
+				}
+				fs.readFile(absoluteFilepath, "utf-8", function(err, content) {
 					if(err) {
-						emitWarning("Cannot find source file '" + source + "': " + err);
-						return callback(null, null);
-					}
-					fs.readFile(absoluteFilepath, "utf-8", function(err, content) {
-						if(err) {
-							emitWarning("Cannot open source file '" + absoluteFilepath + "': " + err);
-							return callback(null, null);
-						}
-						addDependency(absoluteFilepath);
-						callback(null, {
+						emitWarning("Cannot open source file '" + absoluteFilepath + "': " + err);
+						return resolveSource({
 							source: absoluteFilepath,
-							content: content
+							content: null
 						});
+					}
+					addDependency(absoluteFilepath);
+					resolveSource({
+						source: absoluteFilepath,
+						content: content
 					});
 				});
-			}, function(err, info) {
-				map.sourcesContent = map.sourcesContent || [];
-				info.forEach(function(res) {
-					if(res) {
-						map.sources[map.sourcesContent.length] = res.source;
-						map.sourcesContent.push(res.content);
-					} else {
-						map.sourcesContent.push(null);
-					}
-				});
-				processMap(map, context, callback);
 			});
-			return;
-		}
-		callback(null, input.replace(match[0], ""), map);
+		}));
+		Promise.all(sourcesPromises)
+			.then((results) => {
+				if (!options.keepRelativeSources) {
+					map.sources = results.map(res => res.source);
+				}
+				map.sourcesContent = results.map(res => res.content);
+				callback(null, input.replace(match[0], ""), map);
+			});
 	}
 }
