@@ -5,7 +5,7 @@
 var fs = require("fs");
 var path = require("path");
 var async = require("async");
-var loaderUtils = require("loader-utils");
+var urlUtils = require("url");
 
 // Matches only the last occurrence of sourceMappingURL
 var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourceMappingURL)",
@@ -14,11 +14,14 @@ var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourc
 	// Matches // .... comments
 	regex2 = new RegExp("//"+baseRegex+"($|\n|\r\n?)"),
 	// Matches DataUrls
-	regexDataUrl = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,([a-zA-Z0-9+/]+={0,2})/;
+	regexDataUrl = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,([a-zA-Z0-9+/]+={0,2})/,
+	// Matches url with scheme, doesn't match Windows disk
+	regexUrl = /[a-zA-Z]{2,}:/;
+
+const FILE_SCHEME = "file:";
 
 module.exports = function(input, inputMap) {
 	this.cacheable && this.cacheable();
-	var resolve = this.resolve;
 	var addDependency = this.addDependency;
 	var emitWarning = this.emitWarning || function() {};
 	var match = input.match(regex1) || input.match(regex2);
@@ -38,17 +41,17 @@ module.exports = function(input, inputMap) {
 			}
 			processMap(map, this.context, callback);
 		} else {
-			resolve(this.context, loaderUtils.urlToRequest(url, true), function(err, result) {
+			resolveAbsolutePath(this.context, url, function(err, absoluteFilepath) {
 				if(err) {
 					emitWarning("Cannot find SourceMap '" + url + "': " + err);
 					return untouched();
 				}
-				addDependency(result);
-				fs.readFile(result, "utf-8", function(err, content) {
+				fs.readFile(absoluteFilepath, "utf-8", function(err, content) {
 					if(err) {
-						emitWarning("Cannot open SourceMap '" + result + "': " + err);
+						emitWarning("Cannot open SourceMap '" + absoluteFilepath + "': " + err);
 						return untouched();
 					}
+					addDependency(absoluteFilepath);
 					var map;
 					try {
 						map = JSON.parse(content);
@@ -56,10 +59,9 @@ module.exports = function(input, inputMap) {
 						emitWarning("Cannot parse SourceMap '" + url + "': " + e);
 						return untouched();
 					}
-					processMap(map, path.dirname(result), callback);
+					processMap(map, path.dirname(absoluteFilepath), callback);
 				});
 			}.bind(this));
-			return;
 		}
 	} else {
 		var callback = this.callback;
@@ -68,6 +70,22 @@ module.exports = function(input, inputMap) {
 	function untouched() {
 		callback(null, input, inputMap);
 	}
+	function resolveAbsolutePath(context, url, resolveAbsolutePathCallback) {
+		let filepath = url;
+		if(regexUrl.test(filepath) && !filepath.startsWith(FILE_SCHEME)) {
+			resolveAbsolutePathCallback("URL scheme not supported");
+			return;
+		}
+		if(filepath.startsWith(FILE_SCHEME)) {
+			if(urlUtils.fileURLToPath) {
+				filepath = urlUtils.fileURLToPath(filepath);
+			} else {
+				resolveAbsolutePathCallback("file URL scheme support requires node 10.x");
+				return;
+			}
+		}
+		resolveAbsolutePathCallback(null, path.resolve(context, filepath));
+	}
 	function processMap(map, context, callback) {
 		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
 			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
@@ -75,19 +93,19 @@ module.exports = function(input, inputMap) {
 			delete map.sourceRoot;
 			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
 			async.map(missingSources, function(source, callback) {
-				resolve(context, loaderUtils.urlToRequest(source, true), function(err, result) {
+				resolveAbsolutePath(context, source, function(err, absoluteFilepath) {
 					if(err) {
 						emitWarning("Cannot find source file '" + source + "': " + err);
 						return callback(null, null);
 					}
-					addDependency(result);
-					fs.readFile(result, "utf-8", function(err, content) {
+					fs.readFile(absoluteFilepath, "utf-8", function(err, content) {
 						if(err) {
-							emitWarning("Cannot open source file '" + result + "': " + err);
+							emitWarning("Cannot open source file '" + absoluteFilepath + "': " + err);
 							return callback(null, null);
 						}
+						addDependency(absoluteFilepath);
 						callback(null, {
-							source: result,
+							source: absoluteFilepath,
 							content: content
 						});
 					});
@@ -106,6 +124,6 @@ module.exports = function(input, inputMap) {
 			});
 			return;
 		}
-		callback(null, input.replace(match[0], ''), map);
+		callback(null, input.replace(match[0], ""), map);
 	}
 }
