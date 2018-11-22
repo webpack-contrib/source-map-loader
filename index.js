@@ -43,19 +43,20 @@ module.exports = function(input, inputMap) {
 			try {
 				map = JSON.parse(mapStr)
 			} catch (e) {
-				emitWarning("Cannot parse inline SourceMap '" + mapBase64.substr(0, 50) + "': " + e);
+				emitWarning(new Error("Cannot parse inline SourceMap '"
+					+ mapBase64.substr(0, 50) + "': " + e));
 				return untouched();
 			}
 			processMap(map, this.context, callback);
 		} else {
 			resolveAbsolutePath(this.context, url, function(err, absoluteFilepath) {
 				if(err) {
-					emitWarning("Cannot find SourceMap '" + url + "': " + err);
+					emitWarning(new Error("Cannot find SourceMap '" + url + "': " + err));
 					return untouched();
 				}
 				fs.readFile(absoluteFilepath, "utf-8", function(err, content) {
 					if(err) {
-						emitWarning("Cannot open SourceMap '" + absoluteFilepath + "': " + err);
+						emitWarning(new Error("Cannot open SourceMap '" + absoluteFilepath + "': " + err));
 						return untouched();
 					}
 					addDependency(absoluteFilepath);
@@ -63,7 +64,7 @@ module.exports = function(input, inputMap) {
 					try {
 						map = JSON.parse(content);
 					} catch (e) {
-						emitWarning("Cannot parse SourceMap '" + url + "': " + e);
+						emitWarning(new Error("Cannot parse SourceMap '" + url + "': " + e));
 						return untouched();
 					}
 					processMap(map, path.dirname(absoluteFilepath), callback);
@@ -101,7 +102,7 @@ module.exports = function(input, inputMap) {
 		const sourcesPromises = sources.map((source, sourceIndex) => new Promise((resolveSource) => {
 			resolveAbsolutePath(context, source, function(err, absoluteFilepath) {
 				if(err) {
-					emitWarning("Cannot find source file '" + source + "': " + err);
+					emitWarning(new Error("Cannot find source file '" + source + "': " + err));
 					return resolveSource({
 						source: source,
 						content: sourcesContent[sourceIndex] != null ? sourcesContent[sourceIndex] : null
@@ -115,7 +116,7 @@ module.exports = function(input, inputMap) {
 				}
 				fs.readFile(absoluteFilepath, "utf-8", function(err, content) {
 					if(err) {
-						emitWarning("Cannot open source file '" + absoluteFilepath + "': " + err);
+						emitWarning(new Error("Cannot open source file '" + absoluteFilepath + "': " + err));
 						return resolveSource({
 							source: absoluteFilepath,
 							content: null
