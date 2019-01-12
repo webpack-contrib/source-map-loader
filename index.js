@@ -3,6 +3,7 @@
 	Author Tobias Koppers @sokra
 */
 var fs = require("fs");
+var http = require("https");
 var path = require("path");
 var async = require("async");
 var loaderUtils = require("loader-utils");
@@ -68,6 +69,20 @@ module.exports = function(input, inputMap) {
 	function untouched() {
 		callback(null, input, inputMap);
 	}
+	function fetchHttp(source, callback) {
+		http.get(source, function (resp) {
+			let data = '';
+			resp.on('data', (chunk) => {
+				data += chunk;
+			});
+			resp.on('end', () => {
+				return callback(null, { source: source, content: data });
+			});
+		}).on("error", (err) => {
+			emitWarning("Cannot fetch source '" + source + "': " + err.message)
+			return callback(null, null);
+		});
+	}
 	function processMap(map, context, callback) {
 		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
 			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
@@ -77,8 +92,12 @@ module.exports = function(input, inputMap) {
 			async.map(missingSources, function(source, callback) {
 				resolve(context, loaderUtils.urlToRequest(source, true), function(err, result) {
 					if(err) {
-						emitWarning("Cannot find source file '" + source + "': " + err);
-						return callback(null, null);
+						if (source.match(/^https?:\/\//)) {
+							return fetchHttp(source, callback);
+						} else {
+							emitWarning("Cannot find source file '" + source + "': " + err);
+							return callback(null, null);
+						}
 					}
 					addDependency(result);
 					fs.readFile(result, "utf-8", function(err, content) {
