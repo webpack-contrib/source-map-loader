@@ -54,6 +54,17 @@ describe("source-map-loader", function() {
 		});
 	});
 
+	it("should not process source maps in strings", function(done) {
+		execLoader(path.join(fixturesPath, "normal-file2.js"), function(err, res, map, deps, warns) {
+			should.equal(err, null);
+			warns.should.be.eql([]);
+			should.equal(res, "without SourceMap\nanInvalidDirective = \"\\n/*# sourceMappingURL=data:application/json;base64,\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\" */\";\n// comment"),
+			should.equal(map, null);
+			deps.should.be.eql([]);
+			done();
+		});
+	});
+
 	it("should process inlined SourceMaps", function(done) {
 		execLoader(path.join(fixturesPath, "inline-source-map.js"), function(err, res, map, deps, warns) {
 			should.equal(err, null);
