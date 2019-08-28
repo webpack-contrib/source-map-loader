@@ -12,13 +12,13 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "async": "^2.5.0",
-    "loader-utils": "^1.1.0"
+    "loader-utils": "^1.2.3",
+    "neo-async": "^2.6.1"
   },
   "devDependencies": {
-    "mocha": "^5.0.5",
-    "should": "^13.2.1",
-    "standard-version": "^4.4.0"
+    "mocha": "^6.0.5",
+    "should": "^13.2.3",
+    "standard-version": "^7.0.0"
   },
   "bugs": "https://github.com/webpack-contrib/source-map-loader/issues",
   "homepage": "https://github.com/webpack-contrib/source-map-loader",

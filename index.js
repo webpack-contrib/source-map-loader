@@ -4,7 +4,7 @@
 */
 var fs = require("fs");
 var path = require("path");
-var async = require("async");
+var async = require("neo-async");
 var loaderUtils = require("loader-utils");
 
 // Matches only the last occurrence of sourceMappingURL
