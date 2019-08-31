@@ -52,6 +52,56 @@ Object {
 
 exports[`source-map-loader should process external SourceMaps: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should process indexed source maps (sections): css 1`] = `
+"with SourceMap
+// From https://github.com/DavidSouther/flatten-source-map/blob/master/lib/test.js
+// comment"
+`;
+
+exports[`source-map-loader should process indexed source maps (sections): errors 1`] = `Array []`;
+
+exports[`source-map-loader should process indexed source maps (sections): map 1`] = `
+Object {
+  "file": "app.js",
+  "mappings": "AAAA;AAAA,EAAA,OAAO,CAAC,MAAR,CAAe,eAAf,EAAgC,CAC5B,0BAD4B,EAE5B,eAF4B,CAAhC,CAAA,CAAA;AAAA;;;;;ACAA,OAAO,CAAC,MAAM,CAAC,2BAA2B,EAAE;AAC5C,CAAC,CAAC,CAAC,OAAO,CAAC,QAAQ,EAAE,SAAS,MAAM,CAAC,CAAC;IAClC,IAAI,CAAC,QAAQ,EAAE,IAAI,IAAI,CAAC,CAAC;AAC7B,CAAC,CAAC;;;;ACHF;AAAA,MAAA,QAAA;;AAAA,EAAM;AACW,IAAA,kBAAA,GAAA,CAAb;;oBAAA;;MADJ,CAAA;;AAAA,EAGA,OAAO,CAAC,MAAR,CAAe,0BAAf,EAA2C,EAA3C,CACA,CAAC,UADD,CACY,UADZ,EACwB,QADxB,CAHA,CAAA;AAAA;;;ACAA;AAAA,EAAA,OAAO,CAAC,MAAR,CAAe,6BAAf,EAA8C,CAC1C,mBAD0C,EAE1C,kBAF0C,CAA9C,CAGE,CAAC,SAHH,CAGa,YAHb,EAG2B,SAAA,GAAA;WACvB;AAAA,MAAA,QAAA,EAAU,IAAV;AAAA,MACA,WAAA,EAAa,UADb;MADuB;EAAA,CAH3B,CAAA,CAAA;AAAA",
+  "names": Array [],
+  "sources": Array [
+    "main.coffee",
+    "service.js",
+    "controller.coffee",
+    "directive.coffee",
+  ],
+  "sourcesContent": Array [
+    "angular.module('stassets.main', [
+    'stassets.main.controller'
+    'main.template'
+])
+",
+    "angular.module('stassets.main.nav.service', [
+]).service('NavSvc', function NavSvc(){
+    this.started = new Date();
+});
+",
+    "class MainCtrl
+    constructor: ->
+
+angular.module('stassets.main.controller', [])
+.controller 'MainCtrl', MainCtrl
+",
+    "angular.module('stassets.main.nav.directive', [
+    'main.nav.template'
+    'main.nav.service'
+]).directive 'stassetNav', ->
+    restrict: 'AE'
+    templateUrl: 'main/nav'
+",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should process indexed source maps (sections): warnings 1`] = `Array []`;
+
 exports[`source-map-loader should process inlined SourceMaps with charset: css 1`] = `
 "with SourceMap
 // comment"

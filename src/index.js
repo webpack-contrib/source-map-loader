@@ -5,11 +5,12 @@
 import fs from 'fs';
 import path from 'path';
 
-import validateOptions from 'schema-utils';
-import async from 'neo-async';
-import parseDataURL from 'data-urls';
-import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions, urlToRequest } from 'loader-utils';
+import { labelToName, decode } from 'whatwg-encoding';
+import async from 'neo-async';
+import flattenSourceMap from 'flatten-source-map';
+import parseDataURL from 'data-urls';
+import validateOptions from 'schema-utils';
 
 import schema from './options.json';
 
@@ -113,8 +114,12 @@ export default function loader(input, inputMap) {
   });
 
   // eslint-disable-next-line no-shadow
-  function processMap(map, context, callback) {
-    if (!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
+  function processMap(inputMap, context, callback) {
+    if (
+      !inputMap.sourcesContent ||
+      inputMap.sourcesContent.length < inputMap.sources.length
+    ) {
+      const map = inputMap.sections ? flattenSourceMap(inputMap) : inputMap;
       const sourcePrefix = map.sourceRoot ? `${map.sourceRoot}/` : '';
 
       // eslint-disable-next-line no-param-reassign
@@ -184,6 +189,6 @@ export default function loader(input, inputMap) {
       return;
     }
 
-    callback(null, input.replace(match[0], ''), map);
+    callback(null, input.replace(match[0], ''), inputMap);
   }
 }
