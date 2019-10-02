@@ -92,6 +92,8 @@ module.exports = function (input, inputMap) {
 			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
 			async.map(sourcesWithoutContent, function (item, callback) {
 				var source = sourcePrefix + item.source
+				map.sources = map.sources.map(function (s) { return sourcePrefix + s; });
+				delete map.sourceRoot;
 				resolve(context, loaderUtils.urlToRequest(source, true), function (err, result) {
 					if (err) {
 						emitWarning("Cannot find source file '" + source + "': " + err);
