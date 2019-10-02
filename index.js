@@ -10,23 +10,23 @@ var loaderUtils = require("loader-utils");
 // Matches only the last occurrence of sourceMappingURL
 var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourceMappingURL)",
 	// Matches /* ... */ comments
-	regex1 = new RegExp("/\\*"+baseRegex+"\\s*\\*/"),
+	regex1 = new RegExp("/\\*" + baseRegex + "\\s*\\*/"),
 	// Matches // .... comments
-	regex2 = new RegExp("//"+baseRegex+"($|\n|\r\n?)"),
+	regex2 = new RegExp("//" + baseRegex + "($|\n|\r\n?)"),
 	// Matches DataUrls
 	regexDataUrl = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,([a-zA-Z0-9+/]+={0,2})/;
 
-module.exports = function(input, inputMap) {
+module.exports = function (input, inputMap) {
 	this.cacheable && this.cacheable();
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
-	var emitWarning = this.emitWarning || function() {};
+	var emitWarning = this.emitWarning || function () { };
 	var match = input.match(regex1) || input.match(regex2);
-	if(match) {
+	if (match) {
 		var url = match[1];
 		var dataUrlMatch = regexDataUrl.exec(url);
 		var callback = this.async();
-		if(dataUrlMatch) {
+		if (dataUrlMatch) {
 			var mapBase64 = dataUrlMatch[1];
 			var mapStr = (new Buffer(mapBase64, "base64")).toString();
 			var map;
@@ -38,14 +38,14 @@ module.exports = function(input, inputMap) {
 			}
 			processMap(map, this.context, callback);
 		} else {
-			resolve(this.context, loaderUtils.urlToRequest(url, true), function(err, result) {
-				if(err) {
+			resolve(this.context, loaderUtils.urlToRequest(url, true), function (err, result) {
+				if (err) {
 					emitWarning("Cannot find SourceMap '" + url + "': " + err);
 					return untouched();
 				}
 				addDependency(result);
-				fs.readFile(result, "utf-8", function(err, content) {
-					if(err) {
+				fs.readFile(result, "utf-8", function (err, content) {
+					if (err) {
 						emitWarning("Cannot open SourceMap '" + result + "': " + err);
 						return untouched();
 					}
@@ -80,9 +80,9 @@ module.exports = function(input, inputMap) {
 		var sourcesWithoutContent = [];
 		map.sourcesContent = map.sourcesContent || [];
 		resize(map.sourcesContent, map.sources.length, null)
-		map.sourcesContent.forEach(function(sourceContent, i) {
+		map.sourcesContent.forEach(function (sourceContent, i) {
 			if (!sourceContent) {
-				sourcesWithoutContent.push({source: map.sources[i], index: i})
+				sourcesWithoutContent.push({ source: map.sources[i], index: i })
 			}
 		})
 
@@ -90,16 +90,16 @@ module.exports = function(input, inputMap) {
 			setResult(map)
 		} else {
 			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
-			async.map(sourcesWithoutContent, function(item, callback) {
+			async.map(sourcesWithoutContent, function (item, callback) {
 				var source = sourcePrefix + item.source
-				resolve(context, loaderUtils.urlToRequest(source, true), function(err, result) {
-					if(err) {
+				resolve(context, loaderUtils.urlToRequest(source, true), function (err, result) {
+					if (err) {
 						emitWarning("Cannot find source file '" + source + "': " + err);
 						return callback(null, null);
 					}
 					addDependency(result);
-					fs.readFile(result, "utf-8", function(err, content) {
-						if(err) {
+					fs.readFile(result, "utf-8", function (err, content) {
+						if (err) {
 							emitWarning("Cannot open source file '" + result + "': " + err);
 							return callback(null, null);
 						}
@@ -110,9 +110,9 @@ module.exports = function(input, inputMap) {
 						});
 					});
 				});
-			}, function(err, info) {
-				info.forEach(function(item) {
-					if(item) {
+			}, function (err, info) {
+				info.forEach(function (item) {
+					if (item) {
 						map.sources[item.index] = item.source;
 						map.sourcesContent[item.index] = item.content;
 					}
