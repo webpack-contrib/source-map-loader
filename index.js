@@ -68,13 +68,30 @@ module.exports = function(input, inputMap) {
 	function untouched() {
 		callback(null, input, inputMap);
 	}
+	function resize(arr, size, defval) {
+		while (arr.length > size) { arr.pop(); }
+		while (arr.length < size) { arr.push(defval); }
+	}
 	function processMap(map, context, callback) {
-		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
+		function setResult(map) {
+			callback(null, input.replace(match[0], ''), map);
+		}
+
+		var sourcesWithoutContent = [];
+		map.sourcesContent = map.sourcesContent || [];
+		resize(map.sourcesContent, map.sources.length, null)
+		map.sourcesContent.forEach(function(sourceContent, i) {
+			if (!sourceContent) {
+				sourcesWithoutContent.push({source: map.sources[i], index: i})
+			}
+		})
+
+		if (sourcesWithoutContent.length == 0) {
+			setResult(map)
+		} else {
 			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
-			map.sources = map.sources.map(function(s) { return sourcePrefix + s; });
-			delete map.sourceRoot;
-			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
-			async.map(missingSources, function(source, callback) {
+			async.map(sourcesWithoutContent, function(item, callback) {
+				var source = sourcePrefix + item.source
 				resolve(context, loaderUtils.urlToRequest(source, true), function(err, result) {
 					if(err) {
 						emitWarning("Cannot find source file '" + source + "': " + err);
@@ -87,25 +104,21 @@ module.exports = function(input, inputMap) {
 							return callback(null, null);
 						}
 						callback(null, {
+							index: item.index,
 							source: result,
 							content: content
 						});
 					});
 				});
 			}, function(err, info) {
-				map.sourcesContent = map.sourcesContent || [];
-				info.forEach(function(res) {
-					if(res) {
-						map.sources[map.sourcesContent.length] = res.source;
-						map.sourcesContent.push(res.content);
-					} else {
-						map.sourcesContent.push(null);
+				info.forEach(function(item) {
+					if(item) {
+						map.sources[item.index] = item.source;
+						map.sourcesContent[item.index] = item.content;
 					}
 				});
-				processMap(map, context, callback);
+				setResult(map);
 			});
-			return;
 		}
-		callback(null, input.replace(match[0], ''), map);
 	}
 }
