@@ -21,7 +21,17 @@ module.exports = function(input, inputMap) {
 	var resolve = this.resolve;
 	var addDependency = this.addDependency;
 	var emitWarning = this.emitWarning || function() {};
-	var match = input.match(regex1) || input.match(regex2);
+
+	var lines = input.split(/^/m);
+	var match = undefined;
+
+	for(var i = lines.length - 1; i >= 0; i--) {
+		match = lines[i].match(regex1) || lines[i].match(regex2);
+		if(match) {
+			break;
+		}
+	}
+
 	if(match) {
 		var url = match[1];
 		var dataUrlMatch = regexDataUrl.exec(url);
