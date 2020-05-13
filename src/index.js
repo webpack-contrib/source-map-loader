@@ -61,43 +61,45 @@ export default function loader(input, inputMap) {
     }
 
     processMap(map, context, callback);
-  } else {
-    resolve(context, urlToRequest(url, true), (resolveError, result) => {
-      if (resolveError) {
-        emitWarning(`Cannot find SourceMap '${url}': ${resolveError}`);
+
+    return;
+  }
+
+  resolve(context, urlToRequest(url, true), (resolveError, result) => {
+    if (resolveError) {
+      emitWarning(`Cannot find SourceMap '${url}': ${resolveError}`);
+
+      callback(null, input, inputMap);
+
+      return;
+    }
+
+    addDependency(result);
+
+    fs.readFile(result, 'utf-8', (readFileError, content) => {
+      if (readFileError) {
+        emitWarning(`Cannot open SourceMap '${result}': ${readFileError}`);
 
         callback(null, input, inputMap);
 
         return;
       }
 
-      addDependency(result);
+      let map;
 
-      fs.readFile(result, 'utf-8', (readFileError, content) => {
-        if (readFileError) {
-          emitWarning(`Cannot open SourceMap '${result}': ${readFileError}`);
+      try {
+        map = JSON.parse(content);
+      } catch (e) {
+        emitWarning(`Cannot parse SourceMap '${url}': ${e}`);
 
-          callback(null, input, inputMap);
+        callback(null, input, inputMap);
 
-          return;
-        }
+        return;
+      }
 
-        let map;
-
-        try {
-          map = JSON.parse(content);
-        } catch (e) {
-          emitWarning(`Cannot parse SourceMap '${url}': ${e}`);
-
-          callback(null, input, inputMap);
-
-          return;
-        }
-
-        processMap(map, path.dirname(result), callback);
-      });
+      processMap(map, path.dirname(result), callback);
     });
-  }
+  });
 
   // eslint-disable-next-line no-shadow
   function processMap(map, context, callback) {
