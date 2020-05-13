@@ -50,8 +50,8 @@ function execLoader(filename, callback) {
 }
 
 describe('source-map-loader', () => {
-  const fixturesPath = path.join(__dirname, 'fixtures');
-  const dataPath = path.join(fixturesPath, 'data');
+  const fixturesPath = path.resolve(__dirname, 'fixtures');
+  const dataPath = path.resolve(fixturesPath, 'data');
 
   it('should leave normal files untouched', (done) => {
     execLoader(
@@ -271,10 +271,10 @@ describe('source-map-loader', () => {
   });
 
   it('should support absolute sourceRoot paths in sourcemaps', (done) => {
-    const sourceRoot = path.join(fixturesPath);
+    const sourceRoot = fixturesPath;
     const javaScriptFilename = 'absolute-sourceRoot-source-map.js';
     const sourceFilename = 'absolute-sourceRoot-source-map.txt';
-    const rootRelativeSourcePath = path.join(sourceRoot, sourceFilename);
+    const rootRelativeSourcePath = path.posix.join(sourceRoot, sourceFilename);
     const sourceMapPath = path.join(
       sourceRoot,
       'absolute-sourceRoot-source-map.map'
