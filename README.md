@@ -1,89 +1,84 @@
-[![npm][npm]][npm-url]
-[![deps][deps]][deps-url]
-[![chat][chat]][chat-url]
-
 <div align="center">
-  <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
   <a href="https://github.com/webpack/webpack">
-    <img width="200" height="200" vspace="" hspace="25"
-      src="https://cdn.rawgit.com/webpack/media/e7485eb2/logo/icon.svg">
+    <img width="200" height="200" src="https://webpack.js.org/assets/icon-square-big.svg">
   </a>
-  <h1>Sourcemap Loader</h1>
-  <p>Extracts source maps from existing source files (from their <code>sourceMappingURL</code>).<p>
 </div>
 
-<h2 align="center">Install</h2>
+[![npm][npm]][npm-url]
+[![node][node]][node-url]
+[![deps][deps]][deps-url]
+[![tests][tests]][tests-url]
+[![coverage][cover]][cover-url]
+[![chat][chat]][chat-url]
+[![size][size]][size-url]
+
+# source-map-loader
+
+Extracts source maps from existing source files (from their <code>sourceMappingURL</code>).
+
+## Getting Started
+
+To begin, you'll need to install `source-map-loader`:
 
 ```bash
 npm i -D source-map-loader
 ```
 
-<h2 align="center">Usage</h2>
+Then add the plugin to your `webpack` config. For example:
 
-[Documentation: Using loaders](https://webpack.js.org/concepts/#loaders)
+**file.js**
 
+```js
+import css from 'file.css';
+```
 
-### Example webpack config
+**webpack.config.js**
 
-``` javascript
+```js
 module.exports = {
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: ["source-map-loader"],
-        enforce: "pre"
-      }
-    ]
-  }
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
+    ],
+  },
 };
 ```
 
-`source-map-loader` extracts existing source maps from all JavaScript entries. This includes both inline source maps as well as those linked via URL. All source map data is passed to webpack for processing as per a chosen [source map style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.config.js](https://webpack.js.org/configuration/).
+`source-map-loader` extracts existing source maps from all JavaScript entries.
+This includes both inline source maps as well as those linked via URL.
+All source map data is passed to webpack for processing as per a chosen [source map style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.config.js](https://webpack.js.org/configuration/).
+This loader is especially useful when using 3rd-party libraries having their own source maps.
+If not extracted and processed into the source map of the webpack bundle, browsers may misinterpret source map data. `source-map-loader` allows webpack to maintain source map data continuity across libraries so ease of debugging is preserved.
+`source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory.
+Be mindful in setting [include](https://webpack.js.org/configuration/module/#rule-include) and [exclude](https://webpack.js.org/configuration/module/#rule-exclude) rule conditions to maximize bundling performance.
 
-This loader is especially useful when using 3rd-party libraries having their own source maps. If not extracted and processed into the source map of the webpack bundle, browsers may misinterpret source map data. `source-map-loader` allows webpack to maintain source map data continuity across libraries so ease of debugging is preserved.
+And run `webpack` via your preferred method.
 
-`source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory. Be mindful in setting [include](https://webpack.js.org/configuration/module/#rule-include) and [exclude](https://webpack.js.org/configuration/module/#rule-exclude) rule conditions to maximize bundling performance.
+## Contributing
 
-<h2 align="center">Maintainers</h2>
+Please take a moment to read our contributing guidelines if you haven't yet done so.
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <img width="150" height="150"
-        src="https://avatars3.githubusercontent.com/u/166921?v=3&s=150">
-        </br>
-        <a href="https://github.com/bebraw">Juho Vepsäläinen</a>
-      </td>
-      <td align="center">
-        <img width="150" height="150"
-        src="https://avatars2.githubusercontent.com/u/8420490?v=3&s=150">
-        </br>
-        <a href="https://github.com/d3viant0ne">Joshua Wiens</a>
-      </td>
-      <td align="center">
-        <img width="150" height="150"
-        src="https://avatars3.githubusercontent.com/u/533616?v=3&s=150">
-        </br>
-        <a href="https://github.com/SpaceK33z">Kees Kluskens</a>
-      </td>
-      <td align="center">
-        <img width="150" height="150"
-        src="https://avatars3.githubusercontent.com/u/3408176?v=3&s=150">
-        </br>
-        <a href="https://github.com/TheLarkInn">Sean Larkin</a>
-      </td>
-    </tr>
-  <tbody>
-</table>
+[CONTRIBUTING](./.github/CONTRIBUTING.md)
 
+## License
+
+[MIT](./LICENSE)
 
 [npm]: https://img.shields.io/npm/v/source-map-loader.svg
 [npm-url]: https://npmjs.com/package/source-map-loader
-
+[node]: https://img.shields.io/node/v/source-map-loader.svg
+[node-url]: https://nodejs.org
 [deps]: https://david-dm.org/webpack-contrib/source-map-loader.svg
 [deps-url]: https://david-dm.org/webpack-contrib/source-map-loader
-
-[chat]: https://img.shields.io/badge/gitter-webpack%2Fwebpack-brightgreen.svg
+[tests]: https://github.com/webpack-contrib/source-map-loader/workflows/source-map-loader/badge.svg
+[tests-url]: https://github.com/webpack-contrib/source-map-loader/actions
+[cover]: https://codecov.io/gh/webpack-contrib/source-map-loader/branch/master/graph/badge.svg
+[cover-url]: https://codecov.io/gh/webpack-contrib/source-map-loader
+[chat]: https://badges.gitter.im/webpack/webpack.svg
 [chat-url]: https://gitter.im/webpack/webpack
+[size]: https://packagephobia.now.sh/badge?p=source-map-loader
+[size-url]: https://packagephobia.now.sh/result?p=source-map-loader
