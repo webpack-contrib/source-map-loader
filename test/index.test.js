@@ -181,7 +181,7 @@ describe('source-map-loader', () => {
         expect(map).toBeUndefined();
         expect(deps).toEqual([]);
         expect(warns).toEqual([
-          "Cannot parse inline SourceMap 'invalid/base64=': SyntaxError: Unexpected token � in JSON at position 0",
+          'Cannot parse inline SourceMap: data:application/source-map;base64,invalid/base64=',
         ]);
         done();
       }
