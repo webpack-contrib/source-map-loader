@@ -7,6 +7,8 @@ import path from 'path';
 
 import validateOptions from 'schema-utils';
 import async from 'neo-async';
+import parseDataURL from 'data-urls';
+import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions, urlToRequest } from 'loader-utils';
 
 import schema from './options.json';
@@ -18,8 +20,6 @@ const baseRegex =
 const regex1 = new RegExp(`/\\*${baseRegex}\\s*\\*/`);
 // Matches // .... comments
 const regex2 = new RegExp(`//${baseRegex}($|\n|\r\n?)`);
-// Matches DataUrls
-const regexDataUrl = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,([a-zA-Z0-9+/]+={0,2})/;
 
 export default function loader(input, inputMap) {
   const options = getOptions(this);
@@ -39,20 +39,23 @@ export default function loader(input, inputMap) {
   }
 
   const [, url] = match;
-  const dataUrlMatch = regexDataUrl.exec(url);
+
+  const dataURL = parseDataURL(url);
+
   const { context, resolve, addDependency, emitWarning } = this;
 
-  if (dataUrlMatch) {
-    const [, mapBase64] = dataUrlMatch;
-    const mapStr = new Buffer(mapBase64, 'base64').toString();
-
+  if (dataURL) {
     let map;
 
     try {
-      map = JSON.parse(mapStr);
+      dataURL.encodingName =
+        labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
+
+      map = decode(dataURL.body, dataURL.encodingName);
+      map = JSON.parse(map);
     } catch (error) {
       emitWarning(
-        `Cannot parse inline SourceMap '${mapBase64.substr(0, 50)}': ${error}`
+        `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
       );
 
       callback(null, input, inputMap);
@@ -61,6 +64,14 @@ export default function loader(input, inputMap) {
     }
 
     processMap(map, context, callback);
+
+    return;
+  }
+
+  if (url.toLowerCase().indexOf('data:') === 0) {
+    emitWarning(`Cannot parse inline SourceMap: ${url}`);
+
+    callback(null, input, inputMap);
 
     return;
   }
