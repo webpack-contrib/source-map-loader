@@ -3,6 +3,7 @@ import execute from './execute';
 import getCodeFromBundle from './getCodeFromBundle';
 import getCompiler from './getCompiler';
 import getErrors from './getErrors';
+import normalizeMap from './normalizeMap';
 import getWarnings from './getWarnings';
 import normalizeErrors from './normalizeErrors';
 import readAsset from './readAsset';
@@ -14,6 +15,7 @@ export {
   getCodeFromBundle,
   getCompiler,
   getErrors,
+  normalizeMap,
   getWarnings,
   normalizeErrors,
   readAsset,

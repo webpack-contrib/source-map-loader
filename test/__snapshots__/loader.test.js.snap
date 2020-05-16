@@ -13,6 +13,20 @@ exports[`source-map-loader should process external SourceMaps (external sources)
 
 exports[`source-map-loader should process external SourceMaps (external sources): errors 1`] = `Array []`;
 
+exports[`source-map-loader should process external SourceMaps (external sources): map 1`] = `
+Object {
+  "file": "external-source-map2.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/external-source-map2.txt - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap",
+  ],
+  "version": 3,
+}
+`;
+
 exports[`source-map-loader should process external SourceMaps (external sources): warnings 1`] = `Array []`;
 
 exports[`source-map-loader should process external SourceMaps: css 1`] = `
@@ -21,6 +35,20 @@ exports[`source-map-loader should process external SourceMaps: css 1`] = `
 `;
 
 exports[`source-map-loader should process external SourceMaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should process external SourceMaps: map 1`] = `
+Object {
+  "file": "external-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "external-source-map.txt",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap",
+  ],
+  "version": 3,
+}
+`;
 
 exports[`source-map-loader should process external SourceMaps: warnings 1`] = `Array []`;
 
@@ -31,6 +59,20 @@ exports[`source-map-loader should process inlined SourceMaps with charset: css 1
 
 exports[`source-map-loader should process inlined SourceMaps with charset: errors 1`] = `Array []`;
 
+exports[`source-map-loader should process inlined SourceMaps with charset: map 1`] = `
+Object {
+  "file": "charset-inline-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "charset-inline-source-map.txt",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap",
+  ],
+  "version": 3,
+}
+`;
+
 exports[`source-map-loader should process inlined SourceMaps with charset: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should process inlined SourceMaps: css 1`] = `
@@ -39,6 +81,20 @@ exports[`source-map-loader should process inlined SourceMaps: css 1`] = `
 `;
 
 exports[`source-map-loader should process inlined SourceMaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should process inlined SourceMaps: map 1`] = `
+Object {
+  "file": "inline-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "inline-source-map.txt",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap",
+  ],
+  "version": 3,
+}
+`;
 
 exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `Array []`;
 
@@ -59,6 +115,21 @@ exports[`source-map-loader should support absolute sourceRoot paths in sourcemap
 
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: errors 1`] = `Array []`;
 
+exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: map 1`] = `
+Object {
+  "file": "absolute-sourceRoot-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/absolute-sourceRoot-source-map.txt - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap
+// comment",
+  ],
+  "version": 3,
+}
+`;
+
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: css 1`] = `
@@ -67,6 +138,21 @@ exports[`source-map-loader should support relative sourceRoot paths in sourcemap
 `;
 
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: map 1`] = `
+Object {
+  "file": "relative-sourceRoot-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/data/relative-sourceRoot-source-map.txt - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap
+// comment",
+  ],
+  "version": 3,
+}
+`;
 
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
@@ -77,6 +163,20 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 `;
 
 exports[`source-map-loader should use last SourceMap directive: errors 1`] = `Array []`;
+
+exports[`source-map-loader should use last SourceMap directive: map 1`] = `
+Object {
+  "file": "inline-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "inline-source-map.txt",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap",
+  ],
+  "version": 3,
+}
+`;
 
 exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `Array []`;
 
@@ -106,7 +206,7 @@ exports[`source-map-loader should warn on invalid base64 SourceMap: errors 1`] =
 exports[`source-map-loader should warn on invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse inline SourceMap 'invalid/base64=': SyntaxError: Unexpected token � in JSON at position 0",
+(Emitted value instead of an instance of Error) Cannot parse inline SourceMap: data:application/source-map;base64,invalid/base64=",
 ]
 `;
 
@@ -131,6 +231,20 @@ exports[`source-map-loader should warn on missing source file: css 1`] = `
 `;
 
 exports[`source-map-loader should warn on missing source file: errors 1`] = `Array []`;
+
+exports[`source-map-loader should warn on missing source file: map 1`] = `
+Object {
+  "file": "missing-source-map2.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "missing-source-map2.txt",
+  ],
+  "sourcesContent": Array [
+    null,
+  ],
+  "version": 3,
+}
+`;
 
 exports[`source-map-loader should warn on missing source file: warnings 1`] = `
 Array [
