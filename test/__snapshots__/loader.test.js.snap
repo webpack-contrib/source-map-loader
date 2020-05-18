@@ -132,6 +132,37 @@ Object {
 
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should support indexed sourcemaps: css 1`] = `
+"with SourceMap
+// comment
+"
+`;
+
+exports[`source-map-loader should support indexed sourcemaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should support indexed sourcemaps: map 1`] = `
+Object {
+  "file": "file.js",
+  "mappings": "CAAC,IAAI,IAAM,SAAU,GAClB,OAAO,IAAI;CCDb,IAAI,IAAM,SAAU,GAClB,OAAO",
+  "names": Array [],
+  "sources": Array [
+    "nested1.js",
+    "/the/root/nested2.js",
+  ],
+  "sourcesContent": Array [
+    " ONE.foo = function (bar) {
+   return baz(bar);
+ };",
+    " TWO.inc = function (n) {
+   return n + 1;
+ };",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should support indexed sourcemaps: warnings 1`] = `Array []`;
+
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: css 1`] = `
 "with SourceMap
 // comment"
