@@ -40,8 +40,6 @@ async function FlattenSourceMap(map) {
     }
   });
 
-  consumer.destroy();
-
   return generatedMap.toJSON();
 }
 
