@@ -15,7 +15,8 @@
         ],
         "names": ["bar", "baz"],
         "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOC,IAAID",
-        "file": "file.js"
+        "file": "file.js",
+        "sourceRoot": "/the/root"
       }
     },
     {
@@ -30,7 +31,7 @@
         "names": ["n"],
         "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
         "file": "file.js",
-        "sourceRoot": "/the/root"
+        "sourceRoot": "/different/root"
       }
     }
   ]

@@ -6,40 +6,41 @@ async function FlattenSourceMap(map) {
 
   if (map.file) {
     generatedMap = new sourceMap.SourceMapGenerator({
-      file: map.file || '',
+      file: map.file,
     });
   } else {
     generatedMap = new sourceMap.SourceMapGenerator();
   }
 
-  consumer.sources.forEach(function (sourceFile) {
-    const sourceContent = consumer.sourceContentFor(sourceFile);
-
+  consumer.sources.forEach((sourceFile) => {
+    const sourceContent = consumer.sourceContentFor(sourceFile, true);
     generatedMap.setSourceContent(sourceFile, sourceContent);
   });
 
-  consumer.eachMapping(function (m) {
+  consumer.eachMapping((mapping) => {
     const { source } = consumer.originalPositionFor({
-      line: m.generatedLine,
-      column: m.generatedColumn,
+      line: mapping.generatedLine,
+      column: mapping.generatedColumn,
     });
 
-    const mapping = {
+    const mappings = {
       source,
       original: {
-        line: m.originalLine,
-        column: m.originalColumn,
+        line: mapping.originalLine,
+        column: mapping.originalColumn,
       },
       generated: {
-        line: m.generatedLine,
-        column: m.generatedColumn,
+        line: mapping.generatedLine,
+        column: mapping.generatedColumn,
       },
     };
 
     if (source) {
-      generatedMap.addMapping(mapping);
+      generatedMap.addMapping(mappings);
     }
   });
+
+  consumer.destroy();
 
   return generatedMap.toJSON();
 }

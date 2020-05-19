@@ -134,7 +134,8 @@ exports[`source-map-loader should support absolute sourceRoot paths in sourcemap
 
 exports[`source-map-loader should support indexed sourcemaps: css 1`] = `
 "with SourceMap
-// comment
+// Map taken from here
+// https://github.com/mozilla/source-map/blob/master/test/util.js - indexedTestMapDifferentSourceRoots
 "
 `;
 
@@ -146,8 +147,8 @@ Object {
   "mappings": "CAAC,IAAI,IAAM,SAAU,GAClB,OAAO,IAAI;CCDb,IAAI,IAAM,SAAU,GAClB,OAAO",
   "names": Array [],
   "sources": Array [
-    "nested1.js",
-    "/the/root/nested2.js",
+    "/the/root/nested1.js",
+    "/different/root/nested2.js",
   ],
   "sourcesContent": Array [
     " ONE.foo = function (bar) {
