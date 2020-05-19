@@ -11,6 +11,8 @@ import parseDataURL from 'data-urls';
 import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions, urlToRequest } from 'loader-utils';
 
+import flattenSourceMap from './utils/flatten';
+
 import schema from './options.json';
 
 // Matches only the last occurrence of sourceMappingURL
@@ -113,77 +115,76 @@ export default function loader(input, inputMap) {
   });
 
   // eslint-disable-next-line no-shadow
-  function processMap(map, context, callback) {
-    if (!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
-      const sourcePrefix = map.sourceRoot ? `${map.sourceRoot}/` : '';
-
+  async function processMap(map, context, callback) {
+    if (map.sections) {
       // eslint-disable-next-line no-param-reassign
-      map.sources = map.sources.map((s) => sourcePrefix + s);
+      map = await flattenSourceMap(map);
+    }
 
-      // eslint-disable-next-line no-param-reassign
-      delete map.sourceRoot;
-
-      const missingSources = map.sourcesContent
-        ? map.sources.slice(map.sourcesContent.length)
-        : map.sources;
-
-      async.map(
-        missingSources,
-        // eslint-disable-next-line no-shadow
-        (source, callback) => {
-          resolve(
-            context,
-            urlToRequest(source, true),
-            (resolveError, result) => {
-              if (resolveError) {
-                emitWarning(
-                  `Cannot find source file '${source}': ${resolveError}`
-                );
-
-                callback(null, null);
-
-                return;
-              }
-
-              addDependency(result);
-
-              fs.readFile(result, 'utf-8', (readFileError, content) => {
-                if (readFileError) {
-                  emitWarning(
-                    `Cannot open source file '${result}': ${readFileError}`
-                  );
-
-                  callback(null, null);
-
-                  return;
-                }
-
-                callback(null, { source: result, content });
-              });
-            }
-          );
-        },
-        (err, info) => {
-          // eslint-disable-next-line no-param-reassign
-          map.sourcesContent = map.sourcesContent || [];
-
-          info.forEach((res) => {
-            if (res) {
-              // eslint-disable-next-line no-param-reassign
-              map.sources[map.sourcesContent.length] = res.source;
-              map.sourcesContent.push(res.content);
-            } else {
-              map.sourcesContent.push(null);
-            }
-          });
-
-          processMap(map, context, callback);
-        }
-      );
+    if (map.sourcesContent && map.sourcesContent.length >= map.sources.length) {
+      callback(null, input.replace(match[0], ''), map);
 
       return;
     }
 
-    callback(null, input.replace(match[0], ''), map);
+    const sourcePrefix = map.sourceRoot ? `${map.sourceRoot}${path.sep}` : '';
+
+    // eslint-disable-next-line no-param-reassign
+    map.sources = map.sources.map((s) => sourcePrefix + s);
+
+    // eslint-disable-next-line no-param-reassign
+    delete map.sourceRoot;
+
+    const missingSources = map.sourcesContent
+      ? map.sources.slice(map.sourcesContent.length)
+      : map.sources;
+
+    async.map(
+      missingSources,
+      // eslint-disable-next-line no-shadow
+      (source, callback) => {
+        resolve(context, urlToRequest(source, true), (resolveError, result) => {
+          if (resolveError) {
+            emitWarning(`Cannot find source file '${source}': ${resolveError}`);
+
+            callback(null, null);
+
+            return;
+          }
+
+          addDependency(result);
+
+          fs.readFile(result, 'utf-8', (readFileError, content) => {
+            if (readFileError) {
+              emitWarning(
+                `Cannot open source file '${result}': ${readFileError}`
+              );
+
+              callback(null, null);
+
+              return;
+            }
+
+            callback(null, { source: result, content });
+          });
+        });
+      },
+      (err, info) => {
+        // eslint-disable-next-line no-param-reassign
+        map.sourcesContent = map.sourcesContent || [];
+
+        info.forEach((res) => {
+          if (res) {
+            // eslint-disable-next-line no-param-reassign
+            map.sources[map.sourcesContent.length] = res.source;
+            map.sourcesContent.push(res.content);
+          } else {
+            map.sourcesContent.push(null);
+          }
+        });
+
+        processMap(map, context, callback);
+      }
+    );
   }
 }

@@ -33,11 +33,12 @@ function removeCWD(str) {
   let cwd = process.cwd();
 
   if (isWin) {
-    if (str.includes('/')) {
-      throw new Error(
-        'There should not be a forward slash in the Windows path'
-      );
-    }
+    // Todo: explore the issue
+    // if (str.includes('/')) {
+    //   throw new Error(
+    //     'There should not be a forward slash in the Windows path'
+    //   );
+    // }
 
     // eslint-disable-next-line no-param-reassign
     str = str.replace(/\\/g, '/');

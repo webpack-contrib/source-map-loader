@@ -250,4 +250,32 @@ describe('source-map-loader', () => {
     expect(getWarnings(stats)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
+
+  it('should support indexed sourcemaps', async () => {
+    const currentDirPath = path.join(
+      __dirname,
+      'fixtures',
+      'indexed-sourcemap'
+    );
+
+    const testId = path.join(currentDirPath, 'file.js');
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+    const deps = stats.compilation.fileDependencies;
+
+    const dependencies = [
+      path.join(currentDirPath, 'file.js'),
+      path.join(currentDirPath, 'file.js.map'),
+    ];
+
+    dependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(true);
+    });
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
 });
