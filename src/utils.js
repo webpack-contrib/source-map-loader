@@ -1,6 +1,8 @@
+import fs from 'fs';
+
 import sourceMap from 'source-map';
 
-async function FlattenSourceMap(map) {
+async function flattenSourceMap(map) {
   const consumer = await new sourceMap.SourceMapConsumer(map);
   let generatedMap;
 
@@ -43,4 +45,22 @@ async function FlattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-module.exports = FlattenSourceMap;
+function normalize(path) {
+  return path.replace(/\\/g, '/');
+}
+
+function readFile(fullPath, charset, callback, emitWarning) {
+  fs.readFile(fullPath, charset, (readFileError, content) => {
+    if (readFileError) {
+      emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
+
+      callback(null, null);
+
+      return;
+    }
+
+    callback(null, { source: fullPath, content });
+  });
+}
+
+export { flattenSourceMap, readFile, normalize };

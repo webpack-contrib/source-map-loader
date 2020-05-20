@@ -8,12 +8,13 @@ import path from 'path';
 import validateOptions from 'schema-utils';
 import async from 'neo-async';
 import parseDataURL from 'data-urls';
+import sourceMap from 'source-map';
 import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions, urlToRequest } from 'loader-utils';
-
-import flattenSourceMap from './utils/flatten';
+import { isAbsolute } from 'source-map/lib/util';
 
 import schema from './options.json';
+import { flattenSourceMap, readFile, normalize } from './utils';
 
 // Matches only the last occurrence of sourceMappingURL
 const baseRegex =
@@ -121,43 +122,35 @@ export default function loader(input, inputMap) {
       map = await flattenSourceMap(map);
     }
 
-    if (map.sourcesContent && map.sourcesContent.length >= map.sources.length) {
-      callback(null, input.replace(match[0], ''), map);
-
-      return;
-    }
-
-    const sourcePrefix = map.sourceRoot ? `${map.sourceRoot}${path.sep}` : '';
-
-    // eslint-disable-next-line no-param-reassign
-    map.sources = map.sources.map((s) => sourcePrefix + s);
-
-    // eslint-disable-next-line no-param-reassign
-    delete map.sourceRoot;
-
-    const missingSources = map.sourcesContent
-      ? map.sources.slice(map.sourcesContent.length)
-      : map.sources;
+    const originalMap = await new sourceMap.SourceMapConsumer(map);
 
     async.map(
-      missingSources,
+      map.sources,
       // eslint-disable-next-line no-shadow
       (source, callback) => {
-        resolve(context, urlToRequest(source, true), (resolveError, result) => {
-          if (resolveError) {
-            emitWarning(`Cannot find source file '${source}': ${resolveError}`);
+        const fullPath = map.sourceRoot
+          ? `${map.sourceRoot}/${source}`
+          : source;
 
-            callback(null, null);
+        if (isAbsolute(fullPath)) {
+          const sourceContent = originalMap.sourceContentFor(source, true);
 
+          if (sourceContent) {
+            callback(null, { source: fullPath, content: sourceContent });
             return;
           }
 
-          addDependency(result);
+          readFile(fullPath, 'utf-8', callback, emitWarning);
+          return;
+        }
 
-          fs.readFile(result, 'utf-8', (readFileError, content) => {
-            if (readFileError) {
+        resolve(
+          context,
+          urlToRequest(fullPath, true),
+          (resolveError, result) => {
+            if (resolveError) {
               emitWarning(
-                `Cannot open source file '${result}': ${readFileError}`
+                `Cannot find source file '${source}': ${resolveError}`
               );
 
               callback(null, null);
@@ -165,25 +158,35 @@ export default function loader(input, inputMap) {
               return;
             }
 
-            callback(null, { source: result, content });
-          });
-        });
+            readFile(result, 'utf-8', callback, emitWarning);
+          }
+        );
       },
       (err, info) => {
-        // eslint-disable-next-line no-param-reassign
-        map.sourcesContent = map.sourcesContent || [];
+        const resultMap = { ...map };
+        resultMap.sources = [];
+        resultMap.sourcesContent = [];
+
+        delete resultMap.sourceRoot;
 
         info.forEach((res) => {
           if (res) {
             // eslint-disable-next-line no-param-reassign
-            map.sources[map.sourcesContent.length] = res.source;
-            map.sourcesContent.push(res.content);
-          } else {
-            map.sourcesContent.push(null);
+            resultMap.sources.push(normalize(res.source));
+            resultMap.sourcesContent.push(res.content);
+
+            if (res.source) {
+              addDependency(res.source);
+            }
           }
         });
 
-        processMap(map, context, callback);
+        if (resultMap.sources.length === 0) {
+          callback(null, input, map);
+          return;
+        }
+
+        callback(null, input.replace(match[0], ''), resultMap);
       }
     );
   }

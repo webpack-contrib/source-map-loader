@@ -8,6 +8,7 @@ import {
   getErrors,
   normalizeMap,
   getWarnings,
+  readAsset,
 } from './helpers';
 
 describe('source-map-loader', () => {
@@ -267,6 +268,8 @@ describe('source-map-loader', () => {
     const dependencies = [
       path.join(currentDirPath, 'file.js'),
       path.join(currentDirPath, 'file.js.map'),
+      path.join(currentDirPath, 'nested1.js'),
+      `/different/root/nested2.js`,
     ];
 
     dependencies.forEach((fixture) => {
@@ -277,5 +280,29 @@ describe('source-map-loader', () => {
     expect(codeFromBundle.css).toMatchSnapshot('css');
     expect(getWarnings(stats)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should transform to webpack', async () => {
+    const currentDirPath = path.join(
+      __dirname,
+      'fixtures',
+      'indexed-sourcemap'
+    );
+
+    const testId = path.join(currentDirPath, 'file.js');
+    const compiler = getCompiler(testId, {}, {}, true);
+    const stats = await compile(compiler);
+    const bundle = readAsset('main.bundle.js.map', compiler, stats);
+
+    const dependencies = [
+      'indexed-sourcemap/nested1.js',
+      'different/root/nested2.js',
+      'webpack/bootstrap',
+    ];
+
+    // Todo: rewrite when we will fix issue whith unresolved paths
+    dependencies.forEach((fixture) => {
+      expect(bundle.indexOf(fixture) !== -1).toBe(true);
+    });
   });
 });
