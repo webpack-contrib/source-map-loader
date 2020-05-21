@@ -49,18 +49,42 @@ function normalize(path) {
   return path.replace(/\\/g, '/');
 }
 
-function readFile(fullPath, charset, callback, emitWarning) {
-  fs.readFile(fullPath, charset, (readFileError, content) => {
-    if (readFileError) {
-      emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
+function readFile(fullPath, charset, emitWarning) {
+  return new Promise((resolve) => {
+    fs.readFile(fullPath, charset, (readFileError, content) => {
+      if (readFileError) {
+        emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
 
-      callback(null, null);
+        resolve({ source: fullPath, content: null });
+      }
 
-      return;
-    }
-
-    callback(null, { source: fullPath, content });
+      resolve({ source: fullPath, content });
+    });
   });
 }
 
-export { flattenSourceMap, readFile, normalize };
+class MapAgregator {
+  constructor({ mapConsumer, source, fullPath, emitWarning }) {
+    this.fullPath = fullPath;
+    this.sourceContent = mapConsumer.sourceContentFor(source, true);
+    this.emitWarning = emitWarning;
+  }
+
+  setFullPath(path) {
+    this.fullPath = path;
+  }
+
+  get content() {
+    return this.sourceContent
+      ? { source: this.fullPath, content: this.sourceContent }
+      : readFile(this.fullPath, 'utf-8', this.emitWarning);
+  }
+
+  get placeholderContent() {
+    return this.sourceContent
+      ? { source: this.fullPath, content: this.sourceContent }
+      : { source: this.fullPath, content: null };
+  }
+}
+
+export { flattenSourceMap, normalize, MapAgregator };
