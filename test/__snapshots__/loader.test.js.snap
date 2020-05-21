@@ -31,7 +31,6 @@ exports[`source-map-loader should process external SourceMaps (external sources)
 
 exports[`source-map-loader should process external SourceMaps: css 1`] = `
 "with SourceMap
-//#sourceMappingURL=external-source-map.map
 // comment"
 `;
 
@@ -73,8 +72,7 @@ Object {
     "/test/fixtures/charset-inline-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
-    "// Content
-",
+    "with SourceMap",
   ],
   "version": 3,
 }
@@ -84,7 +82,6 @@ exports[`source-map-loader should process inlined SourceMaps with charset: warni
 
 exports[`source-map-loader should process inlined SourceMaps: css 1`] = `
 "with SourceMap
-//    @    sourceMappingURL    =    data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ==
 // comment"
 `;
 
@@ -164,10 +161,9 @@ Object {
     "/different/root/nested2.js",
   ],
   "sourcesContent": Array [
-    "ONE.foo = function (bar) {
-  return baz(bar);
-};
-",
+    " ONE.foo = function (bar) {
+   return baz(bar);
+ };",
     " TWO.inc = function (n) {
    return n + 1;
  };",
@@ -205,7 +201,6 @@ exports[`source-map-loader should support relative sourceRoot paths in sourcemap
 exports[`source-map-loader should use last SourceMap directive: css 1`] = `
 "with SourceMap
 anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
-//    @    sourceMappingURL    =    data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ==
 // comment"
 `;
 
@@ -279,7 +274,6 @@ Array [
 
 exports[`source-map-loader should warn on missing source file: css 1`] = `
 "with SourceMap
-//#sourceMappingURL=missing-source-map2.map
 // comment"
 `;
 
