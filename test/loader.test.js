@@ -11,6 +11,8 @@ import {
   readAsset,
 } from './helpers';
 
+const isWin = process.platform === 'win32';
+
 describe('source-map-loader', () => {
   it('should leave normal files untouched', async () => {
     const testId = 'normal-file.js';
@@ -91,14 +93,14 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it('should reject not valid file: SourceMaps', async () => {
-    const testId = 'file-source-map.js';
+  it('should reject not exist file: SourceMaps', async () => {
+    const testId = isWin ? 'file-source-map-windows.js' : 'file-source-map.js';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
-    const codeFromBundle = getCodeFromBundle(stats, compiler);
+    const errorString = getWarnings(stats).join('');
+    const warning = errorString.match(/TypeError \[ERR_INVALID_FILE/gi);
 
-    expect(codeFromBundle.css).toMatchSnapshot('css');
-    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(...warning).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 

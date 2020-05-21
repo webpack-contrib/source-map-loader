@@ -124,21 +124,9 @@ Array [
 ]
 `;
 
-exports[`source-map-loader should reject not valid file: SourceMaps: css 1`] = `
-"with SourceMap
-//#sourceMappingURL=file:///relative-sourceRoot-source-map.map
-// comment
-"
-`;
+exports[`source-map-loader should reject not exist file: SourceMaps: errors 1`] = `Array []`;
 
-exports[`source-map-loader should reject not valid file: SourceMaps: errors 1`] = `Array []`;
-
-exports[`source-map-loader should reject not valid file: SourceMaps: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must be absolute",
-]
-`;
+exports[`source-map-loader should reject not exist file: SourceMaps: warnings 1`] = `"TypeError [ERR_INVALID_FILE"`;
 
 exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 "without SourceMap
