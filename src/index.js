@@ -4,16 +4,21 @@
 */
 import fs from 'fs';
 import path from 'path';
+import urlUtils from 'url';
 
 import validateOptions from 'schema-utils';
 import parseDataURL from 'data-urls';
+
 import { SourceMapConsumer } from 'source-map';
 import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions, urlToRequest } from 'loader-utils';
-import { isAbsolute } from 'source-map/lib/util';
 
 import schema from './options.json';
-import { flattenSourceMap, normalize, MapAgregator } from './utils';
+import {
+  flattenSourceMap,
+  readFile,
+  getContentFromSourcesContent,
+} from './utils';
 
 // Matches only the last occurrence of sourceMappingURL
 const baseRegex =
@@ -22,6 +27,7 @@ const baseRegex =
 const regex1 = new RegExp(`/\\*${baseRegex}\\s*\\*/`);
 // Matches // .... comments
 const regex2 = new RegExp(`//${baseRegex}($|\n|\r\n?)`);
+const notProcessedProtocols = ['http:', 'https:', 'ftp:'];
 
 export default function loader(input, inputMap) {
   const options = getOptions(this);
@@ -40,7 +46,7 @@ export default function loader(input, inputMap) {
     return;
   }
 
-  const [, url] = match;
+  let [, url] = match;
 
   const dataURL = parseDataURL(url);
 
@@ -72,6 +78,21 @@ export default function loader(input, inputMap) {
 
   if (url.toLowerCase().indexOf('data:') === 0) {
     emitWarning(`Cannot parse inline SourceMap: ${url}`);
+
+    callback(null, input, inputMap);
+
+    return;
+  }
+
+  const parsedUrl = urlUtils.parse(url);
+  const { protocol } = parsedUrl;
+
+  if (protocol === 'file:') {
+    url = urlUtils.fileURLToPath(url);
+  }
+
+  if (notProcessedProtocols.includes(protocol)) {
+    emitWarning(`URL scheme not supported: ${protocol}`);
 
     callback(null, input, inputMap);
 
@@ -123,42 +144,57 @@ export default function loader(input, inputMap) {
 
     const mapConsumer = await new SourceMapConsumer(map);
 
-    const resolvedSources = await Promise.all(
-      map.sources.map(async (source) => {
-        const fullPath = map.sourceRoot
-          ? `${map.sourceRoot}/${source}`
-          : source;
-        const sourceData = new MapAgregator({
-          mapConsumer,
-          source,
-          fullPath,
-          emitWarning,
-        });
+    let resolvedSources;
 
-        if (isAbsolute(fullPath)) {
-          return sourceData.content;
-        }
+    try {
+      resolvedSources = await Promise.all(
+        map.sources.map(async (source) => {
+          const fullPath = map.sourceRoot
+            ? `${map.sourceRoot}${path.sep}${source}`
+            : source;
 
-        return new Promise((promiseResolve) => {
-          resolve(
-            context,
-            urlToRequest(fullPath, true),
-            (resolveError, result) => {
-              if (resolveError) {
-                emitWarning(
-                  `Cannot find source file '${source}': ${resolveError}`
-                );
-
-                return promiseResolve(sourceData.placeholderContent);
-              }
-
-              sourceData.setFullPath(result);
-              return promiseResolve(sourceData.content);
-            }
+          const originalData = getContentFromSourcesContent(
+            mapConsumer,
+            source
           );
-        });
-      })
-    );
+
+          if (path.isAbsolute(fullPath)) {
+            return originalData
+              ? { source: fullPath, content: originalData }
+              : readFile(fullPath, 'utf-8', emitWarning);
+          }
+
+          return new Promise((promiseResolve) => {
+            resolve(
+              context,
+              urlToRequest(fullPath, true),
+              (resolveError, result) => {
+                if (resolveError) {
+                  emitWarning(
+                    `Cannot find source file '${source}': ${resolveError}`
+                  );
+
+                  return originalData
+                    ? promiseResolve({
+                        source: fullPath,
+                        content: originalData,
+                      })
+                    : promiseResolve({ source: fullPath, content: null });
+                }
+
+                return originalData
+                  ? promiseResolve({ source: result, content: originalData })
+                  : promiseResolve(readFile(result, 'utf-8', emitWarning));
+              }
+            );
+          });
+        })
+      );
+    } catch (error) {
+      emitWarning(error);
+
+      callback(null, input, inputMap);
+    }
 
     const resultMap = { ...map };
     resultMap.sources = [];
@@ -168,7 +204,7 @@ export default function loader(input, inputMap) {
 
     resolvedSources.forEach((res) => {
       // eslint-disable-next-line no-param-reassign
-      resultMap.sources.push(normalize(res.source));
+      resultMap.sources.push(path.normalize(res.source));
       resultMap.sourcesContent.push(res.content);
 
       if (res.source) {

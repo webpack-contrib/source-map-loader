@@ -45,17 +45,13 @@ async function flattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-function normalize(path) {
-  return path.replace(/\\/g, '/');
-}
-
 function readFile(fullPath, charset, emitWarning) {
   return new Promise((resolve) => {
     fs.readFile(fullPath, charset, (readFileError, content) => {
       if (readFileError) {
         emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
 
-        resolve({ source: fullPath, content: null });
+        resolve({ source: null, content: null });
       }
 
       resolve({ source: fullPath, content });
@@ -63,28 +59,8 @@ function readFile(fullPath, charset, emitWarning) {
   });
 }
 
-class MapAgregator {
-  constructor({ mapConsumer, source, fullPath, emitWarning }) {
-    this.fullPath = fullPath;
-    this.sourceContent = mapConsumer.sourceContentFor(source, true);
-    this.emitWarning = emitWarning;
-  }
-
-  setFullPath(path) {
-    this.fullPath = path;
-  }
-
-  get content() {
-    return this.sourceContent
-      ? { source: this.fullPath, content: this.sourceContent }
-      : readFile(this.fullPath, 'utf-8', this.emitWarning);
-  }
-
-  get placeholderContent() {
-    return this.sourceContent
-      ? { source: this.fullPath, content: this.sourceContent }
-      : { source: this.fullPath, content: null };
-  }
+function getContentFromSourcesContent(consumer, source) {
+  return consumer.sourceContentFor(source, true);
 }
 
-export { flattenSourceMap, normalize, MapAgregator };
+export { flattenSourceMap, readFile, getContentFromSourcesContent };

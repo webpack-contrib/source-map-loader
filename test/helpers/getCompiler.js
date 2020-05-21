@@ -32,6 +32,7 @@ export default (
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
       library: 'sourceMapLoaderExport',
+      // devtoolModuleFilenameTemplate: "[absolute-resource-path]"
     },
     module: {
       rules: [

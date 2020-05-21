@@ -24,6 +24,10 @@ function normilizeArr(arr) {
       return str;
     }
 
+    if (str.replace(/\\/g, '/') === normilized) {
+      return normilized;
+    }
+
     return `${normilized} - (normalized for test)`;
   });
 }
