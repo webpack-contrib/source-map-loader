@@ -296,7 +296,7 @@ describe('source-map-loader', () => {
 
     const dependencies = [
       'indexed-sourcemap/nested1.js',
-      'different/root/nested2.js',
+      'nested2.js',
       'webpack/bootstrap',
     ];
 
