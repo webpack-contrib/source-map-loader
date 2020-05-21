@@ -126,7 +126,7 @@ Array [
 
 exports[`source-map-loader should reject not valid file: SourceMaps: css 1`] = `
 "with SourceMap
-//#sourceMappingURL=file://relative-sourceRoot-source-map.map
+//#sourceMappingURL=file:///relative-sourceRoot-source-map.map
 // comment
 "
 `;
@@ -136,7 +136,7 @@ exports[`source-map-loader should reject not valid file: SourceMaps: errors 1`] 
 exports[`source-map-loader should reject not valid file: SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) TypeError [ERR_INVALID_FILE_URL_HOST]: File URL host must be \\"localhost\\" or empty on linux",
+(Emitted value instead of an instance of Error) TypeError [ERR_INVALID_FILE_URL_PATH]: File URL path must be absolute",
 ]
 `;
 
