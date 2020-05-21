@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 import sourceMap from 'source-map';
 
@@ -63,4 +64,25 @@ function getContentFromSourcesContent(consumer, source) {
   return consumer.sourceContentFor(source, true);
 }
 
-export { flattenSourceMap, readFile, getContentFromSourcesContent };
+function isUrlRequest(url) {
+  // An URL is not an request if
+
+  // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
+  if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
+    return false;
+  }
+
+  // 2. It's a protocol-relative
+  if (/^\/\//.test(url)) {
+    return false;
+  }
+
+  return true;
+}
+
+export {
+  flattenSourceMap,
+  readFile,
+  getContentFromSourcesContent,
+  isUrlRequest,
+};

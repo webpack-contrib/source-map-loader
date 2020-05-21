@@ -80,6 +80,28 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
+  it('should reject http SourceMaps', async () => {
+    const testId = 'http-source-map.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should reject not valid file: SourceMaps', async () => {
+    const testId = 'file-source-map.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
   it('should use last SourceMap directive', async () => {
     const testId = 'multi-source-map.js';
     const compiler = getCompiler(testId);

@@ -108,6 +108,38 @@ Array [
 ]
 `;
 
+exports[`source-map-loader should reject http SourceMaps: css 1`] = `
+"with SourceMap
+//#sourceMappingURL=http://sampledomain.com/external-source-map2.map
+// comment
+"
+`;
+
+exports[`source-map-loader should reject http SourceMaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should reject http SourceMaps: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) URL scheme not supported: http:",
+]
+`;
+
+exports[`source-map-loader should reject not valid file: SourceMaps: css 1`] = `
+"with SourceMap
+//#sourceMappingURL=file://relative-sourceRoot-source-map.map
+// comment
+"
+`;
+
+exports[`source-map-loader should reject not valid file: SourceMaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should reject not valid file: SourceMaps: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) TypeError [ERR_INVALID_FILE_URL_HOST]: File URL host must be \\"localhost\\" or empty on linux",
+]
+`;
+
 exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,\\"something invalid\\"

@@ -18,6 +18,7 @@ import {
   flattenSourceMap,
   readFile,
   getContentFromSourcesContent,
+  isUrlRequest,
 } from './utils';
 
 // Matches only the last occurrence of sourceMappingURL
@@ -27,7 +28,6 @@ const baseRegex =
 const regex1 = new RegExp(`/\\*${baseRegex}\\s*\\*/`);
 // Matches // .... comments
 const regex2 = new RegExp(`//${baseRegex}($|\n|\r\n?)`);
-const notProcessedProtocols = ['http:', 'https:', 'ftp:'];
 
 export default function loader(input, inputMap) {
   const options = getOptions(this);
@@ -84,19 +84,26 @@ export default function loader(input, inputMap) {
     return;
   }
 
-  const parsedUrl = urlUtils.parse(url);
-  const { protocol } = parsedUrl;
+  if (!isUrlRequest(url)) {
+    const { protocol } = urlUtils.parse(url);
 
-  if (protocol === 'file:') {
-    url = urlUtils.fileURLToPath(url);
-  }
+    if (protocol !== 'file:') {
+      emitWarning(`URL scheme not supported: ${protocol}`);
 
-  if (notProcessedProtocols.includes(protocol)) {
-    emitWarning(`URL scheme not supported: ${protocol}`);
+      callback(null, input, inputMap);
 
-    callback(null, input, inputMap);
+      return;
+    }
 
-    return;
+    try {
+      url = urlUtils.fileURLToPath(url);
+    } catch (error) {
+      emitWarning(error);
+
+      callback(null, input, inputMap);
+
+      return;
+    }
   }
 
   resolve(context, urlToRequest(url, true), (resolveError, result) => {
