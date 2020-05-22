@@ -50,7 +50,12 @@ Object {
 }
 `;
 
-exports[`source-map-loader should process external SourceMaps: warnings 1`] = `Array []`;
+exports[`source-map-loader should process external SourceMaps: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) Cannot find source file 'external-source-map.txt': Error: Can't resolve './external-source-map.txt' in '/test/fixtures'",
+]
+`;
 
 exports[`source-map-loader should process inlined SourceMaps with charset: css 1`] = `
 "with SourceMap
@@ -64,7 +69,7 @@ Object {
   "file": "charset-inline-source-map.js",
   "mappings": "AAAA",
   "sources": Array [
-    "charset-inline-source-map.txt",
+    "/test/fixtures/charset-inline-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
     "with SourceMap",
@@ -96,7 +101,32 @@ Object {
 }
 `;
 
-exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `Array []`;
+exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
+]
+`;
+
+exports[`source-map-loader should reject http SourceMaps: css 1`] = `
+"with SourceMap
+//#sourceMappingURL=http://sampledomain.com/external-source-map2.map
+// comment
+"
+`;
+
+exports[`source-map-loader should reject http SourceMaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should reject http SourceMaps: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) URL scheme not supported: http:",
+]
+`;
+
+exports[`source-map-loader should reject not exist file: SourceMaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should reject not exist file: SourceMaps: warnings 1`] = `"TypeError [ERR_INVALID_FILE"`;
 
 exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 "without SourceMap
@@ -133,7 +163,7 @@ Object {
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should support indexed sourcemaps: css 1`] = `
-"with SourceMap
+"console.log('with SourceMap')
 // Map taken from here
 // https://github.com/mozilla/source-map/blob/master/test/util.js - indexedTestMapDifferentSourceRoots
 "
@@ -147,7 +177,7 @@ Object {
   "mappings": "CAAC,IAAI,IAAM,SAAU,GAClB,OAAO,IAAI;CCDb,IAAI,IAAM,SAAU,GAClB,OAAO",
   "names": Array [],
   "sources": Array [
-    "/the/root/nested1.js",
+    "/test/fixtures/indexed-sourcemap/nested1.js - (normalized for test)",
     "/different/root/nested2.js",
   ],
   "sourcesContent": Array [
@@ -210,7 +240,12 @@ Object {
 }
 `;
 
-exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `Array []`;
+exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
+]
+`;
 
 exports[`source-map-loader should warn on invalid SourceMap: css 1`] = `
 "with SourceMap
@@ -270,9 +305,6 @@ Object {
   "mappings": "AAAA",
   "sources": Array [
     "missing-source-map2.txt",
-  ],
-  "sourcesContent": Array [
-    null,
   ],
   "version": 3,
 }

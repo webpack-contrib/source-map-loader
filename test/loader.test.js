@@ -8,7 +8,10 @@ import {
   getErrors,
   normalizeMap,
   getWarnings,
+  readAsset,
 } from './helpers';
+
+const isWin = process.platform === 'win32';
 
 describe('source-map-loader', () => {
   it('should leave normal files untouched', async () => {
@@ -76,6 +79,28 @@ describe('source-map-loader', () => {
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
     expect(codeFromBundle.css).toMatchSnapshot('css');
     expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should reject http SourceMaps', async () => {
+    const testId = 'http-source-map.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should reject not exist file: SourceMaps', async () => {
+    const testId = isWin ? 'file-source-map-windows.js' : 'file-source-map.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const errorString = getWarnings(stats).join('');
+    const warning = errorString.match(/TypeError \[ERR_INVALID_FILE/gi);
+
+    expect(...warning).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
@@ -267,6 +292,8 @@ describe('source-map-loader', () => {
     const dependencies = [
       path.join(currentDirPath, 'file.js'),
       path.join(currentDirPath, 'file.js.map'),
+      path.join(currentDirPath, 'nested1.js'),
+      `/different/root/nested2.js`,
     ];
 
     dependencies.forEach((fixture) => {
@@ -277,5 +304,29 @@ describe('source-map-loader', () => {
     expect(codeFromBundle.css).toMatchSnapshot('css');
     expect(getWarnings(stats)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should transform to webpack', async () => {
+    const currentDirPath = path.join(
+      __dirname,
+      'fixtures',
+      'indexed-sourcemap'
+    );
+
+    const testId = path.join(currentDirPath, 'file.js');
+    const compiler = getCompiler(testId, {}, {}, true);
+    const stats = await compile(compiler);
+    const bundle = readAsset('main.bundle.js.map', compiler, stats);
+
+    const dependencies = [
+      'indexed-sourcemap/nested1.js',
+      'nested2.js',
+      'webpack/bootstrap',
+    ];
+
+    // Todo: rewrite when we will fix issue whith unresolved paths
+    dependencies.forEach((fixture) => {
+      expect(bundle.indexOf(fixture) !== -1).toBe(true);
+    });
   });
 });

@@ -4,16 +4,22 @@
 */
 import fs from 'fs';
 import path from 'path';
+import urlUtils from 'url';
 
 import validateOptions from 'schema-utils';
-import async from 'neo-async';
 import parseDataURL from 'data-urls';
+
+import { SourceMapConsumer } from 'source-map';
 import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions, urlToRequest } from 'loader-utils';
 
-import flattenSourceMap from './utils/flatten';
-
 import schema from './options.json';
+import {
+  flattenSourceMap,
+  readFile,
+  getContentFromSourcesContent,
+  isUrlRequest,
+} from './utils';
 
 // Matches only the last occurrence of sourceMappingURL
 const baseRegex =
@@ -40,7 +46,7 @@ export default function loader(input, inputMap) {
     return;
   }
 
-  const [, url] = match;
+  let [, url] = match;
 
   const dataURL = parseDataURL(url);
 
@@ -76,6 +82,28 @@ export default function loader(input, inputMap) {
     callback(null, input, inputMap);
 
     return;
+  }
+
+  if (!isUrlRequest(url)) {
+    const { protocol } = urlUtils.parse(url);
+
+    if (protocol !== 'file:') {
+      emitWarning(`URL scheme not supported: ${protocol}`);
+
+      callback(null, input, inputMap);
+
+      return;
+    }
+
+    try {
+      url = urlUtils.fileURLToPath(url);
+    } catch (error) {
+      emitWarning(error);
+
+      callback(null, input, inputMap);
+
+      return;
+    }
   }
 
   resolve(context, urlToRequest(url, true), (resolveError, result) => {
@@ -121,70 +149,83 @@ export default function loader(input, inputMap) {
       map = await flattenSourceMap(map);
     }
 
-    if (map.sourcesContent && map.sourcesContent.length >= map.sources.length) {
-      callback(null, input.replace(match[0], ''), map);
+    const mapConsumer = await new SourceMapConsumer(map);
 
-      return;
+    let resolvedSources;
+
+    try {
+      resolvedSources = await Promise.all(
+        map.sources.map(async (source) => {
+          const fullPath = map.sourceRoot
+            ? `${map.sourceRoot}${path.sep}${source}`
+            : source;
+
+          const originalData = getContentFromSourcesContent(
+            mapConsumer,
+            source
+          );
+
+          if (path.isAbsolute(fullPath)) {
+            return originalData
+              ? { source: fullPath, content: originalData }
+              : readFile(fullPath, 'utf-8', emitWarning);
+          }
+
+          return new Promise((promiseResolve) => {
+            resolve(
+              context,
+              urlToRequest(fullPath, true),
+              (resolveError, result) => {
+                if (resolveError) {
+                  emitWarning(
+                    `Cannot find source file '${source}': ${resolveError}`
+                  );
+
+                  return originalData
+                    ? promiseResolve({
+                        source: fullPath,
+                        content: originalData,
+                      })
+                    : promiseResolve({ source: fullPath, content: null });
+                }
+
+                return originalData
+                  ? promiseResolve({ source: result, content: originalData })
+                  : promiseResolve(readFile(result, 'utf-8', emitWarning));
+              }
+            );
+          });
+        })
+      );
+    } catch (error) {
+      emitWarning(error);
+
+      callback(null, input, inputMap);
     }
 
-    const sourcePrefix = map.sourceRoot ? `${map.sourceRoot}${path.sep}` : '';
+    const resultMap = { ...map };
+    resultMap.sources = [];
+    resultMap.sourcesContent = [];
 
-    // eslint-disable-next-line no-param-reassign
-    map.sources = map.sources.map((s) => sourcePrefix + s);
+    delete resultMap.sourceRoot;
 
-    // eslint-disable-next-line no-param-reassign
-    delete map.sourceRoot;
+    resolvedSources.forEach((res) => {
+      // eslint-disable-next-line no-param-reassign
+      resultMap.sources.push(path.normalize(res.source));
+      resultMap.sourcesContent.push(res.content);
 
-    const missingSources = map.sourcesContent
-      ? map.sources.slice(map.sourcesContent.length)
-      : map.sources;
-
-    async.map(
-      missingSources,
-      // eslint-disable-next-line no-shadow
-      (source, callback) => {
-        resolve(context, urlToRequest(source, true), (resolveError, result) => {
-          if (resolveError) {
-            emitWarning(`Cannot find source file '${source}': ${resolveError}`);
-
-            callback(null, null);
-
-            return;
-          }
-
-          addDependency(result);
-
-          fs.readFile(result, 'utf-8', (readFileError, content) => {
-            if (readFileError) {
-              emitWarning(
-                `Cannot open source file '${result}': ${readFileError}`
-              );
-
-              callback(null, null);
-
-              return;
-            }
-
-            callback(null, { source: result, content });
-          });
-        });
-      },
-      (err, info) => {
-        // eslint-disable-next-line no-param-reassign
-        map.sourcesContent = map.sourcesContent || [];
-
-        info.forEach((res) => {
-          if (res) {
-            // eslint-disable-next-line no-param-reassign
-            map.sources[map.sourcesContent.length] = res.source;
-            map.sourcesContent.push(res.content);
-          } else {
-            map.sourcesContent.push(null);
-          }
-        });
-
-        processMap(map, context, callback);
+      if (res.source) {
+        addDependency(res.source);
       }
-    );
+    });
+
+    const sourcesContentIsEmpty =
+      resultMap.sourcesContent.filter((entry) => !!entry).length === 0;
+
+    if (sourcesContentIsEmpty) {
+      delete resultMap.sourcesContent;
+    }
+
+    callback(null, input.replace(match[0], ''), resultMap);
   }
 }
