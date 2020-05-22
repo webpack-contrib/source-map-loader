@@ -34,7 +34,7 @@ export default function loader(input, inputMap) {
 
   const reportMessage = reportUnresolveSource(
     this,
-    options.unresolveSourceReport
+    options.unresolvedSourceReport
   );
 
   let { url } = getSourceMappingUrl(input);

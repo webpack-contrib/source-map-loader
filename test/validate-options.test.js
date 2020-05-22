@@ -2,7 +2,7 @@ import { getCompiler, compile } from './helpers/index';
 
 describe('validate options', () => {
   const tests = {
-    unresolveSourceReport: {
+    unresolvedSourceReport: {
       success: ['warning', 'ignore', 'error'],
       failure: [1, () => 'test;', [], {}],
     },

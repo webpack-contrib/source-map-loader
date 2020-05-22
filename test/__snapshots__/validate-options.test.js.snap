@@ -1,21 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`validate options should throw an error on the "unresolveSourceReport" option with "() => 'test;'" value 1`] = `
+exports[`validate options should throw an error on the "unresolvedSourceReport" option with "() => 'test;'" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
- - options.unresolveSourceReport should be a string."
+ - options.unresolvedSourceReport should be a string."
 `;
 
-exports[`validate options should throw an error on the "unresolveSourceReport" option with "[]" value 1`] = `
+exports[`validate options should throw an error on the "unresolvedSourceReport" option with "[]" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
- - options.unresolveSourceReport should be a string."
+ - options.unresolvedSourceReport should be a string."
 `;
 
-exports[`validate options should throw an error on the "unresolveSourceReport" option with "{}" value 1`] = `
+exports[`validate options should throw an error on the "unresolvedSourceReport" option with "{}" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
- - options.unresolveSourceReport should be a string."
+ - options.unresolvedSourceReport should be a string."
 `;
 
-exports[`validate options should throw an error on the "unresolveSourceReport" option with "1" value 1`] = `
+exports[`validate options should throw an error on the "unresolvedSourceReport" option with "1" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
- - options.unresolveSourceReport should be a string."
+ - options.unresolvedSourceReport should be a string."
 `;

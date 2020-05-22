@@ -60,7 +60,7 @@ And run `webpack` via your preferred method.
 
 ## Options
 
-### `unresolveSourceReport`
+### `unresolvedSourceReport`
 
 Type: `String`
 Default: `warning`
@@ -85,7 +85,7 @@ module.exports = {
           {
             loader: 'source-map-loader',
             options: {
-              unresolveSourceReport: true,
+              unresolvedSourceReport: 'ignore',
             },
           },
         ],

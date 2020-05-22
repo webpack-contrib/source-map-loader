@@ -156,7 +156,7 @@ describe('source-map-loader', () => {
   it('should not warning on invalid SourceMap', async () => {
     const testId = 'invalid-inline-source-map2.js';
     const compiler = getCompiler(testId, {
-      unresolveSourceReport: 'ignore',
+      unresolvedSourceReport: 'ignore',
     });
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
@@ -170,7 +170,7 @@ describe('source-map-loader', () => {
   it('should error on invalid SourceMap', async () => {
     const testId = 'invalid-inline-source-map2.js';
     const compiler = getCompiler(testId, {
-      unresolveSourceReport: 'error',
+      unresolvedSourceReport: 'error',
     });
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
