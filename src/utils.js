@@ -68,11 +68,13 @@ async function flattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-function readFile(fullPath, charset, emitWarning) {
+function readFile(fullPath, charset, reportMessage) {
   return new Promise((resolve) => {
     fs.readFile(fullPath, charset, (readFileError, content) => {
       if (readFileError) {
-        emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
+        reportMessage(
+          `Cannot open source file '${fullPath}': ${readFileError}`
+        );
 
         resolve({ source: null, content: null });
       }
