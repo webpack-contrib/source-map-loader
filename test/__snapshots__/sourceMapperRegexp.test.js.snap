@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`source-map-loader should be null: result 1`] = `null`;
+
+exports[`source-map-loader should be null: result 2`] = `null`;
+
+exports[`source-map-loader should find last map: result 1`] = `"/sample-source-map-last.map"`;
+
+exports[`source-map-loader should not include quotes: result 1`] = `"data:application/json;base64,"`;
+
+exports[`source-map-loader should work: result 1`] = `"absolute-sourceRoot-source-map.map"`;
+
+exports[`source-map-loader should work: result 2`] = `"absolute-sourceRoot-source-map.map"`;
+
+exports[`source-map-loader should work: result 3`] = `"absolute-sourceRoot-source-map.map"`;
+
+exports[`source-map-loader should work: result 4`] = `"absolute-sourceRoot-source-map.map"`;
+
+exports[`source-map-loader should work: result 5`] = `"absolute-sourceRoot-source-map.map"`;
+
+exports[`source-map-loader should work: result 6`] = `"absolute-sourceRoot-source-map.map"`;
+
+exports[`source-map-loader should work: result 7`] = `"http://sampledomain.com/external-source-map2.map"`;
+
+exports[`source-map-loader should work: result 8`] = `"data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ=="`;
+
+exports[`source-map-loader should work: result 9`] = `"/sample-source-map.map"`;

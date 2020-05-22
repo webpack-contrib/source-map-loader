@@ -19,15 +19,8 @@ import {
   readFile,
   getContentFromSourcesContent,
   isUrlRequest,
+  getSourceMappingUrl,
 } from './utils';
-
-// Matches only the last occurrence of sourceMappingURL
-const baseRegex =
-  '\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourceMappingURL)';
-// Matches /* ... */ comments
-const regex1 = new RegExp(`/\\*${baseRegex}\\s*\\*/`);
-// Matches // .... comments
-const regex2 = new RegExp(`//${baseRegex}($|\n|\r\n?)`);
 
 export default function loader(input, inputMap) {
   const options = getOptions(this);
@@ -37,16 +30,15 @@ export default function loader(input, inputMap) {
     baseDataPath: 'options',
   });
 
-  const match = input.match(regex1) || input.match(regex2);
+  let { url } = getSourceMappingUrl(input);
+  const { replacementString } = getSourceMappingUrl(input);
   const callback = this.async();
 
-  if (!match) {
+  if (!url) {
     callback(null, input, inputMap);
 
     return;
   }
-
-  let [, url] = match;
 
   const dataURL = parseDataURL(url);
 
@@ -60,7 +52,7 @@ export default function loader(input, inputMap) {
         labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
 
       map = decode(dataURL.body, dataURL.encodingName);
-      map = JSON.parse(map);
+      map = JSON.parse(map.replace(/^\)\]\}'/, ''));
     } catch (error) {
       emitWarning(
         `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
@@ -226,6 +218,6 @@ export default function loader(input, inputMap) {
       delete resultMap.sourcesContent;
     }
 
-    callback(null, input.replace(match[0], ''), resultMap);
+    callback(null, input.replace(replacementString, ''), resultMap);
   }
 }
