@@ -26,6 +26,18 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
+  it('should leave normal files with fake source-map untouched', async () => {
+    const testId = 'normal-file2.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
   it('should process inlined SourceMaps', async () => {
     const testId = 'inline-source-map.js';
     const compiler = getCompiler(testId);

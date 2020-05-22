@@ -6,6 +6,17 @@ exports[`source-map-loader should leave normal files untouched: errors 1`] = `Ar
 
 exports[`source-map-loader should leave normal files untouched: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should leave normal files with fake source-map untouched: css 1`] = `
+"// without SourceMap
+anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
+// comment
+"
+`;
+
+exports[`source-map-loader should leave normal files with fake source-map untouched: errors 1`] = `Array []`;
+
+exports[`source-map-loader should leave normal files with fake source-map untouched: warnings 1`] = `Array []`;
+
 exports[`source-map-loader should process external SourceMaps (external sources): css 1`] = `
 "with SourceMap
 // comment"
@@ -136,7 +147,12 @@ exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 
 exports[`source-map-loader should skip invalid base64 SourceMap: errors 1`] = `Array []`;
 
-exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `Array []`;
+exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) Cannot parse inline SourceMap with Charset UTF-8: SyntaxError: Unexpected end of JSON input",
+]
+`;
 
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: css 1`] = `
 "with SourceMap

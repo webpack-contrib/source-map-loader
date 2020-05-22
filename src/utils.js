@@ -3,6 +3,28 @@ import path from 'path';
 
 import sourceMap from 'source-map';
 
+// Matches only the last occurrence of sourceMappingURL
+const innerRegex = /\s*[#@]\s*sourceMappingURL\s*=\s*([^\s'"]*)\s*/;
+
+/* eslint-disable prefer-template */
+const sourceMappingURLRegex = RegExp(
+  '(?:' +
+    '/\\*' +
+    '(?:\\s*\r?\n(?://)?)?' +
+    '(?:' +
+    innerRegex.source +
+    ')' +
+    '\\s*' +
+    '\\*/' +
+    '|' +
+    '//(?:' +
+    innerRegex.source +
+    ')' +
+    ')' +
+    '\\s*'
+);
+/* eslint-enable prefer-template */
+
 async function flattenSourceMap(map) {
   const consumer = await new sourceMap.SourceMapConsumer(map);
   let generatedMap;
@@ -80,9 +102,27 @@ function isUrlRequest(url) {
   return true;
 }
 
+function getSourceMappingUrl(code) {
+  const lines = code.split(/^/m);
+  let match;
+
+  for (let i = lines.length - 1; i >= 0; i--) {
+    match = lines[i].match(sourceMappingURLRegex);
+    if (match) {
+      break;
+    }
+  }
+
+  return {
+    url: match ? match[1] || match[2] || '' : null,
+    replacementString: match ? match[0] : null,
+  };
+}
+
 export {
   flattenSourceMap,
   readFile,
   getContentFromSourcesContent,
   isUrlRequest,
+  getSourceMappingUrl,
 };
