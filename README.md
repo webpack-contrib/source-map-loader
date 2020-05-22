@@ -58,6 +58,43 @@ Be mindful in setting [include](https://webpack.js.org/configuration/module/#rul
 
 And run `webpack` via your preferred method.
 
+## Options
+
+### `unresolveSourceReport`
+
+Type: `String`
+Default: `warning`
+
+Indicates report option output if the source-map file is not resolved or is incorrect data URI
+
+Possible values:
+
+- `error`
+- `ignore`
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'source-map-loader',
+            options: {
+              unresolveSourceReport: true,
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
 ## Contributing
 
 Please take a moment to read our contributing guidelines if you haven't yet done so.

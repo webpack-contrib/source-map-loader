@@ -1,4 +1,9 @@
 {
   "type": "object",
+  "properties": {
+    "unresolveSourceReport": {
+      "type": "string"
+    }
+  },
   "additionalProperties": false
 }

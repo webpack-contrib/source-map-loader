@@ -153,6 +153,34 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
+  it('should not warning on invalid SourceMap', async () => {
+    const testId = 'invalid-inline-source-map2.js';
+    const compiler = getCompiler(testId, {
+      unresolveSourceReport: 'ignore',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should error on invalid SourceMap', async () => {
+    const testId = 'invalid-inline-source-map2.js';
+    const compiler = getCompiler(testId, {
+      unresolveSourceReport: 'error',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
   it('should warn on invalid SourceMap', async () => {
     const testId = 'invalid-source-map.js';
     const compiler = getCompiler(testId);

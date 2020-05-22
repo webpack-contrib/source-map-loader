@@ -119,10 +119,24 @@ function getSourceMappingUrl(code) {
   };
 }
 
+function reportUnresolveSource(loader, typeReport) {
+  const { emitWarning, emitError } = loader;
+
+  switch (typeReport) {
+    case 'error':
+      return emitError;
+    case 'ignore':
+      return function ignore() {};
+    default:
+      return emitWarning;
+  }
+}
+
 export {
   flattenSourceMap,
   readFile,
   getContentFromSourcesContent,
   isUrlRequest,
   getSourceMappingUrl,
+  reportUnresolveSource,
 };

@@ -20,15 +20,22 @@ import {
   getContentFromSourcesContent,
   isUrlRequest,
   getSourceMappingUrl,
+  reportUnresolveSource,
 } from './utils';
 
 export default function loader(input, inputMap) {
+  const { context, resolve, addDependency } = this;
   const options = getOptions(this);
 
   validateOptions(schema, options, {
     name: 'Source Map Loader',
     baseDataPath: 'options',
   });
+
+  const reportMessage = reportUnresolveSource(
+    this,
+    options.unresolveSourceReport
+  );
 
   let { url } = getSourceMappingUrl(input);
   const { replacementString } = getSourceMappingUrl(input);
@@ -42,8 +49,6 @@ export default function loader(input, inputMap) {
 
   const dataURL = parseDataURL(url);
 
-  const { context, resolve, addDependency, emitWarning } = this;
-
   if (dataURL) {
     let map;
 
@@ -54,7 +59,7 @@ export default function loader(input, inputMap) {
       map = decode(dataURL.body, dataURL.encodingName);
       map = JSON.parse(map.replace(/^\)\]\}'/, ''));
     } catch (error) {
-      emitWarning(
+      reportMessage(
         `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
       );
 
@@ -69,7 +74,7 @@ export default function loader(input, inputMap) {
   }
 
   if (url.toLowerCase().indexOf('data:') === 0) {
-    emitWarning(`Cannot parse inline SourceMap: ${url}`);
+    reportMessage(`Cannot parse inline SourceMap: ${url}`);
 
     callback(null, input, inputMap);
 
@@ -80,7 +85,7 @@ export default function loader(input, inputMap) {
     const { protocol } = urlUtils.parse(url);
 
     if (protocol !== 'file:') {
-      emitWarning(`URL scheme not supported: ${protocol}`);
+      reportMessage(`URL scheme not supported: ${protocol}`);
 
       callback(null, input, inputMap);
 
@@ -90,7 +95,7 @@ export default function loader(input, inputMap) {
     try {
       url = urlUtils.fileURLToPath(url);
     } catch (error) {
-      emitWarning(error);
+      reportMessage(error);
 
       callback(null, input, inputMap);
 
@@ -100,7 +105,7 @@ export default function loader(input, inputMap) {
 
   resolve(context, urlToRequest(url, true), (resolveError, result) => {
     if (resolveError) {
-      emitWarning(`Cannot find SourceMap '${url}': ${resolveError}`);
+      reportMessage(`Cannot find SourceMap '${url}': ${resolveError}`);
 
       callback(null, input, inputMap);
 
@@ -111,7 +116,7 @@ export default function loader(input, inputMap) {
 
     fs.readFile(result, 'utf-8', (readFileError, content) => {
       if (readFileError) {
-        emitWarning(`Cannot open SourceMap '${result}': ${readFileError}`);
+        reportMessage(`Cannot open SourceMap '${result}': ${readFileError}`);
 
         callback(null, input, inputMap);
 
@@ -123,7 +128,7 @@ export default function loader(input, inputMap) {
       try {
         map = JSON.parse(content);
       } catch (e) {
-        emitWarning(`Cannot parse SourceMap '${url}': ${e}`);
+        reportMessage(`Cannot parse SourceMap '${url}': ${e}`);
 
         callback(null, input, inputMap);
 
@@ -160,7 +165,7 @@ export default function loader(input, inputMap) {
           if (path.isAbsolute(fullPath)) {
             return originalData
               ? { source: fullPath, content: originalData }
-              : readFile(fullPath, 'utf-8', emitWarning);
+              : readFile(fullPath, 'utf-8', reportMessage);
           }
 
           return new Promise((promiseResolve) => {
@@ -169,7 +174,7 @@ export default function loader(input, inputMap) {
               urlToRequest(fullPath, true),
               (resolveError, result) => {
                 if (resolveError) {
-                  emitWarning(
+                  reportMessage(
                     `Cannot find source file '${source}': ${resolveError}`
                   );
 
@@ -183,14 +188,14 @@ export default function loader(input, inputMap) {
 
                 return originalData
                   ? promiseResolve({ source: result, content: originalData })
-                  : promiseResolve(readFile(result, 'utf-8', emitWarning));
+                  : promiseResolve(readFile(result, 'utf-8', reportMessage));
               }
             );
           });
         })
       );
     } catch (error) {
-      emitWarning(error);
+      reportMessage(error);
 
       callback(null, input, inputMap);
     }
