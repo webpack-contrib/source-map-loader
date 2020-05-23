@@ -45,7 +45,7 @@ export default async function loader(input, inputMap) {
   const { context, resolve, addDependency, emitWarning } = this;
   const resolver = promisify(resolve);
 
-  if (url.startsWith('data:')) {
+  if (url.toLowerCase().startsWith('data:')) {
     const dataURL = parseDataURL(url);
 
     if (dataURL) {
