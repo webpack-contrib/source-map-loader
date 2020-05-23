@@ -1,6 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 
+import fetch from 'node-fetch';
+
 import {
   compile,
   getCodeFromBundle,
@@ -88,6 +90,40 @@ describe('source-map-loader', () => {
       expect(deps.has(fixture)).toBe(true);
     });
     expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should resolve SourceMap.sources to http', async () => {
+    const currentDirPath = path.join(__dirname, 'fixtures', 'fetch');
+
+    const testId = path.join(currentDirPath, 'sources-http.js');
+    const compiler = getCompiler(testId, {
+      fetchReader(url) {
+        return fetch(url)
+          .then((res) => res.text())
+          .then(() => 'some kind content');
+      },
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should not resolve SourceMap.sources to http', async () => {
+    const currentDirPath = path.join(__dirname, 'fixtures', 'fetch');
+
+    const testId = path.join(currentDirPath, 'sources-http.js');
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
     expect(codeFromBundle.css).toMatchSnapshot('css');
     expect(getWarnings(stats)).toMatchSnapshot('warnings');

@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validate options should throw an error on the "fetchReader" option with "[]" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.fetchReader should be an instance of function."
+`;
+
+exports[`validate options should throw an error on the "fetchReader" option with "{}" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.fetchReader should be an instance of function."
+`;
+
+exports[`validate options should throw an error on the "fetchReader" option with "1" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.fetchReader should be an instance of function."
+`;
+
+exports[`validate options should throw an error on the "fetchReader" option with "test" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.fetchReader should be an instance of function."
+`;
+
+exports[`validate options should throw an error on the "fetchReader" option with "true" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.fetchReader should be an instance of function."
+`;

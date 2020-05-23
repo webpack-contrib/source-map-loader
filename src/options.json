@@ -1,4 +1,9 @@
 {
   "type": "object",
+  "properties": {
+    "fetchReader": {
+      "instanceof": "Function"
+    }
+  },
   "additionalProperties": false
 }

@@ -17,6 +17,33 @@ exports[`source-map-loader should leave normal files with fake source-map untouc
 
 exports[`source-map-loader should leave normal files with fake source-map untouched: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should not resolve SourceMap.sources to http: css 1`] = `
+"console.log('with SourceMap')
+"
+`;
+
+exports[`source-map-loader should not resolve SourceMap.sources to http: errors 1`] = `Array []`;
+
+exports[`source-map-loader should not resolve SourceMap.sources to http: map 1`] = `
+Object {
+  "file": "sources-http.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "https:/github2.com/",
+    "https:/github.com/",
+    "https:/google.com/",
+  ],
+  "sourcesContent": Array [
+    "static content",
+    null,
+    null,
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should not resolve SourceMap.sources to http: warnings 1`] = `Array []`;
+
 exports[`source-map-loader should process external SourceMaps (external sources): css 1`] = `
 "with SourceMap
 // comment"
@@ -138,6 +165,33 @@ Array [
 exports[`source-map-loader should reject not exist file: SourceMaps: errors 1`] = `Array []`;
 
 exports[`source-map-loader should reject not exist file: SourceMaps: warnings 1`] = `"TypeError [ERR_INVALID_FILE"`;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: css 1`] = `
+"console.log('with SourceMap')
+"
+`;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: errors 1`] = `Array []`;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: map 1`] = `
+Object {
+  "file": "sources-http.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "https:/github2.com/",
+    "https:/github.com/",
+    "https:/google.com/",
+  ],
+  "sourcesContent": Array [
+    "static content",
+    "some kind content",
+    "some kind content",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 "without SourceMap

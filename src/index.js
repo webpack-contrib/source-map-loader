@@ -18,6 +18,7 @@ import schema from './options.json';
 import {
   flattenSourceMap,
   readFile,
+  fetchFile,
   getContentFromSourcesContent,
   getSourceMappingUrl,
   getRequestedUrl,
@@ -31,6 +32,7 @@ export default async function loader(input, inputMap) {
     baseDataPath: 'options',
   });
 
+  const { fetchReader } = options;
   let { url } = getSourceMappingUrl(input);
   const { replacementString } = getSourceMappingUrl(input);
   const callback = this.async();
@@ -142,6 +144,12 @@ export default async function loader(input, inputMap) {
             mapConsumer,
             source
           );
+
+          if (/^https?:\/\//.test(fullPath)) {
+            return originalData
+              ? { source: fullPath, content: originalData }
+              : fetchFile(fullPath, emitWarning, fetchReader);
+          }
 
           if (path.isAbsolute(fullPath)) {
             return originalData

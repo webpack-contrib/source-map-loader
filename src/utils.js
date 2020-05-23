@@ -77,10 +77,27 @@ async function readFile(fullPath, emitWarning, reader) {
   } catch (readFileError) {
     emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
 
-    return { source: null, content: null };
+    return { source: fullPath, content: null };
   }
 
   return { source: fullPath, content: content.toString() };
+}
+
+async function fetchFile(url, emitWarning, reader) {
+  if (!reader) {
+    return { source: url, content: null };
+  }
+
+  let content;
+
+  try {
+    content = await reader(url);
+    return { source: url, content };
+  } catch (fetchError) {
+    emitWarning(`Cannot fetch source file '${url}': ${fetchError}`);
+
+    return { source: url, content: null };
+  }
 }
 
 function getContentFromSourcesContent(consumer, source) {
@@ -141,6 +158,7 @@ function getRequestedUrl(url) {
 export {
   flattenSourceMap,
   readFile,
+  fetchFile,
   getContentFromSourcesContent,
   isUrlRequest,
   getSourceMappingUrl,
