@@ -4,12 +4,14 @@
 */
 import fs from 'fs';
 import path from 'path';
-import urlUtils from 'url';
+
+import { promisify } from 'util';
 
 import validateOptions from 'schema-utils';
 import parseDataURL from 'data-urls';
 
 import { SourceMapConsumer } from 'source-map';
+
 import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions, urlToRequest } from 'loader-utils';
 
@@ -18,11 +20,11 @@ import {
   flattenSourceMap,
   readFile,
   getContentFromSourcesContent,
-  isUrlRequest,
   getSourceMappingUrl,
+  getRequestedUrl,
 } from './utils';
 
-export default function loader(input, inputMap) {
+export default async function loader(input, inputMap) {
   const options = getOptions(this);
 
   validateOptions(schema, options, {
@@ -40,35 +42,36 @@ export default function loader(input, inputMap) {
     return;
   }
 
-  const dataURL = parseDataURL(url);
-
   const { context, resolve, addDependency, emitWarning } = this;
+  const resolver = promisify(resolve);
 
-  if (dataURL) {
-    let map;
+  if (url.toLowerCase().startsWith('data:')) {
+    const dataURL = parseDataURL(url);
 
-    try {
-      dataURL.encodingName =
-        labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
+    if (dataURL) {
+      let map;
 
-      map = decode(dataURL.body, dataURL.encodingName);
-      map = JSON.parse(map.replace(/^\)\]\}'/, ''));
-    } catch (error) {
-      emitWarning(
-        `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
-      );
+      try {
+        dataURL.encodingName =
+          labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
 
-      callback(null, input, inputMap);
+        map = decode(dataURL.body, dataURL.encodingName);
+        map = JSON.parse(map.replace(/^\)\]\}'/, ''));
+      } catch (error) {
+        emitWarning(
+          `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
+        );
+
+        callback(null, input, inputMap);
+
+        return;
+      }
+
+      processMap(map, context, callback);
 
       return;
     }
 
-    processMap(map, context, callback);
-
-    return;
-  }
-
-  if (url.toLowerCase().indexOf('data:') === 0) {
     emitWarning(`Cannot parse inline SourceMap: ${url}`);
 
     callback(null, input, inputMap);
@@ -76,63 +79,46 @@ export default function loader(input, inputMap) {
     return;
   }
 
-  if (!isUrlRequest(url)) {
-    const { protocol } = urlUtils.parse(url);
+  try {
+    url = getRequestedUrl(url);
+  } catch (error) {
+    emitWarning(error.message);
 
-    if (protocol !== 'file:') {
-      emitWarning(`URL scheme not supported: ${protocol}`);
+    callback(null, input, inputMap);
 
-      callback(null, input, inputMap);
-
-      return;
-    }
-
-    try {
-      url = urlUtils.fileURLToPath(url);
-    } catch (error) {
-      emitWarning(error);
-
-      callback(null, input, inputMap);
-
-      return;
-    }
+    return;
   }
 
-  resolve(context, urlToRequest(url, true), (resolveError, result) => {
-    if (resolveError) {
-      emitWarning(`Cannot find SourceMap '${url}': ${resolveError}`);
+  let urlResolved;
 
-      callback(null, input, inputMap);
+  try {
+    urlResolved = await resolver(context, urlToRequest(url, true));
+  } catch (resolveError) {
+    emitWarning(`Cannot find SourceMap '${url}': ${resolveError}`);
 
-      return;
-    }
+    callback(null, input, inputMap);
 
-    addDependency(result);
+    return;
+  }
 
-    fs.readFile(result, 'utf-8', (readFileError, content) => {
-      if (readFileError) {
-        emitWarning(`Cannot open SourceMap '${result}': ${readFileError}`);
+  urlResolved = urlResolved.toString();
+  addDependency(urlResolved);
 
-        callback(null, input, inputMap);
+  const reader = promisify(fs.readFile);
+  const content = await reader(urlResolved);
+  let map;
 
-        return;
-      }
+  try {
+    map = JSON.parse(content.toString());
+  } catch (parseError) {
+    emitWarning(`Cannot parse SourceMap '${url}': ${parseError}`);
 
-      let map;
+    callback(null, input, inputMap);
 
-      try {
-        map = JSON.parse(content);
-      } catch (e) {
-        emitWarning(`Cannot parse SourceMap '${url}': ${e}`);
+    return;
+  }
 
-        callback(null, input, inputMap);
-
-        return;
-      }
-
-      processMap(map, path.dirname(result), callback);
-    });
-  });
+  processMap(map, path.dirname(urlResolved), callback);
 
   // eslint-disable-next-line no-shadow
   async function processMap(map, context, callback) {
@@ -163,30 +149,30 @@ export default function loader(input, inputMap) {
               : readFile(fullPath, 'utf-8', emitWarning);
           }
 
-          return new Promise((promiseResolve) => {
-            resolve(
+          let fullPathResolved;
+
+          try {
+            fullPathResolved = await resolver(
               context,
-              urlToRequest(fullPath, true),
-              (resolveError, result) => {
-                if (resolveError) {
-                  emitWarning(
-                    `Cannot find source file '${source}': ${resolveError}`
-                  );
-
-                  return originalData
-                    ? promiseResolve({
-                        source: fullPath,
-                        content: originalData,
-                      })
-                    : promiseResolve({ source: fullPath, content: null });
-                }
-
-                return originalData
-                  ? promiseResolve({ source: result, content: originalData })
-                  : promiseResolve(readFile(result, 'utf-8', emitWarning));
-              }
+              urlToRequest(fullPath, true)
             );
-          });
+          } catch (resolveError) {
+            emitWarning(`Cannot find source file '${source}': ${resolveError}`);
+
+            return originalData
+              ? {
+                  source: fullPath,
+                  content: originalData,
+                }
+              : { source: fullPath, content: null };
+          }
+
+          return originalData
+            ? {
+                source: fullPathResolved,
+                content: originalData,
+              }
+            : readFile(fullPathResolved, 'utf-8', emitWarning);
         })
       );
     } catch (error) {

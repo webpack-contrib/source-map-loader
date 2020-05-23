@@ -1,6 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+import { promisify } from 'util';
+
+import urlUtils from 'url';
+
 import sourceMap from 'source-map';
 
 // Matches only the last occurrence of sourceMappingURL
@@ -68,18 +72,18 @@ async function flattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-function readFile(fullPath, charset, emitWarning) {
-  return new Promise((resolve) => {
-    fs.readFile(fullPath, charset, (readFileError, content) => {
-      if (readFileError) {
-        emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
+async function readFile(fullPath, charset, emitWarning) {
+  const reader = promisify(fs.readFile);
+  let content;
 
-        resolve({ source: null, content: null });
-      }
+  try {
+    content = await reader(fullPath, charset);
+    return { source: fullPath, content };
+  } catch (readFileError) {
+    emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
 
-      resolve({ source: fullPath, content });
-    });
-  });
+    return { source: null, content: null };
+  }
 }
 
 function getContentFromSourcesContent(consumer, source) {
@@ -119,10 +123,29 @@ function getSourceMappingUrl(code) {
   };
 }
 
+function getRequestedUrl(url) {
+  if (isUrlRequest(url)) {
+    return url;
+  }
+
+  const { protocol } = urlUtils.parse(url);
+
+  if (protocol !== 'file:') {
+    throw new Error(`URL scheme not supported: ${protocol}`);
+  }
+
+  try {
+    return urlUtils.fileURLToPath(url);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export {
   flattenSourceMap,
   readFile,
   getContentFromSourcesContent,
   isUrlRequest,
   getSourceMappingUrl,
+  getRequestedUrl,
 };
