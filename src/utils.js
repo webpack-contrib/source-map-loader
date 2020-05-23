@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+import urlUtils from 'url';
+
 import sourceMap from 'source-map';
 
 // Matches only the last occurrence of sourceMappingURL
@@ -119,10 +121,29 @@ function getSourceMappingUrl(code) {
   };
 }
 
+function getRequestedUrl(url) {
+  if (isUrlRequest(url)) {
+    return url;
+  }
+
+  const { protocol } = urlUtils.parse(url);
+
+  if (protocol !== 'file:') {
+    throw new Error(`URL scheme not supported: ${protocol}`);
+  }
+
+  try {
+    return urlUtils.fileURLToPath(url);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export {
   flattenSourceMap,
   readFile,
   getContentFromSourcesContent,
   isUrlRequest,
   getSourceMappingUrl,
+  getRequestedUrl,
 };
