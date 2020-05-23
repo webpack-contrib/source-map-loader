@@ -1,7 +1,4 @@
-import fs from 'fs';
 import path from 'path';
-
-import { promisify } from 'util';
 
 import urlUtils from 'url';
 
@@ -72,18 +69,18 @@ async function flattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-async function readFile(fullPath, charset, emitWarning) {
-  const reader = promisify(fs.readFile);
+async function readFile(fullPath, emitWarning, reader) {
   let content;
 
   try {
-    content = await reader(fullPath, charset);
-    return { source: fullPath, content };
+    content = await reader(fullPath);
   } catch (readFileError) {
     emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
 
     return { source: null, content: null };
   }
+
+  return { source: fullPath, content: content.toString() };
 }
 
 function getContentFromSourcesContent(consumer, source) {

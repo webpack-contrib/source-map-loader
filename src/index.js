@@ -2,7 +2,6 @@
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
 */
-import fs from 'fs';
 import path from 'path';
 
 import { promisify } from 'util';
@@ -42,8 +41,9 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  const { context, resolve, addDependency, emitWarning } = this;
+  const { fs, context, resolve, addDependency, emitWarning } = this;
   const resolver = promisify(resolve);
+  const reader = promisify(fs.readFile).bind(fs);
 
   if (url.toLowerCase().startsWith('data:')) {
     const dataURL = parseDataURL(url);
@@ -102,9 +102,9 @@ export default async function loader(input, inputMap) {
   }
 
   urlResolved = urlResolved.toString();
+
   addDependency(urlResolved);
 
-  const reader = promisify(fs.readFile);
   const content = await reader(urlResolved);
   let map;
 
@@ -146,7 +146,7 @@ export default async function loader(input, inputMap) {
           if (path.isAbsolute(fullPath)) {
             return originalData
               ? { source: fullPath, content: originalData }
-              : readFile(fullPath, 'utf-8', emitWarning);
+              : readFile(fullPath, emitWarning, reader);
           }
 
           let fullPathResolved;
@@ -172,7 +172,7 @@ export default async function loader(input, inputMap) {
                 source: fullPathResolved,
                 content: originalData,
               }
-            : readFile(fullPathResolved, 'utf-8', emitWarning);
+            : readFile(fullPathResolved, emitWarning, reader);
         })
       );
     } catch (error) {
