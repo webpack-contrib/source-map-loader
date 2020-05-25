@@ -306,13 +306,8 @@ describe('source-map-loader', () => {
       path.join(currentDirPath, 'file.js'),
       path.join(currentDirPath, 'file.js.map'),
       path.join(currentDirPath, 'nested1.js'),
-      `/different/root/nested2.js`,
+      path.normalize(`/different/root/nested2.js`),
     ];
-
-    // eslint-disable-next-line no-console
-    console.log(deps);
-    // eslint-disable-next-line no-console
-    console.log(dependencies);
 
     dependencies.forEach((fixture) => {
       expect(deps.has(fixture)).toBe(true);
