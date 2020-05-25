@@ -1,9 +1,9 @@
 import path from 'path';
-
 import urlUtils from 'url';
 
-import { urlToRequest } from 'loader-utils';
 import sourceMap from 'source-map';
+
+import { urlToRequest } from 'loader-utils';
 
 // Matches only the last occurrence of sourceMappingURL
 const innerRegex = /\s*[#@]\s*sourceMappingURL\s*=\s*([^\s'"]*)\s*/;
@@ -127,4 +127,29 @@ function computeSourceURL(context, url, sourceRoot) {
   return getAbsoluteURL(context, url, sourceRoot);
 }
 
-export { getSourceMappingUrl, computeSourceURL, flattenSourceMap };
+async function getContentFromURL(loaderContext, sourceURL) {
+  let buffer;
+
+  try {
+    buffer = await new Promise((resolve, reject) => {
+      loaderContext.fs.readFile(sourceURL, (error, data) => {
+        if (error) {
+          return reject(error);
+        }
+
+        return resolve(data);
+      });
+    });
+  } catch (error) {
+    throw new Error(`Cannot read '${sourceURL}' file: ${error}`);
+  }
+
+  return buffer.toString();
+}
+
+export {
+  getSourceMappingUrl,
+  getContentFromURL,
+  computeSourceURL,
+  flattenSourceMap,
+};

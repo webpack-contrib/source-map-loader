@@ -289,7 +289,7 @@ exports[`source-map-loader should warn on missing SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on missing SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot read '/test/fixtures/missing-source-map.map' file from source map URL: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map.map'",
+Cannot read '/test/fixtures/missing-source-map.map' file: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map.map'",
 ]
 `;
 
@@ -314,6 +314,6 @@ Object {
 exports[`source-map-loader should warn on missing source file: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot read source file 'missing-source-map2.txt': Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map2.txt'",
+Cannot read '/test/fixtures/missing-source-map2.txt' file: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map2.txt'",
 ]
 `;

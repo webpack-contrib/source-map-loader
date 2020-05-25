@@ -4,8 +4,6 @@
 */
 import path from 'path';
 
-import { promisify } from 'util';
-
 import validateOptions from 'schema-utils';
 import parseDataURL from 'data-urls';
 
@@ -19,6 +17,7 @@ import {
   getSourceMappingUrl,
   computeSourceURL,
   flattenSourceMap,
+  getContentFromURL,
 } from './utils';
 
 export default async function loader(input, inputMap) {
@@ -38,8 +37,7 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  const { fs, context, addDependency, emitWarning } = this;
-  const readFile = promisify(fs.readFile).bind(fs);
+  const loaderContext = this;
 
   if (url.toLowerCase().startsWith('data:')) {
     const dataURL = parseDataURL(url);
@@ -54,7 +52,7 @@ export default async function loader(input, inputMap) {
         map = decode(dataURL.body, dataURL.encodingName);
         map = JSON.parse(map.replace(/^\)\]\}'/, ''));
       } catch (error) {
-        emitWarning(
+        this.emitWarning(
           `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
         );
 
@@ -63,12 +61,12 @@ export default async function loader(input, inputMap) {
         return;
       }
 
-      processMap(map, context, callback);
+      processMap(map, this.context, callback);
 
       return;
     }
 
-    emitWarning(`Cannot parse inline SourceMap: ${url}`);
+    this.emitWarning(`Cannot parse inline SourceMap: ${url}`);
 
     callback(null, input, inputMap);
 
@@ -78,37 +76,37 @@ export default async function loader(input, inputMap) {
   let sourceURL;
 
   try {
-    sourceURL = computeSourceURL(context, url);
+    sourceURL = computeSourceURL(this.context, url);
   } catch (error) {
-    emitWarning(error);
+    this.emitWarning(error);
 
     callback(null, input, inputMap);
 
     return;
   }
 
-  addDependency(sourceURL);
-
-  let buffer;
+  let content;
 
   try {
-    buffer = await readFile(sourceURL);
+    content = await getContentFromURL(this, sourceURL);
   } catch (error) {
-    emitWarning(
-      `Cannot read '${sourceURL}' file from source map URL: ${error}`
-    );
+    this.emitWarning(error);
 
     callback(null, input, inputMap);
 
     return;
   }
+
+  this.addDependency(sourceURL);
 
   let map;
 
   try {
-    map = JSON.parse(buffer.toString());
+    map = JSON.parse(content);
   } catch (parseError) {
-    emitWarning(`Cannot parse source map from '${sourceURL}': ${parseError}`);
+    this.emitWarning(
+      `Cannot parse source map from '${sourceURL}': ${parseError}`
+    );
 
     callback(null, input, inputMap);
 
@@ -139,12 +137,12 @@ export default async function loader(input, inputMap) {
           try {
             sourceURL = computeSourceURL(context, source, map.sourceRoot);
           } catch (error) {
-            emitWarning(error);
+            loaderContext.emitWarning(error);
 
             return { source: sourceURL, content };
           }
 
-          addDependency(sourceURL);
+          loaderContext.addDependency(sourceURL);
 
           content = mapConsumer.sourceContentFor(source, true);
 
@@ -154,18 +152,16 @@ export default async function loader(input, inputMap) {
 
           try {
             // eslint-disable-next-line no-shadow
-            const buffer = await readFile(sourceURL);
-
-            content = buffer.toString();
+            content = await getContentFromURL(loaderContext, sourceURL);
           } catch (error) {
-            emitWarning(`Cannot read source file '${source}': ${error}`);
+            loaderContext.emitWarning(error);
           }
 
           return { source: sourceURL, content };
         })
       );
     } catch (error) {
-      emitWarning(error);
+      loaderContext.emitWarning(error);
 
       callback(null, input, inputMap);
     }
