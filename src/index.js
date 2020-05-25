@@ -16,10 +16,9 @@ import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
 import {
-  flattenSourceMap,
   getSourceMappingUrl,
-  getRequestedUrl,
-  getAbsolutePath,
+  computeSourceURL,
+  flattenSourceMap,
 } from './utils';
 
 export default async function loader(input, inputMap) {
@@ -30,8 +29,7 @@ export default async function loader(input, inputMap) {
     baseDataPath: 'options',
   });
 
-  let { url } = getSourceMappingUrl(input);
-  const { replacementString } = getSourceMappingUrl(input);
+  const { url, replacementString } = getSourceMappingUrl(input);
   const callback = this.async();
 
   if (!url) {
@@ -77,26 +75,28 @@ export default async function loader(input, inputMap) {
     return;
   }
 
+  let sourceURL;
+
   try {
-    url = getRequestedUrl(url);
+    sourceURL = computeSourceURL(context, url);
   } catch (error) {
-    emitWarning(error.message);
+    emitWarning(error);
 
     callback(null, input, inputMap);
 
     return;
   }
 
-  const absolutePath = getAbsolutePath(context, url);
-
-  addDependency(absolutePath);
+  addDependency(sourceURL);
 
   let buffer;
 
   try {
-    buffer = await readFile(absolutePath);
+    buffer = await readFile(sourceURL);
   } catch (error) {
-    emitWarning(`Cannot read '${url}' file from source map URL: ${error}`);
+    emitWarning(
+      `Cannot read '${sourceURL}' file from source map URL: ${error}`
+    );
 
     callback(null, input, inputMap);
 
@@ -108,14 +108,14 @@ export default async function loader(input, inputMap) {
   try {
     map = JSON.parse(buffer.toString());
   } catch (parseError) {
-    emitWarning(`Cannot parse SourceMap '${url}': ${parseError}`);
+    emitWarning(`Cannot parse source map from '${sourceURL}': ${parseError}`);
 
     callback(null, input, inputMap);
 
     return;
   }
 
-  processMap(map, path.dirname(absolutePath), callback);
+  processMap(map, path.dirname(sourceURL), callback);
 
   // eslint-disable-next-line no-shadow
   async function processMap(map, context, callback) {
@@ -132,26 +132,36 @@ export default async function loader(input, inputMap) {
       resolvedSources = await Promise.all(
         map.sources.map(async (source) => {
           // eslint-disable-next-line no-shadow
-          const absolutePath = getAbsolutePath(context, source, map);
-          const originalContent = mapConsumer.sourceContentFor(source, true);
-
-          if (originalContent) {
-            return { source: absolutePath, content: originalContent };
-          }
-
+          let sourceURL;
           // eslint-disable-next-line no-shadow
           let content;
 
           try {
+            sourceURL = computeSourceURL(context, source, map.sourceRoot);
+          } catch (error) {
+            emitWarning(error);
+
+            return { source: sourceURL, content };
+          }
+
+          addDependency(sourceURL);
+
+          content = mapConsumer.sourceContentFor(source, true);
+
+          if (content) {
+            return { source: sourceURL, content };
+          }
+
+          try {
             // eslint-disable-next-line no-shadow
-            const buffer = await readFile(absolutePath);
+            const buffer = await readFile(sourceURL);
 
             content = buffer.toString();
           } catch (error) {
             emitWarning(`Cannot read source file '${source}': ${error}`);
           }
 
-          return { source: absolutePath, content };
+          return { source: sourceURL, content };
         })
       );
     } catch (error) {
@@ -168,13 +178,13 @@ export default async function loader(input, inputMap) {
     delete resultMap.sourceRoot;
 
     resolvedSources.forEach((res) => {
-      // eslint-disable-next-line no-param-reassign
-      resultMap.sources.push(path.normalize(res.source));
-      resultMap.sourcesContent.push(res.content);
-
       if (res.source) {
-        addDependency(res.source);
+        resultMap.sources.push(res.source);
+      } else {
+        resultMap.sources.push('');
       }
+
+      resultMap.sourcesContent.push(res.content);
     });
 
     const sourcesContentIsEmpty =

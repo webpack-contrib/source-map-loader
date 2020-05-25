@@ -70,22 +70,6 @@ async function flattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-function isUrlRequest(url) {
-  // An URL is not an request if
-
-  // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
-  if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
-    return false;
-  }
-
-  // 2. It's a protocol-relative
-  if (/^\/\//.test(url)) {
-    return false;
-  }
-
-  return true;
-}
-
 function getSourceMappingUrl(code) {
   const lines = code.split(/^/m);
   let match;
@@ -103,46 +87,44 @@ function getSourceMappingUrl(code) {
   };
 }
 
-function getRequestedUrl(url) {
-  if (isUrlRequest(url)) {
-    return url;
-  }
+function getAbsoluteURL(context, url, sourceRoot) {
+  const request = urlToRequest(url, true);
 
-  const { protocol } = urlUtils.parse(url);
-
-  if (protocol !== 'file:') {
-    throw new Error(`URL scheme not supported: ${protocol}`);
-  }
-
-  try {
-    return urlUtils.fileURLToPath(url);
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
-function getAbsolutePath(context, source, map) {
-  if (path.isAbsolute(source)) {
-    return source;
-  }
-
-  const request = urlToRequest(source, true);
-
-  if (map && map.sourceRoot) {
-    if (path.isAbsolute(map.sourceRoot)) {
-      return path.join(map.sourceRoot, request);
+  if (sourceRoot) {
+    if (path.isAbsolute(sourceRoot)) {
+      return path.join(sourceRoot, request);
     }
 
-    return path.join(context, urlToRequest(map.sourceRoot, true), request);
+    return path.join(context, urlToRequest(sourceRoot, true), request);
   }
 
   return path.join(context, request);
 }
 
-export {
-  flattenSourceMap,
-  isUrlRequest,
-  getSourceMappingUrl,
-  getRequestedUrl,
-  getAbsolutePath,
-};
+function computeSourceURL(context, url, sourceRoot) {
+  // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
+  if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
+    const { protocol } = urlUtils.parse(url);
+
+    if (protocol === 'file:') {
+      return getAbsoluteURL(context, urlUtils.fileURLToPath(url), sourceRoot);
+    }
+
+    throw new Error(`Absolute '${url}' URL is not supported`);
+  }
+
+  // 2. It's a scheme-relative
+  if (/^\/\//.test(url)) {
+    throw new Error(`Scheme-relative '${url}' URL is not supported`);
+  }
+
+  // 3. Absolute path
+  if (path.isAbsolute(url)) {
+    return path.normalize(url);
+  }
+
+  // 4. Relative path
+  return getAbsoluteURL(context, url, sourceRoot);
+}
+
+export { getSourceMappingUrl, computeSourceURL, flattenSourceMap };

@@ -81,6 +81,7 @@ describe('source-map-loader', () => {
 
     const dependencies = [
       path.resolve(__dirname, 'fixtures', 'data', 'external-source-map2.map'),
+      path.resolve(__dirname, 'fixtures', 'external-source-map2.js'),
       path.resolve(__dirname, 'fixtures', 'external-source-map2.txt'),
     ];
 

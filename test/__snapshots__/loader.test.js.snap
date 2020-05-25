@@ -121,7 +121,7 @@ exports[`source-map-loader should reject http SourceMaps: errors 1`] = `Array []
 exports[`source-map-loader should reject http SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) URL scheme not supported: http:",
+Absolute 'http://sampledomain.com/external-source-map2.map' URL is not supported",
 ]
 `;
 
@@ -259,7 +259,7 @@ exports[`source-map-loader should warn on invalid SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on invalid SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse SourceMap 'invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
+(Emitted value instead of an instance of Error) Cannot parse source map from '/test/fixtures/invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
 ]
 `;
 
@@ -289,7 +289,7 @@ exports[`source-map-loader should warn on missing SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on missing SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot read 'missing-source-map.map' file from source map URL: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map.map'",
+(Emitted value instead of an instance of Error) Cannot read '/test/fixtures/missing-source-map.map' file from source map URL: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map.map'",
 ]
 `;
 
