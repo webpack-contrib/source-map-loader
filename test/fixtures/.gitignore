@@ -1,1 +1,4 @@
+absolute-path.js
 absolute-sourceRoot-source-map.map
+map-with-sourceroot.js.map
+normal-map.js.map

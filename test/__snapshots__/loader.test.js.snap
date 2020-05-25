@@ -17,6 +17,116 @@ exports[`source-map-loader should leave normal files with fake source-map untouc
 
 exports[`source-map-loader should leave normal files with fake source-map untouched: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should process css sourceMap: css 1`] = `
+"* {
+  box-sizing: border-box; }
+
+.row {
+  display: flex;
+  margin-right: -15px;
+  margin-left: -15px; }
+
+.col-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  height: 50px;
+  background: coral; }
+
+.col-s3 {
+  flex: 0 1 25%;
+  padding: 0 15px; }
+
+
+"
+`;
+
+exports[`source-map-loader should process css sourceMap: css 2`] = `
+"// Skip SourcesContent in SourceMap
+// comment
+"
+`;
+
+exports[`source-map-loader should process css sourceMap: errors 1`] = `Array []`;
+
+exports[`source-map-loader should process css sourceMap: errors 2`] = `Array []`;
+
+exports[`source-map-loader should process css sourceMap: map 1`] = `
+Object {
+  "file": "app.css",
+  "mappings": "AAAA;EACE,sBAAsB;;AAGxB;EACE,aAAa;EACb,mBAAmB;EACnB,kBAAkB;;AAIlB;EACE,aAAa;EACb,mBAAmB;EACnB,uBAAuB;EACvB,WAAW;EACX,YAAY;EACZ,iBAAiB;;AAInB;EACE,aAAa;EACb,eAAe",
+  "names": Array [],
+  "sources": Array [
+    "webpack:///./src/app/app.scss",
+  ],
+  "sourcesContent": Array [
+    "* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col {
+  &-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    height: 50px;
+    background: coral;
+    //background: red;
+  }
+
+  &-s3 {
+    flex: 0 1 25%;
+    padding: 0 15px;
+  }
+}
+",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should process css sourceMap: map 2`] = `
+Object {
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/normal-file.js - (normalized for test)",
+    "unresolved-file.js",
+    "/test/fixtures/normal-file2.js - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "without SourceMap",
+    "",
+    "// without SourceMap
+anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
+// comment
+",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should process css sourceMap: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Absolute 'webpack:///./src/app/app.scss' URL is not supported",
+]
+`;
+
+exports[`source-map-loader should process css sourceMap: warnings 2`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Cannot read '/test/fixtures/unresolved-file.js' file: Error: ENOENT: no such file or directory, open '/test/fixtures/unresolved-file.js'",
+]
+`;
+
 exports[`source-map-loader should process external SourceMaps (external sources): css 1`] = `
 "with SourceMap
 // comment"
@@ -52,7 +162,7 @@ Object {
   "file": "external-source-map.js",
   "mappings": "AAAA",
   "sources": Array [
-    "external-source-map.txt",
+    "/test/fixtures/external-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
     "with SourceMap",
@@ -61,12 +171,7 @@ Object {
 }
 `;
 
-exports[`source-map-loader should process external SourceMaps: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'external-source-map.txt': Error: Can't resolve './external-source-map.txt' in '/test/fixtures'",
-]
-`;
+exports[`source-map-loader should process external SourceMaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should process inlined SourceMaps with charset: css 1`] = `
 "with SourceMap
@@ -103,7 +208,7 @@ Object {
   "file": "inline-source-map.js",
   "mappings": "AAAA",
   "sources": Array [
-    "inline-source-map.txt",
+    "/test/fixtures/inline-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
     "with SourceMap",
@@ -112,10 +217,45 @@ Object {
 }
 `;
 
-exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `
+exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `Array []`;
+
+exports[`source-map-loader should process inlined sources: css 1`] = `
+"// Inline Sources in SourceMap
+// comment
+"
+`;
+
+exports[`source-map-loader should process inlined sources: errors 1`] = `Array []`;
+
+exports[`source-map-loader should process inlined sources: map 1`] = `
+Object {
+  "file": "inline-sources.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "",
+  ],
+  "sourcesContent": Array [
+    "some kind content",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should process inlined sources: warnings 1`] = `Array []`;
+
+exports[`source-map-loader should process protocol-relative-url-path: css 1`] = `
+"// Some content
+// # sourceMappingURL=//sampledomain.com/external-source-map2.map
+// comment
+"
+`;
+
+exports[`source-map-loader should process protocol-relative-url-path: errors 1`] = `Array []`;
+
+exports[`source-map-loader should process protocol-relative-url-path: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
+Scheme-relative '//sampledomain.com/external-source-map2.map' URL is not supported",
 ]
 `;
 
@@ -131,13 +271,29 @@ exports[`source-map-loader should reject http SourceMaps: errors 1`] = `Array []
 exports[`source-map-loader should reject http SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) URL scheme not supported: http:",
+Absolute 'http://sampledomain.com/external-source-map2.map' URL is not supported",
 ]
 `;
 
 exports[`source-map-loader should reject not exist file: SourceMaps: errors 1`] = `Array []`;
 
 exports[`source-map-loader should reject not exist file: SourceMaps: warnings 1`] = `"TypeError [ERR_INVALID_FILE"`;
+
+exports[`source-map-loader should reject not support url: css 1`] = `
+"// with SourceMap
+//#sourceMappingURL=ftp://exampleurl.com
+// comment
+"
+`;
+
+exports[`source-map-loader should reject not support url: errors 1`] = `Array []`;
+
+exports[`source-map-loader should reject not support url: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Absolute 'ftp://exampleurl.com' URL is not supported",
+]
+`;
 
 exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 "without SourceMap
@@ -150,9 +306,36 @@ exports[`source-map-loader should skip invalid base64 SourceMap: errors 1`] = `A
 exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse inline SourceMap with Charset UTF-8: SyntaxError: Unexpected end of JSON input",
+Cannot parse source map from 'undefined': SyntaxError: Unexpected end of JSON input",
 ]
 `;
+
+exports[`source-map-loader should support absolute paths to sourcemaps: css 1`] = `
+"// Some content 
+ "
+`;
+
+exports[`source-map-loader should support absolute paths to sourcemaps: errors 1`] = `Array []`;
+
+exports[`source-map-loader should support absolute paths to sourcemaps: map 1`] = `
+Object {
+  "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
+  "sources": Array [
+    "/test/fixtures/normal-file.js - (normalized for test)",
+    "/test/fixtures/normal-file2.js - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "without SourceMap",
+    "// without SourceMap
+anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
+// comment
+",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should support absolute paths to sourcemaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: css 1`] = `
 "with SourceMap
@@ -210,6 +393,82 @@ Object {
 
 exports[`source-map-loader should support indexed sourcemaps: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should support mixed paths in sources with sourceRoot: css 1`] = `
+"// Some content 
+ "
+`;
+
+exports[`source-map-loader should support mixed paths in sources with sourceRoot: errors 1`] = `Array []`;
+
+exports[`source-map-loader should support mixed paths in sources with sourceRoot: map 1`] = `
+Object {
+  "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
+  "sources": Array [
+    "/test/fixtures/normal-file.js - (normalized for test)",
+    "/test/fixtures/normal-file2.js - (normalized for test)",
+    "http://path-to-map.com",
+    "ftp://path-to-map.com",
+  ],
+  "sourcesContent": Array [
+    "without SourceMap",
+    "// without SourceMap
+anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
+// comment
+",
+    "",
+    "",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should support mixed paths in sources with sourceRoot: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Absolute 'ftp://path-to-map.com' URL is not supported",
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Absolute 'http://path-to-map.com' URL is not supported",
+]
+`;
+
+exports[`source-map-loader should support mixed paths in sources without sourceRoot: css 1`] = `
+"// Some content 
+ "
+`;
+
+exports[`source-map-loader should support mixed paths in sources without sourceRoot: errors 1`] = `Array []`;
+
+exports[`source-map-loader should support mixed paths in sources without sourceRoot: map 1`] = `
+Object {
+  "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
+  "sources": Array [
+    "/test/fixtures/normal-file.js - (normalized for test)",
+    "/test/fixtures/normal-file2.js - (normalized for test)",
+    "http://path-to-map.com",
+    "ftp://path-to-map.com",
+  ],
+  "sourcesContent": Array [
+    "without SourceMap",
+    "// without SourceMap
+anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
+// comment
+",
+    "",
+    "",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should support mixed paths in sources without sourceRoot: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Absolute 'ftp://path-to-map.com' URL is not supported",
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Absolute 'http://path-to-map.com' URL is not supported",
+]
+`;
+
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: css 1`] = `
 "with SourceMap
 // comment"
@@ -247,7 +506,7 @@ Object {
   "file": "inline-source-map.js",
   "mappings": "AAAA",
   "sources": Array [
-    "inline-source-map.txt",
+    "/test/fixtures/inline-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
     "with SourceMap",
@@ -256,12 +515,7 @@ Object {
 }
 `;
 
-exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
-]
-`;
+exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should warn on invalid SourceMap: css 1`] = `
 "with SourceMap
@@ -274,7 +528,7 @@ exports[`source-map-loader should warn on invalid SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on invalid SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse SourceMap 'invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
+Cannot parse source map from '/test/fixtures/invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
 ]
 `;
 
@@ -289,7 +543,7 @@ exports[`source-map-loader should warn on invalid base64 SourceMap: errors 1`] =
 exports[`source-map-loader should warn on invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse inline SourceMap: data:application/source-map;base64,invalid/base64=",
+Can not parse inline source map: data:application/source-map;base64,invalid/base64=",
 ]
 `;
 
@@ -304,7 +558,7 @@ exports[`source-map-loader should warn on missing SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on missing SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find SourceMap 'missing-source-map.map': Error: Can't resolve './missing-source-map.map' in '/test/fixtures'",
+Cannot read '/test/fixtures/missing-source-map.map' file: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map.map'",
 ]
 `;
 
@@ -329,6 +583,6 @@ Object {
 exports[`source-map-loader should warn on missing source file: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'missing-source-map2.txt': Error: Can't resolve './missing-source-map2.txt' in '/test/fixtures'",
+Cannot read '/test/fixtures/missing-source-map2.txt' file: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map2.txt'",
 ]
 `;
