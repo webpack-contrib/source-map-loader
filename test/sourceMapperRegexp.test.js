@@ -51,6 +51,13 @@ describe('source-map-loader', () => {
   });
 
   it('should work', async () => {
+    const code = `// #sourceMappingURL = //sampledomain.com/external-source-map2.map`;
+    const { url } = getSourceMappingUrl(code);
+
+    expect(url).toMatchSnapshot('result');
+  });
+
+  it('should work', async () => {
     const code = `// @sourceMappingURL=data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ==`;
     const { url } = getSourceMappingUrl(code);
 

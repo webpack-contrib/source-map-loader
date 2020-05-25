@@ -22,6 +22,8 @@ exports[`source-map-loader should work: result 6`] = `"absolute-sourceRoot-sourc
 
 exports[`source-map-loader should work: result 7`] = `"http://sampledomain.com/external-source-map2.map"`;
 
-exports[`source-map-loader should work: result 8`] = `"data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ=="`;
+exports[`source-map-loader should work: result 8`] = `"//sampledomain.com/external-source-map2.map"`;
 
-exports[`source-map-loader should work: result 9`] = `"/sample-source-map.map"`;
+exports[`source-map-loader should work: result 9`] = `"data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ=="`;
+
+exports[`source-map-loader should work: result 10`] = `"/sample-source-map.map"`;

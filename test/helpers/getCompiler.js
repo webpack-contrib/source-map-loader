@@ -40,6 +40,11 @@ export default (
           test: /\.js/i,
           use: loaders,
         },
+
+        {
+          test: /\.css/i,
+          use: loaders,
+        },
       ],
     },
     plugins: [],
