@@ -309,6 +309,11 @@ describe('source-map-loader', () => {
       `/different/root/nested2.js`,
     ];
 
+    // eslint-disable-next-line no-console
+    console.log(deps);
+    // eslint-disable-next-line no-console
+    console.log(dependencies);
+
     dependencies.forEach((fixture) => {
       expect(deps.has(fixture)).toBe(true);
     });
