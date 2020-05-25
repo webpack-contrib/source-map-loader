@@ -289,7 +289,7 @@ exports[`source-map-loader should warn on missing SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on missing SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find SourceMap 'missing-source-map.map': Error: Can't resolve './missing-source-map.map' in '/test/fixtures'",
+(Emitted value instead of an instance of Error) Cannot read 'missing-source-map.map' file from source map URL: Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map.map'",
 ]
 `;
 

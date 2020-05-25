@@ -40,8 +40,7 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  const { fs, context, resolve, addDependency, emitWarning } = this;
-  const resolver = promisify(resolve);
+  const { fs, context, addDependency, emitWarning } = this;
   const readFile = promisify(fs.readFile).bind(fs);
 
   if (url.toLowerCase().startsWith('data:')) {
@@ -88,27 +87,28 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  let urlResolved;
+  const absolutePathToSourceMappingURL = path.isAbsolute(url)
+    ? url
+    : path.join(context, urlToRequest(url, true));
+
+  addDependency(absolutePathToSourceMappingURL);
+
+  let buffer;
 
   try {
-    urlResolved = await resolver(context, urlToRequest(url, true));
-  } catch (resolveError) {
-    emitWarning(`Cannot find SourceMap '${url}': ${resolveError}`);
+    buffer = await readFile(absolutePathToSourceMappingURL);
+  } catch (error) {
+    emitWarning(`Cannot read '${url}' file from source map URL: ${error}`);
 
     callback(null, input, inputMap);
 
     return;
   }
 
-  urlResolved = urlResolved.toString();
-
-  addDependency(urlResolved);
-
-  const content = await readFile(urlResolved);
   let map;
 
   try {
-    map = JSON.parse(content.toString());
+    map = JSON.parse(buffer.toString());
   } catch (parseError) {
     emitWarning(`Cannot parse SourceMap '${url}': ${parseError}`);
 
@@ -117,7 +117,7 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  processMap(map, path.dirname(urlResolved), callback);
+  processMap(map, path.dirname(absolutePathToSourceMappingURL), callback);
 
   // eslint-disable-next-line no-shadow
   async function processMap(map, context, callback) {
@@ -144,6 +144,7 @@ export default async function loader(input, inputMap) {
           let content;
 
           try {
+            // eslint-disable-next-line no-shadow
             const buffer = await readFile(absolutePath);
 
             content = buffer.toString();
