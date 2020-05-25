@@ -42,7 +42,14 @@ Object {
 }
 `;
 
-exports[`source-map-loader should not resolve SourceMap.sources to http: warnings 1`] = `Array []`;
+exports[`source-map-loader should not resolve SourceMap.sources to http: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) Fetch reader is not defined, can not download: https://github.com/",
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) Fetch reader is not defined, can not download: https://google.com/",
+]
+`;
 
 exports[`source-map-loader should process external SourceMaps (external sources): css 1`] = `
 "with SourceMap
@@ -91,7 +98,7 @@ Object {
 exports[`source-map-loader should process external SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'external-source-map.txt': Error: Can't resolve './external-source-map.txt' in '/test/fixtures'",
+(Emitted value instead of an instance of Error) Cannot find 'external-source-map.txt': Error: Can't resolve './external-source-map.txt' in '/test/fixtures'",
 ]
 `;
 
@@ -142,7 +149,7 @@ Object {
 exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
+(Emitted value instead of an instance of Error) Cannot find 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
 ]
 `;
 
@@ -158,13 +165,29 @@ exports[`source-map-loader should reject http SourceMaps: errors 1`] = `Array []
 exports[`source-map-loader should reject http SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) URL scheme not supported: http:",
+(Emitted value instead of an instance of Error) Fetch reader is not defined, can not download: http://sampledomain.com/external-source-map2.map",
 ]
 `;
 
 exports[`source-map-loader should reject not exist file: SourceMaps: errors 1`] = `Array []`;
 
 exports[`source-map-loader should reject not exist file: SourceMaps: warnings 1`] = `"TypeError [ERR_INVALID_FILE"`;
+
+exports[`source-map-loader should reject not support url: css 1`] = `
+"// with SourceMap
+//#sourceMappingURL=ftp://exampleurl.com
+// comment
+"
+`;
+
+exports[`source-map-loader should reject not support url: errors 1`] = `Array []`;
+
+exports[`source-map-loader should reject not support url: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) URL not supported: ftp://exampleurl.com",
+]
+`;
 
 exports[`source-map-loader should resolve SourceMap.sources to http: css 1`] = `
 "console.log('with SourceMap')
@@ -204,7 +227,7 @@ exports[`source-map-loader should skip invalid base64 SourceMap: errors 1`] = `A
 exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse inline SourceMap with Charset UTF-8: SyntaxError: Unexpected end of JSON input",
+(Emitted value instead of an instance of Error) Cannot parse SourceMap 'data:application/source-map;base64,': SyntaxError: Unexpected end of JSON input",
 ]
 `;
 
@@ -262,7 +285,12 @@ Object {
 }
 `;
 
-exports[`source-map-loader should support indexed sourcemaps: warnings 1`] = `Array []`;
+exports[`source-map-loader should support indexed sourcemaps: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+(Emitted value instead of an instance of Error) Cannot find '/different/root/nested2.js': Error: Can't resolve '/different/root/nested2.js' in '/test/fixtures/indexed-sourcemap'",
+]
+`;
 
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: css 1`] = `
 "with SourceMap
@@ -313,7 +341,7 @@ Object {
 exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
+(Emitted value instead of an instance of Error) Cannot find 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
 ]
 `;
 
@@ -358,7 +386,7 @@ exports[`source-map-loader should warn on missing SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on missing SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find SourceMap 'missing-source-map.map': Error: Can't resolve './missing-source-map.map' in '/test/fixtures'",
+(Emitted value instead of an instance of Error) Cannot find 'missing-source-map.map': Error: Can't resolve './missing-source-map.map' in '/test/fixtures'",
 ]
 `;
 
@@ -383,6 +411,6 @@ Object {
 exports[`source-map-loader should warn on missing source file: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'missing-source-map2.txt': Error: Can't resolve './missing-source-map2.txt' in '/test/fixtures'",
+(Emitted value instead of an instance of Error) Cannot find 'missing-source-map2.txt': Error: Can't resolve './missing-source-map2.txt' in '/test/fixtures'",
 ]
 `;

@@ -4,24 +4,19 @@
 */
 import path from 'path';
 
-import { promisify } from 'util';
-
 import validateOptions from 'schema-utils';
-import parseDataURL from 'data-urls';
 
 import { SourceMapConsumer } from 'source-map';
 
-import { labelToName, decode } from 'whatwg-encoding';
-import { getOptions, urlToRequest } from 'loader-utils';
+import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
 import {
   flattenSourceMap,
-  readFile,
-  fetchFile,
   getContentFromSourcesContent,
   getSourceMappingUrl,
-  getRequestedUrl,
+  getUrlContent,
+  errorsHandle,
 } from './utils';
 
 export default async function loader(input, inputMap) {
@@ -33,7 +28,7 @@ export default async function loader(input, inputMap) {
   });
 
   const { fetchReader } = options;
-  let { url } = getSourceMappingUrl(input);
+  const { url } = getSourceMappingUrl(input);
   const { replacementString } = getSourceMappingUrl(input);
   const callback = this.async();
 
@@ -43,75 +38,32 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  const { fs, context, resolve, addDependency, emitWarning } = this;
-  const resolver = promisify(resolve);
-  const reader = promisify(fs.readFile).bind(fs);
+  const { context, emitWarning, addDependency } = this;
+  const loaderContext = this;
 
-  if (url.toLowerCase().startsWith('data:')) {
-    const dataURL = parseDataURL(url);
-
-    if (dataURL) {
-      let map;
-
-      try {
-        dataURL.encodingName =
-          labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
-
-        map = decode(dataURL.body, dataURL.encodingName);
-        map = JSON.parse(map.replace(/^\)\]\}'/, ''));
-      } catch (error) {
-        emitWarning(
-          `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
-        );
-
-        callback(null, input, inputMap);
-
-        return;
-      }
-
-      processMap(map, context, callback);
-
-      return;
-    }
-
-    emitWarning(`Cannot parse inline SourceMap: ${url}`);
-
-    callback(null, input, inputMap);
-
-    return;
-  }
+  let rawMap;
 
   try {
-    url = getRequestedUrl(url);
+    rawMap = await getUrlContent({
+      context,
+      url,
+      fetchReader,
+      loaderContext,
+    });
   } catch (error) {
-    emitWarning(error.message);
+    errorsHandle(error, loaderContext);
 
     callback(null, input, inputMap);
 
     return;
   }
 
-  let urlResolved;
+  const { content: mapExtracted, urlResolved } = rawMap;
 
-  try {
-    urlResolved = await resolver(context, urlToRequest(url, true));
-  } catch (resolveError) {
-    emitWarning(`Cannot find SourceMap '${url}': ${resolveError}`);
-
-    callback(null, input, inputMap);
-
-    return;
-  }
-
-  urlResolved = urlResolved.toString();
-
-  addDependency(urlResolved);
-
-  const content = await reader(urlResolved);
   let map;
 
   try {
-    map = JSON.parse(content.toString());
+    map = JSON.parse(mapExtracted.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
     emitWarning(`Cannot parse SourceMap '${url}': ${parseError}`);
 
@@ -120,7 +72,9 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  processMap(map, path.dirname(urlResolved), callback);
+  const newContext = urlResolved ? path.dirname(urlResolved) : context;
+
+  processMap(map, newContext, callback);
 
   // eslint-disable-next-line no-shadow
   async function processMap(map, context, callback) {
@@ -131,63 +85,45 @@ export default async function loader(input, inputMap) {
 
     const mapConsumer = await new SourceMapConsumer(map);
 
-    let resolvedSources;
+    const resolvedSources = await Promise.all(
+      map.sources.map(async (source) => {
+        const fullPath = map.sourceRoot
+          ? `${map.sourceRoot}${path.sep}${source}`
+          : source;
 
-    try {
-      resolvedSources = await Promise.all(
-        map.sources.map(async (source) => {
-          const fullPath = map.sourceRoot
-            ? `${map.sourceRoot}${path.sep}${source}`
-            : source;
+        const originalData = getContentFromSourcesContent(mapConsumer, source);
 
-          const originalData = getContentFromSourcesContent(
-            mapConsumer,
-            source
-          );
+        let sourceContent;
 
-          if (/^https?:\/\//.test(fullPath)) {
-            return originalData
-              ? { source: fullPath, content: originalData }
-              : fetchFile(fullPath, emitWarning, fetchReader);
-          }
-
-          if (path.isAbsolute(fullPath)) {
-            return originalData
-              ? { source: fullPath, content: originalData }
-              : readFile(fullPath, emitWarning, reader);
-          }
-
-          let fullPathResolved;
-
-          try {
-            fullPathResolved = await resolver(
-              context,
-              urlToRequest(fullPath, true)
-            );
-          } catch (resolveError) {
-            emitWarning(`Cannot find source file '${source}': ${resolveError}`);
-
-            return originalData
-              ? {
-                  source: fullPath,
-                  content: originalData,
-                }
-              : { source: fullPath, content: null };
-          }
+        try {
+          sourceContent = await getUrlContent({
+            context,
+            url: fullPath,
+            fetchReader,
+            loaderContext,
+            originalData,
+          });
+        } catch (error) {
+          errorsHandle(error, loaderContext);
 
           return originalData
             ? {
-                source: fullPathResolved,
+                source,
                 content: originalData,
               }
-            : readFile(fullPathResolved, emitWarning, reader);
-        })
-      );
-    } catch (error) {
-      emitWarning(error);
+            : { source, content: null };
+        }
 
-      callback(null, input, inputMap);
-    }
+        const { content, urlResolved: sourceResolved } = sourceContent;
+
+        return originalData
+          ? {
+              source: sourceResolved || fullPath,
+              content: originalData,
+            }
+          : { source: sourceResolved || fullPath, content };
+      })
+    );
 
     const resultMap = { ...map };
     resultMap.sources = [];

@@ -152,6 +152,17 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
+  it('should reject not support url', async () => {
+    const testId = 'unSupport-file-source-map.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
   it('should use last SourceMap directive', async () => {
     const testId = 'multi-source-map.js';
     const compiler = getCompiler(testId);
