@@ -9,7 +9,7 @@ import { SourceMapConsumer } from 'source-map';
 import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
-import { getSourceMappingUrl, fetchFromURL, flattenSourceMap } from './utils';
+import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from './utils';
 
 export default async function loader(input, inputMap) {
   const options = getOptions(this);
@@ -19,10 +19,10 @@ export default async function loader(input, inputMap) {
     baseDataPath: 'options',
   });
 
-  const { url, replacementString } = getSourceMappingUrl(input);
+  const { sourceMappingURL, replacementString } = getSourceMappingURL(input);
   const callback = this.async();
 
-  if (!url) {
+  if (!sourceMappingURL) {
     callback(null, input, inputMap);
 
     return;
@@ -35,7 +35,7 @@ export default async function loader(input, inputMap) {
     ({ sourceURL, sourceContent } = await fetchFromURL(
       this,
       this.context,
-      url
+      sourceMappingURL
     ));
   } catch (error) {
     this.emitWarning(error);
@@ -79,6 +79,7 @@ export default async function loader(input, inputMap) {
       let sourceContent;
 
       const originalSourceContent = mapConsumer.sourceContentFor(source, true);
+      const skipReading = originalSourceContent !== null;
 
       try {
         ({ sourceURL, sourceContent } = await fetchFromURL(
@@ -86,7 +87,7 @@ export default async function loader(input, inputMap) {
           context,
           source,
           map.sourceRoot,
-          originalSourceContent !== null
+          skipReading
         ));
       } catch (error) {
         this.emitWarning(error);

@@ -72,7 +72,7 @@ async function flattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-function getSourceMappingUrl(code) {
+function getSourceMappingURL(code) {
   const lines = code.split(/^/m);
   let match;
 
@@ -84,7 +84,7 @@ function getSourceMappingUrl(code) {
   }
 
   return {
-    url: match ? match[1] || match[2] || '' : null,
+    sourceMappingURL: match ? match[1] || match[2] || '' : null,
     replacementString: match ? match[0] : null,
   };
 }
@@ -199,4 +199,4 @@ async function fetchFromURL(
   return { sourceURL, sourceContent };
 }
 
-export { getSourceMappingUrl, fetchFromURL, flattenSourceMap };
+export { getSourceMappingURL, fetchFromURL, flattenSourceMap };
