@@ -69,24 +69,6 @@ async function flattenSourceMap(map) {
   return generatedMap.toJSON();
 }
 
-async function readFile(fullPath, emitWarning, reader) {
-  let content;
-
-  try {
-    content = await reader(fullPath);
-  } catch (readFileError) {
-    emitWarning(`Cannot open source file '${fullPath}': ${readFileError}`);
-
-    return { source: null, content: null };
-  }
-
-  return { source: fullPath, content: content.toString() };
-}
-
-function getContentFromSourcesContent(consumer, source) {
-  return consumer.sourceContentFor(source, true);
-}
-
 function isUrlRequest(url) {
   // An URL is not an request if
 
@@ -138,11 +120,26 @@ function getRequestedUrl(url) {
   }
 }
 
+function getAbsolutePathToSource(context, source, map) {
+  if (path.isAbsolute(source)) {
+    return source;
+  }
+
+  if (map.sourceRoot) {
+    if (path.isAbsolute(map.sourceRoot)) {
+      return path.join(map.sourceRoot, source);
+    }
+
+    return path.join(context, map.sourceRoot, source);
+  }
+
+  return path.join(context, source);
+}
+
 export {
   flattenSourceMap,
-  readFile,
-  getContentFromSourcesContent,
   isUrlRequest,
   getSourceMappingUrl,
   getRequestedUrl,
+  getAbsolutePathToSource,
 };

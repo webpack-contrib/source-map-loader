@@ -52,7 +52,7 @@ Object {
   "file": "external-source-map.js",
   "mappings": "AAAA",
   "sources": Array [
-    "external-source-map.txt",
+    "/test/fixtures/external-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
     "with SourceMap",
@@ -61,12 +61,7 @@ Object {
 }
 `;
 
-exports[`source-map-loader should process external SourceMaps: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'external-source-map.txt': Error: Can't resolve './external-source-map.txt' in '/test/fixtures'",
-]
-`;
+exports[`source-map-loader should process external SourceMaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should process inlined SourceMaps with charset: css 1`] = `
 "with SourceMap
@@ -103,7 +98,7 @@ Object {
   "file": "inline-source-map.js",
   "mappings": "AAAA",
   "sources": Array [
-    "inline-source-map.txt",
+    "/test/fixtures/inline-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
     "with SourceMap",
@@ -112,12 +107,7 @@ Object {
 }
 `;
 
-exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
-]
-`;
+exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should reject http SourceMaps: css 1`] = `
 "with SourceMap
@@ -247,7 +237,7 @@ Object {
   "file": "inline-source-map.js",
   "mappings": "AAAA",
   "sources": Array [
-    "inline-source-map.txt",
+    "/test/fixtures/inline-source-map.txt - (normalized for test)",
   ],
   "sourcesContent": Array [
     "with SourceMap",
@@ -256,12 +246,7 @@ Object {
 }
 `;
 
-exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'inline-source-map.txt': Error: Can't resolve './inline-source-map.txt' in '/test/fixtures'",
-]
-`;
+exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should warn on invalid SourceMap: css 1`] = `
 "with SourceMap
@@ -320,7 +305,7 @@ Object {
   "file": "missing-source-map2.js",
   "mappings": "AAAA",
   "sources": Array [
-    "missing-source-map2.txt",
+    "/test/fixtures/missing-source-map2.txt - (normalized for test)",
   ],
   "version": 3,
 }
@@ -329,6 +314,6 @@ Object {
 exports[`source-map-loader should warn on missing source file: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot find source file 'missing-source-map2.txt': Error: Can't resolve './missing-source-map2.txt' in '/test/fixtures'",
+(Emitted value instead of an instance of Error) Cannot read source file 'missing-source-map2.txt': Error: ENOENT: no such file or directory, open '/test/fixtures/missing-source-map2.txt'",
 ]
 `;

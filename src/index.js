@@ -17,10 +17,9 @@ import { getOptions, urlToRequest } from 'loader-utils';
 import schema from './options.json';
 import {
   flattenSourceMap,
-  readFile,
-  getContentFromSourcesContent,
   getSourceMappingUrl,
   getRequestedUrl,
+  getAbsolutePathToSource,
 } from './utils';
 
 export default async function loader(input, inputMap) {
@@ -43,7 +42,7 @@ export default async function loader(input, inputMap) {
 
   const { fs, context, resolve, addDependency, emitWarning } = this;
   const resolver = promisify(resolve);
-  const reader = promisify(fs.readFile).bind(fs);
+  const readFile = promisify(fs.readFile).bind(fs);
 
   if (url.toLowerCase().startsWith('data:')) {
     const dataURL = parseDataURL(url);
@@ -105,7 +104,7 @@ export default async function loader(input, inputMap) {
 
   addDependency(urlResolved);
 
-  const content = await reader(urlResolved);
+  const content = await readFile(urlResolved);
   let map;
 
   try {
@@ -134,45 +133,25 @@ export default async function loader(input, inputMap) {
     try {
       resolvedSources = await Promise.all(
         map.sources.map(async (source) => {
-          const fullPath = map.sourceRoot
-            ? `${map.sourceRoot}${path.sep}${source}`
-            : source;
+          const absolutePath = getAbsolutePathToSource(context, source, map);
+          const originalContent = mapConsumer.sourceContentFor(source, true);
 
-          const originalData = getContentFromSourcesContent(
-            mapConsumer,
-            source
-          );
-
-          if (path.isAbsolute(fullPath)) {
-            return originalData
-              ? { source: fullPath, content: originalData }
-              : readFile(fullPath, emitWarning, reader);
+          if (originalContent) {
+            return { source: absolutePath, content: originalContent };
           }
 
-          let fullPathResolved;
+          // eslint-disable-next-line no-shadow
+          let content;
 
           try {
-            fullPathResolved = await resolver(
-              context,
-              urlToRequest(fullPath, true)
-            );
-          } catch (resolveError) {
-            emitWarning(`Cannot find source file '${source}': ${resolveError}`);
+            const buffer = await readFile(absolutePath);
 
-            return originalData
-              ? {
-                  source: fullPath,
-                  content: originalData,
-                }
-              : { source: fullPath, content: null };
+            content = buffer.toString();
+          } catch (error) {
+            emitWarning(`Cannot read source file '${source}': ${error}`);
           }
 
-          return originalData
-            ? {
-                source: fullPathResolved,
-                content: originalData,
-              }
-            : readFile(fullPathResolved, emitWarning, reader);
+          return { source: absolutePath, content };
         })
       );
     } catch (error) {
@@ -182,6 +161,7 @@ export default async function loader(input, inputMap) {
     }
 
     const resultMap = { ...map };
+
     resultMap.sources = [];
     resultMap.sourcesContent = [];
 
