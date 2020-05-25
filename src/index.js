@@ -19,8 +19,7 @@ import {
   flattenSourceMap,
   getSourceMappingUrl,
   getRequestedUrl,
-  getAbsolutePathToSourceMapURL,
-  getAbsolutePathToSource,
+  getAbsolutePath,
 } from './utils';
 
 export default async function loader(input, inputMap) {
@@ -88,17 +87,14 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  const absolutePathToSourceMappingURL = getAbsolutePathToSourceMapURL(
-    context,
-    url
-  );
+  const absolutePath = getAbsolutePath(context, url);
 
-  addDependency(absolutePathToSourceMappingURL);
+  addDependency(absolutePath);
 
   let buffer;
 
   try {
-    buffer = await readFile(absolutePathToSourceMappingURL);
+    buffer = await readFile(absolutePath);
   } catch (error) {
     emitWarning(`Cannot read '${url}' file from source map URL: ${error}`);
 
@@ -119,7 +115,7 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  processMap(map, path.dirname(absolutePathToSourceMappingURL), callback);
+  processMap(map, path.dirname(absolutePath), callback);
 
   // eslint-disable-next-line no-shadow
   async function processMap(map, context, callback) {
@@ -135,7 +131,8 @@ export default async function loader(input, inputMap) {
     try {
       resolvedSources = await Promise.all(
         map.sources.map(async (source) => {
-          const absolutePath = getAbsolutePathToSource(context, source, map);
+          // eslint-disable-next-line no-shadow
+          const absolutePath = getAbsolutePath(context, source, map);
           const originalContent = mapConsumer.sourceContentFor(source, true);
 
           if (originalContent) {

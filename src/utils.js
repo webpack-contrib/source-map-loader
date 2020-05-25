@@ -121,24 +121,14 @@ function getRequestedUrl(url) {
   }
 }
 
-function getAbsolutePathToSourceMapURL(context, url) {
-  if (path.isAbsolute(url)) {
-    return url;
-  }
-
-  const request = urlToRequest(url, true);
-
-  return path.join(context, request);
-}
-
-function getAbsolutePathToSource(context, source, map) {
+function getAbsolutePath(context, source, map) {
   if (path.isAbsolute(source)) {
     return source;
   }
 
   const request = urlToRequest(source, true);
 
-  if (map.sourceRoot) {
+  if (map && map.sourceRoot) {
     if (path.isAbsolute(map.sourceRoot)) {
       return path.join(map.sourceRoot, request);
     }
@@ -154,6 +144,5 @@ export {
   isUrlRequest,
   getSourceMappingUrl,
   getRequestedUrl,
-  getAbsolutePathToSourceMapURL,
-  getAbsolutePathToSource,
+  getAbsolutePath,
 };
