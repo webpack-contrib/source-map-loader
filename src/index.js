@@ -102,7 +102,7 @@ export default async function loader(input, inputMap) {
   let map;
 
   try {
-    map = JSON.parse(content);
+    map = JSON.parse(content.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
     this.emitWarning(
       `Cannot parse source map from '${sourceURL}': ${parseError}`
