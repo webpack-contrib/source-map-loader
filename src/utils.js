@@ -89,7 +89,7 @@ function getSourceMappingUrl(code) {
   };
 }
 
-function getAbsoluteURL(context, url, sourceRoot) {
+function getAbsolutePath(context, url, sourceRoot) {
   const request = urlToRequest(url, true);
 
   if (sourceRoot) {
@@ -103,7 +103,20 @@ function getAbsoluteURL(context, url, sourceRoot) {
   return path.join(context, request);
 }
 
-async function readFromFs(loaderContext, sourceURL) {
+function fetchFromDataURL(loaderContext, sourceURL) {
+  const dataURL = parseDataURL(sourceURL);
+
+  if (dataURL) {
+    dataURL.encodingName =
+      labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
+
+    return decode(dataURL.body, dataURL.encodingName);
+  }
+
+  throw new Error(`Can not parse inline source map: ${sourceURL}`);
+}
+
+async function fetchFromFilesystem(loaderContext, sourceURL) {
   let buffer;
 
   try {
@@ -135,28 +148,19 @@ async function fetchFromURL(
     const { protocol } = urlUtils.parse(url);
 
     if (protocol === 'data:') {
-      const dataURL = parseDataURL(url);
+      const sourceContent = fetchFromDataURL(loaderContext, url);
 
-      if (dataURL) {
-        dataURL.encodingName =
-          labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
-
-        const sourceContent = decode(dataURL.body, dataURL.encodingName);
-
-        return { sourceContent };
-      }
-
-      throw new Error(`Can not parse inline source map: ${url}`);
+      return { sourceContent };
     }
 
     if (protocol === 'file:') {
       const pathFromURL = urlUtils.fileURLToPath(url);
-      const sourceURL = getAbsoluteURL(context, pathFromURL, sourceRoot);
+      const sourceURL = getAbsolutePath(context, pathFromURL, sourceRoot);
 
       let sourceContent;
 
       if (!skipReading) {
-        sourceContent = await readFromFs(loaderContext, sourceURL);
+        sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
       }
 
       return { sourceURL, sourceContent };
@@ -177,19 +181,19 @@ async function fetchFromURL(
     let sourceContent;
 
     if (!skipReading) {
-      sourceContent = await readFromFs(loaderContext, sourceURL);
+      sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
     }
 
     return { sourceURL, sourceContent };
   }
 
   // 4. Relative path
-  const sourceURL = getAbsoluteURL(context, url, sourceRoot);
+  const sourceURL = getAbsolutePath(context, url, sourceRoot);
 
   let sourceContent;
 
   if (!skipReading) {
-    sourceContent = await readFromFs(loaderContext, sourceURL);
+    sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
   }
 
   return { sourceURL, sourceContent };
