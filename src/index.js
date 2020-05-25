@@ -119,13 +119,8 @@ export default async function loader(input, inputMap) {
     // eslint-disable-next-line no-shadow
     const { sourceURL, sourceContent } = source;
 
-    if (sourceURL) {
-      newMap.sources.push(sourceURL);
-    } else {
-      newMap.sources.push('');
-    }
-
-    newMap.sourcesContent.push(sourceContent);
+    newMap.sources.push(sourceURL || '');
+    newMap.sourcesContent.push(sourceContent || '');
   });
 
   const sourcesContentIsEmpty =

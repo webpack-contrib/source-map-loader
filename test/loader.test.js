@@ -343,7 +343,7 @@ describe('source-map-loader', () => {
     });
   });
 
-  it.skip('should process protocol-relative-url-path', async () => {
+  it('should process protocol-relative-url-path', async () => {
     const testId = 'protocol-relative-url-path.js';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
@@ -355,7 +355,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.skip('should support mixed paths in sources without sourceRoot', async () => {
+  it('should support mixed paths in sources without sourceRoot', async () => {
     const sourceRoot = path.resolve(__dirname, 'fixtures');
     const javaScriptFilename = 'absolute-path.js';
     const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
@@ -389,7 +389,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.skip('should support mixed paths in sources with sourceRoot', async () => {
+  it('should support mixed paths in sources with sourceRoot', async () => {
     const sourceRoot = path.resolve(__dirname, 'fixtures');
     const javaScriptFilename = 'absolute-path.js';
     const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
@@ -424,7 +424,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.skip('should support absolute paths to sourcemaps', async () => {
+  it('should support absolute paths to sourcemaps', async () => {
     const sourceRoot = path.resolve(__dirname, 'fixtures');
     const javaScriptFilename = 'absolute-path.js';
     const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
@@ -457,7 +457,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.skip('should reject not support url', async () => {
+  it('should reject not support url', async () => {
     const testId = 'unSupport-file-source-map.js';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
@@ -468,7 +468,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.skip('should process inlined sources', async () => {
+  it('should process inlined sources', async () => {
     const testId = 'inline-sources.js';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
@@ -481,7 +481,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.skip('should process css sourceMap', async () => {
+  it('should process css sourceMap', async () => {
     const testId = 'app.css';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
@@ -494,7 +494,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.skip('should process css sourceMap', async () => {
+  it('should process css sourceMap', async () => {
     const testId = 'skip-sourcesContent.js';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
