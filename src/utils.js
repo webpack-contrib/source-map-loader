@@ -31,16 +31,11 @@ const sourceMappingURLRegex = RegExp(
 
 async function flattenSourceMap(map) {
   const consumer = await new sourceMap.SourceMapConsumer(map);
-
-  let generatedMap;
-
-  if (map.file) {
-    generatedMap = new sourceMap.SourceMapGenerator({
-      file: map.file,
-    });
-  } else {
-    generatedMap = new sourceMap.SourceMapGenerator();
-  }
+  const generatedMap = map.file
+    ? new sourceMap.SourceMapGenerator({
+        file: map.file,
+      })
+    : new sourceMap.SourceMapGenerator();
 
   consumer.sources.forEach((sourceFile) => {
     const sourceContent = consumer.sourceContentFor(sourceFile, true);
