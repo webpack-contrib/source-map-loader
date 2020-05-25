@@ -28,14 +28,15 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  const loaderContext = this;
-  const { context } = this;
-
   let sourceURL;
   let sourceContent;
 
   try {
-    ({ sourceURL, sourceContent } = await fetchFromURL(this, context, url));
+    ({ sourceURL, sourceContent } = await fetchFromURL(
+      this,
+      this.context,
+      url
+    ));
   } catch (error) {
     this.emitWarning(error);
 
@@ -62,87 +63,75 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  processMap(map, sourceURL ? path.dirname(sourceURL) : context, callback);
+  const context = sourceURL ? path.dirname(sourceURL) : this.context;
 
-  // eslint-disable-next-line no-shadow
-  async function processMap(map, context, callback) {
-    if (map.sections) {
-      // eslint-disable-next-line no-param-reassign
-      map = await flattenSourceMap(map);
-    }
+  if (map.sections) {
+    // eslint-disable-next-line no-param-reassign
+    map = await flattenSourceMap(map);
+  }
 
-    const mapConsumer = await new SourceMapConsumer(map);
+  const mapConsumer = await new SourceMapConsumer(map);
+  const resolvedSources = await Promise.all(
+    map.sources.map(async (source) => {
+      // eslint-disable-next-line no-shadow
+      let sourceURL;
+      // eslint-disable-next-line no-shadow
+      let sourceContent;
 
-    let resolvedSources;
+      const originalSourceContent = mapConsumer.sourceContentFor(source, true);
 
-    try {
-      resolvedSources = await Promise.all(
-        map.sources.map(async (source) => {
-          // eslint-disable-next-line no-shadow
-          let sourceURL;
-          // eslint-disable-next-line no-shadow
-          let sourceContent;
+      try {
+        ({ sourceURL, sourceContent } = await fetchFromURL(
+          this,
+          context,
+          source,
+          map.sourceRoot,
+          originalSourceContent !== null
+        ));
+      } catch (error) {
+        this.emitWarning(error);
 
-          const originalSourceContent = mapConsumer.sourceContentFor(
-            source,
-            true
-          );
-
-          try {
-            ({ sourceURL, sourceContent } = await fetchFromURL(
-              loaderContext,
-              context,
-              source,
-              map.sourceRoot,
-              originalSourceContent !== null
-            ));
-          } catch (error) {
-            loaderContext.emitWarning(error);
-
-            sourceURL = source;
-          }
-
-          if (originalSourceContent) {
-            sourceContent = originalSourceContent;
-          }
-
-          if (sourceURL) {
-            loaderContext.addDependency(sourceURL);
-          }
-
-          return { sourceURL, sourceContent };
-        })
-      );
-    } catch (error) {
-      loaderContext.emitWarning(error);
-
-      callback(null, input, inputMap);
-    }
-
-    const resultMap = { ...map };
-
-    resultMap.sources = [];
-    resultMap.sourcesContent = [];
-
-    delete resultMap.sourceRoot;
-
-    resolvedSources.forEach((res) => {
-      if (res.sourceURL) {
-        resultMap.sources.push(res.sourceURL);
-      } else {
-        resultMap.sources.push('');
+        sourceURL = source;
       }
 
-      resultMap.sourcesContent.push(res.sourceContent);
-    });
+      if (originalSourceContent) {
+        sourceContent = originalSourceContent;
+      }
 
-    const sourcesContentIsEmpty =
-      resultMap.sourcesContent.filter((entry) => !!entry).length === 0;
+      if (sourceURL) {
+        this.addDependency(sourceURL);
+      }
 
-    if (sourcesContentIsEmpty) {
-      delete resultMap.sourcesContent;
+      return { sourceURL, sourceContent };
+    })
+  );
+
+  const newMap = { ...map };
+
+  newMap.sources = [];
+  newMap.sourcesContent = [];
+
+  delete newMap.sourceRoot;
+
+  resolvedSources.forEach((source) => {
+    // eslint-disable-next-line no-shadow
+    const { sourceURL, sourceContent } = source;
+
+    if (sourceURL) {
+      newMap.sources.push(sourceURL);
+    } else {
+      newMap.sources.push('');
     }
 
-    callback(null, input.replace(replacementString, ''), resultMap);
+    newMap.sourcesContent.push(sourceContent);
+  });
+
+  const sourcesContentIsEmpty =
+    newMap.sourcesContent.filter((entry) => Boolean(entry)).length === 0;
+
+  if (sourcesContentIsEmpty) {
+    delete newMap.sourcesContent;
   }
+
+  callback(null, input.replace(replacementString, ''), newMap);
 }
