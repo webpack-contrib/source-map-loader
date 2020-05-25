@@ -341,4 +341,168 @@ describe('source-map-loader', () => {
       expect(bundle.indexOf(fixture) !== -1).toBe(true);
     });
   });
+
+  it.skip('should process protocol-relative-url-path', async () => {
+    const testId = 'protocol-relative-url-path.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.skip('should support mixed paths in sources without sourceRoot', async () => {
+    const sourceRoot = path.resolve(__dirname, 'fixtures');
+    const javaScriptFilename = 'absolute-path.js';
+    const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
+    const sourceMapPath = path.join(sourceRoot, 'map-with-sourceroot.js.map');
+
+    // Create the sourcemap file
+    const rawSourceMap = {
+      version: 3,
+      sources: [
+        'normal-file.js',
+        path.resolve(__dirname, 'fixtures', 'normal-file2.js'),
+        'http://path-to-map.com',
+        'ftp://path-to-map.com',
+      ],
+      mappings: 'CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA',
+    };
+    fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));
+
+    // Create the entryPointFile file
+    const entryFileContent = `// Some content \r\n // # sourceMappingURL=${sourceMapPath}`;
+    fs.writeFileSync(entryFileAbsolutePath, entryFileContent);
+
+    const compiler = getCompiler(javaScriptFilename);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.skip('should support mixed paths in sources with sourceRoot', async () => {
+    const sourceRoot = path.resolve(__dirname, 'fixtures');
+    const javaScriptFilename = 'absolute-path.js';
+    const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
+    const sourceMapPath = path.join(sourceRoot, 'map-with-sourceroot.js.map');
+
+    // Create the sourcemap file
+    const rawSourceMap = {
+      version: 3,
+      sourceRoot,
+      sources: [
+        'normal-file.js',
+        path.resolve(__dirname, 'fixtures', 'normal-file2.js'),
+        'http://path-to-map.com',
+        'ftp://path-to-map.com',
+      ],
+      mappings: 'CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA',
+    };
+    fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));
+
+    // Create the entryPointFile file
+    const entryFileContent = `// Some content \r\n // # sourceMappingURL=${sourceMapPath}`;
+    fs.writeFileSync(entryFileAbsolutePath, entryFileContent);
+
+    const compiler = getCompiler(javaScriptFilename);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.skip('should support absolute paths to sourcemaps', async () => {
+    const sourceRoot = path.resolve(__dirname, 'fixtures');
+    const javaScriptFilename = 'absolute-path.js';
+    const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
+    const sourceMapPath = path.join(sourceRoot, 'normal-map.js.map');
+
+    // Create the sourcemap file
+    const rawSourceMap = {
+      version: 3,
+      sourceRoot,
+      sources: [
+        'normal-file.js',
+        path.resolve(__dirname, 'fixtures', 'normal-file2.js'),
+      ],
+      mappings: 'CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA',
+    };
+    fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));
+
+    // Create the entryPointFile file
+    const entryFileContent = `// Some content \r\n // # sourceMappingURL=${sourceMapPath}`;
+    fs.writeFileSync(entryFileAbsolutePath, entryFileContent);
+
+    const compiler = getCompiler(javaScriptFilename);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.skip('should reject not support url', async () => {
+    const testId = 'unSupport-file-source-map.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.skip('should process inlined sources', async () => {
+    const testId = 'inline-sources.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.skip('should process css sourceMap', async () => {
+    const testId = 'app.css';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.skip('should process css sourceMap', async () => {
+    const testId = 'skip-sourcesContent.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
 });

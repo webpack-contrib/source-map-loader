@@ -2,21 +2,21 @@ export default (map) => {
   const result = map;
 
   if (result.sources) {
-    result.sources = normilizeArr(result.sources);
+    result.sources = normalizeArr(result.sources);
   }
 
   if (result.file) {
-    [result.file] = normilizeArr([result.file]);
+    [result.file] = normalizeArr([result.file]);
   }
 
   if (result.sourceRoot) {
-    [result.sourceRoot] = normilizeArr([result.sourceRoot]);
+    [result.sourceRoot] = normalizeArr([result.sourceRoot]);
   }
 
   return result;
 };
 
-function normilizeArr(arr) {
+function normalizeArr(arr) {
   return arr.map((str) => {
     const normilized = removeCWD(str);
 
