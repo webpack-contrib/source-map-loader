@@ -12,13 +12,14 @@ import parseDataURL from 'data-urls';
 import { SourceMapConsumer } from 'source-map';
 
 import { labelToName, decode } from 'whatwg-encoding';
-import { getOptions, urlToRequest } from 'loader-utils';
+import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
 import {
   flattenSourceMap,
   getSourceMappingUrl,
   getRequestedUrl,
+  getAbsolutePathToSourceMapURL,
   getAbsolutePathToSource,
 } from './utils';
 
@@ -87,9 +88,10 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  const absolutePathToSourceMappingURL = path.isAbsolute(url)
-    ? url
-    : path.join(context, urlToRequest(url, true));
+  const absolutePathToSourceMappingURL = getAbsolutePathToSourceMapURL(
+    context,
+    url
+  );
 
   addDependency(absolutePathToSourceMappingURL);
 
