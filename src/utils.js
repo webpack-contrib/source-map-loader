@@ -31,6 +31,7 @@ const sourceMappingURLRegex = RegExp(
 
 async function flattenSourceMap(map) {
   const consumer = await new sourceMap.SourceMapConsumer(map);
+
   let generatedMap;
 
   if (map.file) {

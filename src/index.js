@@ -5,7 +5,6 @@
 import path from 'path';
 
 import validateOptions from 'schema-utils';
-import { SourceMapConsumer } from 'source-map';
 import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
@@ -70,15 +69,17 @@ export default async function loader(input, inputMap) {
     map = await flattenSourceMap(map);
   }
 
-  const mapConsumer = await new SourceMapConsumer(map);
   const resolvedSources = await Promise.all(
-    map.sources.map(async (source) => {
+    map.sources.map(async (source, i) => {
       // eslint-disable-next-line no-shadow
       let sourceURL;
       // eslint-disable-next-line no-shadow
       let sourceContent;
 
-      const originalSourceContent = mapConsumer.sourceContentFor(source, true);
+      const originalSourceContent =
+        map.sourcesContent && map.sourcesContent[i]
+          ? map.sourcesContent[i]
+          : null;
       const skipReading = originalSourceContent !== null;
 
       try {
