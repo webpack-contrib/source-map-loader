@@ -13,12 +13,7 @@ import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
-import {
-  getSourceMappingUrl,
-  computeSourceURL,
-  flattenSourceMap,
-  getContentFromURL,
-} from './utils';
+import { getSourceMappingUrl, fetchFromURL, flattenSourceMap } from './utils';
 
 export default async function loader(input, inputMap) {
   const options = getOptions(this);
@@ -73,22 +68,13 @@ export default async function loader(input, inputMap) {
     return;
   }
 
+  const { context } = this;
+
   let sourceURL;
+  let sourceContent;
 
   try {
-    sourceURL = computeSourceURL(this.context, url);
-  } catch (error) {
-    this.emitWarning(error);
-
-    callback(null, input, inputMap);
-
-    return;
-  }
-
-  let content;
-
-  try {
-    content = await getContentFromURL(this, sourceURL);
+    ({ sourceURL, sourceContent } = await fetchFromURL(this, context, url));
   } catch (error) {
     this.emitWarning(error);
 
@@ -102,7 +88,7 @@ export default async function loader(input, inputMap) {
   let map;
 
   try {
-    map = JSON.parse(content.replace(/^\)\]\}'/, ''));
+    map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
     this.emitWarning(
       `Cannot parse source map from '${sourceURL}': ${parseError}`
@@ -132,32 +118,34 @@ export default async function loader(input, inputMap) {
           // eslint-disable-next-line no-shadow
           let sourceURL;
           // eslint-disable-next-line no-shadow
-          let content;
+          let sourceContent;
+
+          const originalSourceContent = mapConsumer.sourceContentFor(
+            source,
+            true
+          );
 
           try {
-            sourceURL = computeSourceURL(context, source, map.sourceRoot);
+            ({ sourceURL, sourceContent } = await fetchFromURL(
+              loaderContext,
+              context,
+              source,
+              map.sourceRoot,
+              originalSourceContent !== null
+            ));
           } catch (error) {
             loaderContext.emitWarning(error);
 
-            return { source: sourceURL, content };
+            sourceURL = source;
+          }
+
+          if (originalSourceContent) {
+            sourceContent = originalSourceContent;
           }
 
           loaderContext.addDependency(sourceURL);
 
-          content = mapConsumer.sourceContentFor(source, true);
-
-          if (content) {
-            return { source: sourceURL, content };
-          }
-
-          try {
-            // eslint-disable-next-line no-shadow
-            content = await getContentFromURL(loaderContext, sourceURL);
-          } catch (error) {
-            loaderContext.emitWarning(error);
-          }
-
-          return { source: sourceURL, content };
+          return { sourceURL, sourceContent };
         })
       );
     } catch (error) {
@@ -174,13 +162,13 @@ export default async function loader(input, inputMap) {
     delete resultMap.sourceRoot;
 
     resolvedSources.forEach((res) => {
-      if (res.source) {
-        resultMap.sources.push(res.source);
+      if (res.sourceURL) {
+        resultMap.sources.push(res.sourceURL);
       } else {
         resultMap.sources.push('');
       }
 
-      resultMap.sourcesContent.push(res.content);
+      resultMap.sourcesContent.push(res.sourceContent);
     });
 
     const sourcesContentIsEmpty =

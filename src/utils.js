@@ -101,33 +101,7 @@ function getAbsoluteURL(context, url, sourceRoot) {
   return path.join(context, request);
 }
 
-function computeSourceURL(context, url, sourceRoot) {
-  // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
-  if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
-    const { protocol } = urlUtils.parse(url);
-
-    if (protocol === 'file:') {
-      return getAbsoluteURL(context, urlUtils.fileURLToPath(url), sourceRoot);
-    }
-
-    throw new Error(`Absolute '${url}' URL is not supported`);
-  }
-
-  // 2. It's a scheme-relative
-  if (/^\/\//.test(url)) {
-    throw new Error(`Scheme-relative '${url}' URL is not supported`);
-  }
-
-  // 3. Absolute path
-  if (path.isAbsolute(url)) {
-    return path.normalize(url);
-  }
-
-  // 4. Relative path
-  return getAbsoluteURL(context, url, sourceRoot);
-}
-
-async function getContentFromURL(loaderContext, sourceURL) {
+async function readFromFs(loaderContext, sourceURL) {
   let buffer;
 
   try {
@@ -147,9 +121,61 @@ async function getContentFromURL(loaderContext, sourceURL) {
   return buffer.toString();
 }
 
-export {
-  getSourceMappingUrl,
-  getContentFromURL,
-  computeSourceURL,
-  flattenSourceMap,
-};
+async function fetchFromURL(
+  loaderContext,
+  context,
+  url,
+  sourceRoot,
+  skipReading = false
+) {
+  // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
+  if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
+    const { protocol } = urlUtils.parse(url);
+
+    if (protocol === 'file:') {
+      const pathFromURL = urlUtils.fileURLToPath(url);
+      const sourceURL = getAbsoluteURL(context, pathFromURL, sourceRoot);
+
+      let sourceContent;
+
+      if (!skipReading) {
+        sourceContent = await readFromFs(loaderContext, sourceURL);
+      }
+
+      return { sourceURL, sourceContent };
+    }
+
+    throw new Error(`Absolute '${url}' URL is not supported`);
+  }
+
+  // 2. It's a scheme-relative
+  if (/^\/\//.test(url)) {
+    throw new Error(`Scheme-relative '${url}' URL is not supported`);
+  }
+
+  // 3. Absolute path
+  if (path.isAbsolute(url)) {
+    const sourceURL = path.normalize(url);
+
+    let sourceContent;
+
+    if (!skipReading) {
+      sourceContent = await readFromFs(loaderContext, sourceURL);
+    }
+
+    return { sourceURL, sourceContent };
+  }
+
+  // 4. Relative path
+  const sourceURL = getAbsoluteURL(context, url, sourceRoot);
+
+  let sourceContent;
+
+  if (!skipReading) {
+    sourceContent = await readFromFs(loaderContext, sourceURL);
+  }
+
+  return { sourceURL, sourceContent };
+}
+
+export { getSourceMappingUrl, fetchFromURL, flattenSourceMap };

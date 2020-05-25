@@ -305,7 +305,7 @@ Object {
   "file": "missing-source-map2.js",
   "mappings": "AAAA",
   "sources": Array [
-    "/test/fixtures/missing-source-map2.txt - (normalized for test)",
+    "missing-source-map2.txt",
   ],
   "version": 3,
 }
