@@ -140,7 +140,7 @@ exports[`source-map-loader should skip invalid base64 SourceMap: errors 1`] = `A
 exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse inline SourceMap with Charset UTF-8: SyntaxError: Unexpected end of JSON input",
+Cannot parse source map from 'undefined': SyntaxError: Unexpected end of JSON input",
 ]
 `;
 
@@ -259,7 +259,7 @@ exports[`source-map-loader should warn on invalid SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on invalid SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse source map from '/test/fixtures/invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
+Cannot parse source map from '/test/fixtures/invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
 ]
 `;
 
@@ -274,7 +274,7 @@ exports[`source-map-loader should warn on invalid base64 SourceMap: errors 1`] =
 exports[`source-map-loader should warn on invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-(Emitted value instead of an instance of Error) Cannot parse inline SourceMap: data:application/source-map;base64,invalid/base64=",
+Can not parse inline source map: data:application/source-map;base64,invalid/base64=",
 ]
 `;
 

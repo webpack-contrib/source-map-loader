@@ -5,11 +5,7 @@
 import path from 'path';
 
 import validateOptions from 'schema-utils';
-import parseDataURL from 'data-urls';
-
 import { SourceMapConsumer } from 'source-map';
-
-import { labelToName, decode } from 'whatwg-encoding';
 import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
@@ -33,41 +29,6 @@ export default async function loader(input, inputMap) {
   }
 
   const loaderContext = this;
-
-  if (url.toLowerCase().startsWith('data:')) {
-    const dataURL = parseDataURL(url);
-
-    if (dataURL) {
-      let map;
-
-      try {
-        dataURL.encodingName =
-          labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
-
-        map = decode(dataURL.body, dataURL.encodingName);
-        map = JSON.parse(map.replace(/^\)\]\}'/, ''));
-      } catch (error) {
-        this.emitWarning(
-          `Cannot parse inline SourceMap with Charset ${dataURL.encodingName}: ${error}`
-        );
-
-        callback(null, input, inputMap);
-
-        return;
-      }
-
-      processMap(map, this.context, callback);
-
-      return;
-    }
-
-    this.emitWarning(`Cannot parse inline SourceMap: ${url}`);
-
-    callback(null, input, inputMap);
-
-    return;
-  }
-
   const { context } = this;
 
   let sourceURL;
@@ -83,7 +44,9 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  this.addDependency(sourceURL);
+  if (sourceURL) {
+    this.addDependency(sourceURL);
+  }
 
   let map;
 
@@ -91,7 +54,7 @@ export default async function loader(input, inputMap) {
     map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
     this.emitWarning(
-      `Cannot parse source map from '${sourceURL}': ${parseError}`
+      new Error(`Cannot parse source map from '${sourceURL}': ${parseError}`)
     );
 
     callback(null, input, inputMap);
@@ -99,7 +62,7 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  processMap(map, path.dirname(sourceURL), callback);
+  processMap(map, sourceURL ? path.dirname(sourceURL) : context, callback);
 
   // eslint-disable-next-line no-shadow
   async function processMap(map, context, callback) {
@@ -143,7 +106,9 @@ export default async function loader(input, inputMap) {
             sourceContent = originalSourceContent;
           }
 
-          loaderContext.addDependency(sourceURL);
+          if (sourceURL) {
+            loaderContext.addDependency(sourceURL);
+          }
 
           return { sourceURL, sourceContent };
         })
