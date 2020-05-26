@@ -3,9 +3,12 @@ import urlUtils from 'url';
 
 import sourceMap from 'source-map';
 import parseDataURL from 'data-urls';
-import { labelToName, decode } from 'whatwg-encoding';
+
+import { decode } from 'iconv-lite';
 
 import { urlToRequest } from 'loader-utils';
+
+import labelsToNames from './labels-to-names';
 
 // Matches only the last occurrence of sourceMappingURL
 const innerRegex = /\s*[#@]\s*sourceMappingURL\s*=\s*([^\s'"]*)\s*/;
@@ -28,6 +31,12 @@ const sourceMappingURLRegex = RegExp(
     '\\s*'
 );
 /* eslint-enable prefer-template */
+
+function labelToName(label) {
+  const labelLowercase = String(label).trim().toLowerCase();
+
+  return labelsToNames[labelLowercase] || null;
+}
 
 async function flattenSourceMap(map) {
   const consumer = await new sourceMap.SourceMapConsumer(map);

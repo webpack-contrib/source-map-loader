@@ -42,10 +42,10 @@
   },
   "dependencies": {
     "data-urls": "^2.0.0",
+    "iconv-lite": "^0.5.1",
     "loader-utils": "^2.0.0",
     "schema-utils": "^2.6.6",
-    "source-map": "^0.6.0",
-    "whatwg-encoding": "^1.0.5"
+    "source-map": "^0.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
