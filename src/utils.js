@@ -109,7 +109,7 @@ function fetchFromDataURL(loaderContext, sourceURL) {
     return decode(dataURL.body, dataURL.encodingName);
   }
 
-  throw new Error(`Can not parse inline source map: ${sourceURL}`);
+  throw new Error(`Failed to parse source map from "data" URL: ${sourceURL}`);
 }
 
 async function fetchFromFilesystem(loaderContext, sourceURL) {
@@ -126,7 +126,9 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
       });
     });
   } catch (error) {
-    throw new Error(`Cannot read '${sourceURL}' file: ${error}`);
+    throw new Error(
+      `Failed to parse source map from '${sourceURL}' file: ${error}`
+    );
   }
 
   return buffer.toString();
@@ -163,12 +165,16 @@ async function fetchFromURL(
       return { sourceURL, sourceContent };
     }
 
-    throw new Error(`Absolute '${url}' URL is not supported`);
+    throw new Error(
+      `Failed to parse source map: "${url}" URL is not supported`
+    );
   }
 
   // 2. It's a scheme-relative
   if (/^\/\//.test(url)) {
-    throw new Error(`Scheme-relative '${url}' URL is not supported`);
+    throw new Error(
+      `Failed to parse source map: "${url}" URL is not supported`
+    );
   }
 
   // 3. Absolute path
