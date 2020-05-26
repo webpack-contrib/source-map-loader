@@ -8,7 +8,7 @@ import { decode } from 'iconv-lite';
 
 import { urlToRequest } from 'loader-utils';
 
-const labelsToNames = require('./labels-to-names.json');
+import labelsToNames from './labels-to-names';
 
 // Matches only the last occurrence of sourceMappingURL
 const innerRegex = /\s*[#@]\s*sourceMappingURL\s*=\s*([^\s'"]*)\s*/;
