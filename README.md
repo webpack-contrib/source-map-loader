@@ -58,6 +58,155 @@ Be mindful in setting [include](https://webpack.js.org/configuration/module/#rul
 
 And run `webpack` via your preferred method.
 
+## Options
+
+### `brokenMapUrlReportType`
+
+Type: `String`
+Default: `warning`
+
+Type of error message, when the map failed to load.
+
+Possible values:
+
+- `ignore`
+- `warning`
+- `error`
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'source-map-loader',
+            options: {
+              brokenMapUrlReportType: 'ignore',
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
+### `brokenMapParseReportType`
+
+Type: `String`
+Default: `warning`
+
+Type of error message, when the card is received, but cannot be correctly parsed.
+
+Possible values:
+
+- `ignore`
+- `warning`
+- `error`
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'source-map-loader',
+            options: {
+              brokenMapParseReportType: 'ignore',
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
+### `brokenSourceUrlReportType`
+
+Type: `String`
+Default: `warning`
+
+Type of error message, when the source (from `map.sources`) failed to load.
+
+Possible values:
+
+- `ignore`
+- `warning`
+- `error`
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'source-map-loader',
+            options: {
+              brokenSourceUrlReportType: 'ignore',
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
+### `unresolveSourceFetcher`
+
+Type: `Function`
+Default: `undefined`
+
+The option allows you to fetching the remote content.
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'source-map-loader',
+            options: {
+              async unresolveSourceFetcher(url) {
+                if (/^https?:\/\//i.test(url)) {
+                  const response = await fetch(url);
+                  const result = await response.text();
+
+                  return result;
+                }
+
+                throw new Error(`${url} is not supported`);
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
 ## Contributing
 
 Please take a moment to read our contributing guidelines if you haven't yet done so.

@@ -2,6 +2,22 @@ import { getCompiler, compile } from './helpers';
 
 describe('validate options', () => {
   const tests = {
+    brokenMapUrlReportType: {
+      success: ['warning', 'ignore', 'error'],
+      failure: [1, () => 'test;', [], {}, true, false],
+    },
+    brokenMapParseReportType: {
+      success: ['warning', 'ignore', 'error'],
+      failure: [1, () => 'test;', [], {}, true, false],
+    },
+    brokenSourceUrlReportType: {
+      success: ['warning', 'ignore', 'error'],
+      failure: [1, () => 'test;', [], {}, true, false],
+    },
+    unresolveSourceFetcher: {
+      success: [() => 'test;'],
+      failure: [1, 'test', true, [], {}],
+    },
     unknown: {
       success: [],
       failure: [1, true, false, 'test', /test/, [], {}, { foo: 'bar' }],
