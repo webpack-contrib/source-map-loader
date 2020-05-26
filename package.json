@@ -1,6 +1,6 @@
 {
   "name": "source-map-loader",
-  "version": "0.2.4",
+  "version": "1.0.0",
   "description": "extracts inlined source map and offers it to webpack",
   "license": "MIT",
   "repository": "webpack-contrib/source-map-loader",

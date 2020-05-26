@@ -1,6 +1,30 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.0.0](https://github.com/webpack-contrib/source-map-loader/compare/v0.2.4...v1.0.0) (2020-05-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* minimum supported Node.js version is `10.13`
+* minimum supported `webpack` version is `4`
+
+### Features
+
+* support indexed source maps ([c18d1f9](https://github.com/webpack-contrib/source-map-loader/commit/c18d1f9495fce229d21993aba1d215cc75986d84))
+* support `charsert` for Data URLs
+
+### Bug Fixes
+
+* absolute path for sources ([b64f7d8](https://github.com/webpack-contrib/source-map-loader/commit/b64f7d82de27769c8bbd2be280faf4f9f97492d5))
+* avoid crash on big data URL source maps ([7f769aa](https://github.com/webpack-contrib/source-map-loader/commit/7f769aa5a09d362cf29eeb52f4c8155360e1afad))
+* improve performance ([#101](https://github.com/webpack-contrib/source-map-loader/issues/101)) ([4c39c22](https://github.com/webpack-contrib/source-map-loader/commit/4c39c228ae215b43d6c90fd1727d572dfd3d5929))
+* use webpack fs ([#105](https://github.com/webpack-contrib/source-map-loader/issues/105)) ([1e785a1](https://github.com/webpack-contrib/source-map-loader/commit/1e785a1114afe2f40a9f2361d8a326a99b5050e6))
+* support `file` protocol
+* improve error messages
+* avoid conflicts with other source maps
+* fix compatibility with `5` version of `webpack`
 
 <a name="0.2.4"></a>
 ## [0.2.4](https://github.com/webpack-contrib/source-map-loader/compare/v0.2.3...v0.2.4) (2018-08-14)
