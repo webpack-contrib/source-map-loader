@@ -60,7 +60,7 @@ And run `webpack` via your preferred method.
 
 ## Examples
 
-### Ignore Warnings
+### Ignoring Warnings
 
 To ignore warnings, you can use the following configuration:
 
