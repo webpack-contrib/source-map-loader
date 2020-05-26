@@ -196,4 +196,20 @@ async function fetchFromURL(
   return { sourceURL, sourceContent };
 }
 
-export { getSourceMappingURL, fetchFromURL, flattenSourceMap };
+function getErrorReporter(loaderContext, typeReport) {
+  switch (typeReport) {
+    case 'error':
+      return loaderContext.emitError;
+    case 'ignore':
+      return function ignore() {};
+    default:
+      return loaderContext.emitWarning;
+  }
+}
+
+export {
+  getSourceMappingURL,
+  fetchFromURL,
+  flattenSourceMap,
+  getErrorReporter,
+};

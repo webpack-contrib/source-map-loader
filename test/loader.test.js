@@ -576,4 +576,102 @@ describe('source-map-loader', () => {
     expect(getWarnings(stats)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
+
+  it('should warning on broken map url error SourceMap', async () => {
+    const testId = 'invalid-inline-source-map2.js';
+    const compiler = getCompiler(testId, {
+      brokenMapUrlReportType: 'warning',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should error on broken map url error SourceMap', async () => {
+    const testId = 'invalid-inline-source-map2.js';
+    const compiler = getCompiler(testId, {
+      brokenMapUrlReportType: 'error',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should ignore report on broken map url error SourceMap', async () => {
+    const testId = 'invalid-inline-source-map2.js';
+    const compiler = getCompiler(testId, {
+      brokenMapUrlReportType: 'ignore',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should warning on map parse error', async () => {
+    const testId = 'invalid-source-map.js';
+    const compiler = getCompiler(testId, {
+      brokenMapParseReportType: 'warning',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should error on map parse error', async () => {
+    const testId = 'invalid-source-map.js';
+    const compiler = getCompiler(testId, {
+      brokenMapParseReportType: 'error',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should ignore report on map parse error', async () => {
+    const testId = 'invalid-source-map.js';
+    const compiler = getCompiler(testId, {
+      brokenMapParseReportType: 'ignore',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should error on broken source in map.sources', async () => {
+    const testId = 'skip-sourcesContent.js';
+    const compiler = getCompiler(testId, {
+      brokenSourceUrlReportType: 'error',
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
 });

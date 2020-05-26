@@ -1,4 +1,15 @@
 {
   "type": "object",
+  "properties": {
+    "brokenMapUrlReportType": {
+      "enum": ["ignore", "warning", "error"]
+    },
+    "brokenMapParseReportType": {
+      "enum": ["ignore", "warning", "error"]
+    },
+    "brokenSourceUrlReportType": {
+      "enum": ["ignore", "warning", "error"]
+    }
+  },
   "additionalProperties": false
 }

@@ -8,7 +8,12 @@ import validateOptions from 'schema-utils';
 import { getOptions } from 'loader-utils';
 
 import schema from './options.json';
-import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from './utils';
+import {
+  getSourceMappingURL,
+  fetchFromURL,
+  flattenSourceMap,
+  getErrorReporter,
+} from './utils';
 
 export default async function loader(input, inputMap) {
   const options = getOptions(this);
@@ -37,7 +42,11 @@ export default async function loader(input, inputMap) {
       sourceMappingURL
     ));
   } catch (error) {
-    this.emitWarning(error);
+    const brokenMapUrlReporter = getErrorReporter(
+      this,
+      options.brokenMapUrlReportType
+    );
+    brokenMapUrlReporter(error);
 
     callback(null, input, inputMap);
 
@@ -53,7 +62,11 @@ export default async function loader(input, inputMap) {
   try {
     map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
-    this.emitWarning(
+    const brokenMapParseReporter = getErrorReporter(
+      this,
+      options.brokenMapParseReportType
+    );
+    brokenMapParseReporter(
       new Error(`Cannot parse source map from '${sourceURL}': ${parseError}`)
     );
 
@@ -91,7 +104,11 @@ export default async function loader(input, inputMap) {
           skipReading
         ));
       } catch (error) {
-        this.emitWarning(error);
+        const brokenSourceUrlReporter = getErrorReporter(
+          this,
+          options.brokenSourceUrlReportType
+        );
+        brokenSourceUrlReporter(error);
 
         sourceURL = source;
       }

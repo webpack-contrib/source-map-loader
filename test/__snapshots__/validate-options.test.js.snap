@@ -1,49 +1,157 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`validate options should throw an error on the "brokenMapParseReportType" option with "() => 'test;'" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapParseReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapParseReportType" option with "[]" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapParseReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapParseReportType" option with "{}" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapParseReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapParseReportType" option with "1" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapParseReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapParseReportType" option with "false" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapParseReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapParseReportType" option with "true" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapParseReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapUrlReportType" option with "() => 'test;'" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapUrlReportType" option with "[]" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapUrlReportType" option with "{}" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapUrlReportType" option with "1" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapUrlReportType" option with "false" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenMapUrlReportType" option with "true" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenMapUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenSourceUrlReportType" option with "() => 'test;'" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenSourceUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenSourceUrlReportType" option with "[]" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenSourceUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenSourceUrlReportType" option with "{}" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenSourceUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenSourceUrlReportType" option with "1" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenSourceUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenSourceUrlReportType" option with "false" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenSourceUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
+exports[`validate options should throw an error on the "brokenSourceUrlReportType" option with "true" value 1`] = `
+"Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
+ - options.brokenSourceUrlReportType should be one of these:
+   \\"ignore\\" | \\"warning\\" | \\"error\\""
+`;
+
 exports[`validate options should throw an error on the "unknown" option with "/test/" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
 
 exports[`validate options should throw an error on the "unknown" option with "[]" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
 
 exports[`validate options should throw an error on the "unknown" option with "{"foo":"bar"}" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
 
 exports[`validate options should throw an error on the "unknown" option with "{}" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
 
 exports[`validate options should throw an error on the "unknown" option with "1" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
 
 exports[`validate options should throw an error on the "unknown" option with "false" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
 
 exports[`validate options should throw an error on the "unknown" option with "test" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
 
 exports[`validate options should throw an error on the "unknown" option with "true" value 1`] = `
 "Invalid options object. Source Map Loader has been initialized using an options object that does not match the API schema.
  - options has an unknown property 'unknown'. These properties are valid:
-   object {}"
+   object { brokenMapUrlReportType?, brokenMapParseReportType?, brokenSourceUrlReportType? }"
 `;
