@@ -200,11 +200,15 @@ describe('source-map-loader', () => {
     const rawSourceMap = {
       version: 3,
       sources: [
+        `file://${path
+          .resolve(__dirname, 'fixtures', 'normal-file.js')
+          .replace(/\\/g, '/')}`,
         'normal-file.js',
         `file://${path
           .resolve(__dirname, 'fixtures', 'normal-file2.js')
           .replace(/\\/g, '/')}`,
       ],
+      sourcesContent: ['static content'],
       mappings: 'CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA',
     };
     fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));

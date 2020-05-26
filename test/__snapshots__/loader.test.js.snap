@@ -486,9 +486,11 @@ Object {
   "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
   "sources": Array [
     "/test/fixtures/normal-file.js - (normalized for test)",
+    "/test/fixtures/normal-file.js - (normalized for test)",
     "/test/fixtures/normal-file2.js - (normalized for test)",
   ],
   "sourcesContent": Array [
+    "static content",
     "without SourceMap",
     "// without SourceMap
 anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";

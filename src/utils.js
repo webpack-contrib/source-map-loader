@@ -60,9 +60,7 @@ async function flattenSourceMap(map) {
       },
     };
 
-    if (source) {
-      generatedMap.addMapping(mappings);
-    }
+    generatedMap.addMapping(mappings);
   });
 
   return generatedMap.toJSON();
