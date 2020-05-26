@@ -78,7 +78,7 @@ function getSourceMappingURL(code) {
   }
 
   return {
-    sourceMappingURL: match ? match[1] || match[2] || '' : null,
+    sourceMappingURL: match ? match[1] || match[2] : null,
     replacementString: match ? match[0] : null,
   };
 }
@@ -135,7 +135,7 @@ async function fetchFromURL(
   context,
   url,
   sourceRoot,
-  skipReading = false,
+  skipReading,
   unresolveSourceFetcher
 ) {
   // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
