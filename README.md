@@ -58,6 +58,33 @@ Be mindful in setting [include](https://webpack.js.org/configuration/module/#rul
 
 And run `webpack` via your preferred method.
 
+## Examples
+
+### Ignoring Warnings
+
+To ignore warnings, you can use the following configuration:
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
+    ],
+  },
+  stats: {
+    warningsFilter: [/Failed to parse source map/],
+  },
+};
+```
+
+More information about the `warningsFilters` option you can find [here](https://webpack.js.org/configuration/stats/#statswarningsfilter);
+
 ## Contributing
 
 Please take a moment to read our contributing guidelines if you haven't yet done so.

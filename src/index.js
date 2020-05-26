@@ -54,7 +54,7 @@ export default async function loader(input, inputMap) {
     map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
     this.emitWarning(
-      new Error(`Cannot parse source map from '${sourceURL}': ${parseError}`)
+      new Error(`Failed to parse source map from '${sourceURL}': ${parseError}`)
     );
 
     callback(null, input, inputMap);
