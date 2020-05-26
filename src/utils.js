@@ -151,7 +151,8 @@ async function fetchFromURL(
 
     if (protocol === 'file:') {
       const pathFromURL = urlUtils.fileURLToPath(url);
-      const sourceURL = getAbsolutePath(context, pathFromURL, sourceRoot);
+
+      const sourceURL = path.normalize(pathFromURL);
 
       let sourceContent;
 

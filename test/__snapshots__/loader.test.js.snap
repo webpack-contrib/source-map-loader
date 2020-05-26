@@ -361,6 +361,62 @@ Object {
 
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should support file protocol path: css 1`] = `
+"// Some content 
+ "
+`;
+
+exports[`source-map-loader should support file protocol path: errors 1`] = `Array []`;
+
+exports[`source-map-loader should support file protocol path: map 1`] = `
+Object {
+  "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
+  "sources": Array [
+    "/test/fixtures/normal-file.js - (normalized for test)",
+    "/test/fixtures/normal-file2.js - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "without SourceMap",
+    "// without SourceMap
+anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
+// comment
+",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should support file protocol path: warnings 1`] = `Array []`;
+
+exports[`source-map-loader should support indexed sourcemaps 2: css 1`] = `
+"console.log('with SourceMap')
+"
+`;
+
+exports[`source-map-loader should support indexed sourcemaps 2: errors 1`] = `Array []`;
+
+exports[`source-map-loader should support indexed sourcemaps 2: map 1`] = `
+Object {
+  "mappings": "CAAC,IAAI,IAAM,SAAU,GAClB,OAAO,IAAI;CCDb,IAAI,IAAM,SAAU,GAClB,OAAO",
+  "names": Array [],
+  "sources": Array [
+    "/test/fixtures/indexed-sourcemap/nested1.js - (normalized for test)",
+    "/different/root/nested2.js",
+  ],
+  "sourcesContent": Array [
+    " ONE.foo = function (bar) {
+   return baz(bar);
+ };",
+    " TWO.inc = function (n) {
+   return n + 1;
+ };",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should support indexed sourcemaps 2: warnings 1`] = `Array []`;
+
 exports[`source-map-loader should support indexed sourcemaps: css 1`] = `
 "console.log('with SourceMap')
 // Map taken from here

@@ -117,6 +117,43 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
+  it('should support file protocol path', async () => {
+    const sourceRoot = path.resolve(__dirname, 'fixtures');
+    const javaScriptFilename = 'file-protocol-path.js';
+    const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
+    const sourceMapPath = path.join(sourceRoot, 'file-protocol-path.js.map');
+
+    // Create the sourcemap file
+    const rawSourceMap = {
+      version: 3,
+      sources: [
+        'normal-file.js',
+        `file://${path
+          .resolve(__dirname, 'fixtures', 'normal-file2.js')
+          .replace(/\\/g, '/')}`,
+      ],
+      mappings: 'CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA',
+    };
+    fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));
+
+    // Create the entryPointFile file
+    const entryFileContent = `// Some content \r\n // # sourceMappingURL=file://${sourceMapPath.replace(
+      /\\/g,
+      '/'
+    )}`;
+    fs.writeFileSync(entryFileAbsolutePath, entryFileContent);
+
+    const compiler = getCompiler(javaScriptFilename);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
   it('should use last SourceMap directive', async () => {
     const testId = 'multi-source-map.js';
     const compiler = getCompiler(testId);
@@ -319,6 +356,36 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
+  it('should support indexed sourcemaps 2', async () => {
+    const currentDirPath = path.join(
+      __dirname,
+      'fixtures',
+      'indexed-sourcemap'
+    );
+
+    const testId = path.join(currentDirPath, 'file2.js');
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+    const deps = stats.compilation.fileDependencies;
+
+    const dependencies = [
+      path.join(currentDirPath, 'file2.js'),
+      path.join(currentDirPath, 'file2.js.map'),
+      path.join(currentDirPath, 'nested1.js'),
+      path.normalize(`/different/root/nested2.js`),
+    ];
+
+    dependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(true);
+    });
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
   it('should transform to webpack', async () => {
     const currentDirPath = path.join(
       __dirname,
@@ -359,7 +426,10 @@ describe('source-map-loader', () => {
     const sourceRoot = path.resolve(__dirname, 'fixtures');
     const javaScriptFilename = 'absolute-path.js';
     const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
-    const sourceMapPath = path.join(sourceRoot, 'map-with-sourceroot.js.map');
+    const sourceMapPath = path.join(
+      sourceRoot,
+      'map-without-sourceroot.js.map'
+    );
 
     // Create the sourcemap file
     const rawSourceMap = {

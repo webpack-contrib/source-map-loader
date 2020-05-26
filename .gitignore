@@ -1,5 +1,12 @@
 /node_modules
 test/output/*
+test/fixtures/absolute-path.js
+test/fixtures/absolute-sourceRoot-source-map.map
+test/fixtures/file-protocol-path.js
+test/fixtures/file-protocol-path.js.map
+test/fixtures/map-with-sourceroot.js.map
+test/fixtures/map-without-sourceroot.js.map
+test/fixtures/normal-map.js.map
 logs
 *.log
 npm-debug.log*

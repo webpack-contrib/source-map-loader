@@ -1,0 +1,34 @@
+{
+  "version": 3,
+  "sections": [
+    {
+      "offset": {
+        "line": 0,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": ["nested1.js"],
+        "sourcesContent": [
+          " ONE.foo = function (bar) {\n   return baz(bar);\n };"
+        ],
+        "names": ["bar", "baz"],
+        "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOC,IAAID"
+      }
+    },
+    {
+      "offset": {
+        "line": 1,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": ["nested2.js"],
+        "sourcesContent": [" TWO.inc = function (n) {\n   return n + 1;\n };"],
+        "names": ["n"],
+        "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
+        "sourceRoot": "/different/root"
+      }
+    }
+  ]
+}
