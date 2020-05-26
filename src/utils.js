@@ -137,7 +137,8 @@ async function fetchFromURL(
   context,
   url,
   sourceRoot,
-  skipReading = false
+  skipReading = false,
+  unresolveSourceFetcher
 ) {
   // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
   if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
@@ -161,6 +162,16 @@ async function fetchFromURL(
       }
 
       return { sourceURL, sourceContent };
+    }
+
+    if (skipReading) {
+      return { sourceURL: url, sourceContent: '' };
+    }
+
+    if (unresolveSourceFetcher) {
+      const sourceContent = await unresolveSourceFetcher(url);
+
+      return { sourceURL: url, sourceContent };
     }
 
     throw new Error(`Absolute '${url}' URL is not supported`);

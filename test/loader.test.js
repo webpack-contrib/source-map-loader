@@ -11,6 +11,12 @@ import {
   readAsset,
 } from './helpers';
 
+/* eslint-disable */
+jest.mock('node-fetch');
+
+import fetch from 'node-fetch';
+/* eslint-enable */
+
 const isWin = process.platform === 'win32';
 
 describe('source-map-loader', () => {
@@ -89,6 +95,73 @@ describe('source-map-loader', () => {
       expect(deps.has(fixture)).toBe(true);
     });
     expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should resolve SourceMap.sources to http', async () => {
+    const { Response } = jest.requireActual('node-fetch');
+    fetch.mockReturnValue(Promise.resolve(new Response('downloaded content')));
+
+    const currentDirPath = path.join(__dirname, 'fixtures', 'fetch');
+
+    const testId = path.join(currentDirPath, 'sources-http.js');
+    const compiler = getCompiler(testId, {
+      async unresolveSourceFetcher(url) {
+        if (/^https?:\/\//i.test(url)) {
+          const response = await fetch(url);
+          return response.text();
+        }
+
+        throw new Error(`${url} is not supported`);
+      },
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should throw error for SourceMap.sources to http', async () => {
+    const currentDirPath = path.join(__dirname, 'fixtures', 'fetch');
+
+    const testId = path.join(currentDirPath, 'sources-http.js');
+    const compiler = getCompiler(testId, {
+      async unresolveSourceFetcher(url) {
+        throw new Error(`${url} is not supported`);
+      },
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should not resolve SourceMap.sources to http', async () => {
+    const currentDirPath = path.join(__dirname, 'fixtures', 'fetch');
+
+    const testId = path.join(currentDirPath, 'unresolved-sources-http.js');
+    const compiler = getCompiler(testId, {
+      async unresolveSourceFetcher(url) {
+        if (/^https?:\/\//i.test(url)) {
+          const response = await fetch(url);
+          return response.text();
+        }
+
+        throw new Error(`${url} is not supported`);
+      },
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
     expect(codeFromBundle.css).toMatchSnapshot('css');
     expect(getWarnings(stats)).toMatchSnapshot('warnings');

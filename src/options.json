@@ -9,6 +9,9 @@
     },
     "brokenSourceUrlReportType": {
       "enum": ["ignore", "warning", "error"]
+    },
+    "unresolveSourceFetcher": {
+      "instanceof": "Function"
     }
   },
   "additionalProperties": false

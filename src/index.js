@@ -39,7 +39,10 @@ export default async function loader(input, inputMap) {
     ({ sourceURL, sourceContent } = await fetchFromURL(
       this,
       this.context,
-      sourceMappingURL
+      sourceMappingURL,
+      '',
+      false,
+      options.unresolveSourceFetcher
     ));
   } catch (error) {
     const brokenMapUrlReporter = getErrorReporter(
@@ -101,7 +104,8 @@ export default async function loader(input, inputMap) {
           context,
           source,
           map.sourceRoot,
-          skipReading
+          skipReading,
+          options.unresolveSourceFetcher
         ));
       } catch (error) {
         const brokenSourceUrlReporter = getErrorReporter(

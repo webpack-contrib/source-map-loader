@@ -82,6 +82,34 @@ exports[`source-map-loader should leave normal files with fake source-map untouc
 
 exports[`source-map-loader should leave normal files with fake source-map untouched: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should not resolve SourceMap.sources to http: css 1`] = `
+"// console.log('with SourceMap')
+"
+`;
+
+exports[`source-map-loader should not resolve SourceMap.sources to http: errors 1`] = `Array []`;
+
+exports[`source-map-loader should not resolve SourceMap.sources to http: map 1`] = `
+Object {
+  "file": "sources-http.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "https://unresolved1.com/",
+    "https://unresolved1.com/",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should not resolve SourceMap.sources to http: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+body used already for: ",
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+body used already for: ",
+]
+`;
+
 exports[`source-map-loader should process css sourceMap: css 1`] = `
 "* {
   box-sizing: border-box; }
@@ -178,12 +206,7 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 }
 `;
 
-exports[`source-map-loader should process css sourceMap: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-Absolute 'webpack:///./src/app/app.scss' URL is not supported",
-]
-`;
+exports[`source-map-loader should process css sourceMap: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should process css sourceMap: warnings 2`] = `
 Array [
@@ -359,6 +382,31 @@ Array [
 Absolute 'ftp://exampleurl.com' URL is not supported",
 ]
 `;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: css 1`] = `
+"// console.log('with SourceMap')
+"
+`;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: errors 1`] = `Array []`;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: map 1`] = `
+Object {
+  "file": "sources-http.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "https://github2.com/",
+    "https://github.com/",
+  ],
+  "sourcesContent": Array [
+    "static content",
+    "downloaded content",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should resolve SourceMap.sources to http: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 "without SourceMap
@@ -613,6 +661,36 @@ Object {
 `;
 
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
+
+exports[`source-map-loader should throw error for SourceMap.sources to http: css 1`] = `
+"// console.log('with SourceMap')
+"
+`;
+
+exports[`source-map-loader should throw error for SourceMap.sources to http: errors 1`] = `Array []`;
+
+exports[`source-map-loader should throw error for SourceMap.sources to http: map 1`] = `
+Object {
+  "file": "sources-http.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "https://github2.com/",
+    "https://github.com/",
+  ],
+  "sourcesContent": Array [
+    "static content",
+    "",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should throw error for SourceMap.sources to http: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+https://github.com/ is not supported",
+]
+`;
 
 exports[`source-map-loader should use last SourceMap directive: css 1`] = `
 "with SourceMap

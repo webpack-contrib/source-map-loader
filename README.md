@@ -168,6 +168,45 @@ module.exports = {
 };
 ```
 
+### `unresolveSourceFetcher`
+
+Type: `Function`
+Default: `undefined`
+
+The option allows you to fetching the remote content.
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'source-map-loader',
+            options: {
+              async unresolveSourceFetcher(url) {
+                if (/^https?:\/\//i.test(url)) {
+                  const response = await fetch(url);
+                  const result = await response.text();
+
+                  return result;
+                }
+
+                throw new Error(`${url} is not supported`);
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
 ## Contributing
 
 Please take a moment to read our contributing guidelines if you haven't yet done so.
