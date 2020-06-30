@@ -160,16 +160,14 @@ async function fetchFromURL(
       return { sourceContent };
     }
 
+    if (skipReading) {
+      return { sourceURL: url };
+    }
+
     if (protocol === 'file:') {
       const pathFromURL = urlUtils.fileURLToPath(url);
-
       const sourceURL = path.normalize(pathFromURL);
-
-      let sourceContent;
-
-      if (!skipReading) {
-        sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
-      }
+      const sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
 
       return { sourceURL, sourceContent };
     }

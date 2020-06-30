@@ -82,6 +82,9 @@ export default async function loader(input, inputMap) {
           : null;
       const skipReading = originalSourceContent !== null;
 
+      // We do not skipReading here, because we need absolute paths in sources.
+      // This is necessary so that for sourceMaps with the same file structure in sources, name collisions do not occur.
+      // https://github.com/webpack-contrib/source-map-loader/issues/51
       try {
         ({ sourceURL, sourceContent } = await fetchFromURL(
           this,
