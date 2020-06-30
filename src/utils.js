@@ -160,24 +160,14 @@ async function fetchFromURL(
       return { sourceContent };
     }
 
-    if (protocol === 'webpack:') {
-      const sourceURL = url;
-
-      if (skipReading) {
-        return { sourceURL };
-      }
+    if (skipReading) {
+      return { sourceURL: url };
     }
 
     if (protocol === 'file:') {
-      let sourceURL = url;
-      let sourceContent;
-
-      if (!skipReading) {
-        const pathFromURL = urlUtils.fileURLToPath(url);
-
-        sourceURL = path.normalize(pathFromURL);
-        sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
-      }
+      const pathFromURL = urlUtils.fileURLToPath(url);
+      const sourceURL = path.normalize(pathFromURL);
+      const sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
 
       return { sourceURL, sourceContent };
     }
