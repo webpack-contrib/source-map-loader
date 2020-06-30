@@ -154,6 +154,19 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
+  it('should skip file protocol path if sourcesContent is set', async () => {
+    const testId = 'file-broken-protocol-path.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
   it('should skip webpack protocol path if sourcesContent is set', async () => {
     const testId = 'webpack/main.js';
     const compiler = getCompiler(testId);

@@ -169,13 +169,13 @@ async function fetchFromURL(
     }
 
     if (protocol === 'file:') {
-      const pathFromURL = urlUtils.fileURLToPath(url);
-
-      const sourceURL = path.normalize(pathFromURL);
-
+      let sourceURL = url;
       let sourceContent;
 
       if (!skipReading) {
+        const pathFromURL = urlUtils.fileURLToPath(url);
+
+        sourceURL = path.normalize(pathFromURL);
         sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
       }
 

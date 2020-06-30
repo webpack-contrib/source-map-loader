@@ -305,6 +305,28 @@ Failed to parse source map: \\"ftp://exampleurl.com\\" URL is not supported",
 ]
 `;
 
+exports[`source-map-loader should skip file protocol path if sourcesContent is set: css 1`] = `
+"// Some content
+ "
+`;
+
+exports[`source-map-loader should skip file protocol path if sourcesContent is set: errors 1`] = `Array []`;
+
+exports[`source-map-loader should skip file protocol path if sourcesContent is set: map 1`] = `
+Object {
+  "mappings": "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
+  "sources": Array [
+    "file:///external normal-file2.js",
+  ],
+  "sourcesContent": Array [
+    "export default 3;",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should skip file protocol path if sourcesContent is set: warnings 1`] = `Array []`;
+
 exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,\\"something invalid\\"
@@ -335,11 +357,12 @@ Object {
   "sources": Array [
     "webpack:///webpack/bootstrap",
     "webpack:///./src/index.js",
+    "webpack:///external \\"$\\"",
   ],
   "sourcesContent": Array [
     " //webpack bootstrap;",
-    "export default 3;
-",
+    "export default 3;",
+    "module.exports = $;",
   ],
   "version": 3,
 }
