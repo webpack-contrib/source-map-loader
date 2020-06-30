@@ -160,6 +160,14 @@ async function fetchFromURL(
       return { sourceContent };
     }
 
+    if (protocol === 'webpack:') {
+      const sourceURL = url;
+
+      if (skipReading) {
+        return { sourceURL };
+      }
+    }
+
     if (protocol === 'file:') {
       const pathFromURL = urlUtils.fileURLToPath(url);
 
