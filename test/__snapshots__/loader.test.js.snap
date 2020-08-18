@@ -15,6 +15,22 @@ Failed to parse source map from \\"data\\" URL: data:application/source-map;base
 ]
 `;
 
+exports[`source-map-loader should emit warning when unresolved server-relative-url-path: css 1`] = `
+"with SourceMap
+// #sourceMappingURL=/unresolved-server-relative-url-path.js.map
+// comment
+"
+`;
+
+exports[`source-map-loader should emit warning when unresolved server-relative-url-path: errors 1`] = `Array []`;
+
+exports[`source-map-loader should emit warning when unresolved server-relative-url-path: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Failed to parse source map from '/test/fixtures/unresolved-server-relative-url-path.js.map' file: Error: ENOENT: no such file or directory, open '/test/fixtures/unresolved-server-relative-url-path.js.map'",
+]
+`;
+
 exports[`source-map-loader should leave normal files untouched: css 1`] = `"without SourceMap"`;
 
 exports[`source-map-loader should leave normal files untouched: errors 1`] = `Array []`;
@@ -268,6 +284,33 @@ Array [
 Failed to parse source map: \\"//sampledomain.com/external-source-map2.map\\" URL is not supported",
 ]
 `;
+
+exports[`source-map-loader should process server-relative-url-path: css 1`] = `
+"with SourceMap
+// comment
+"
+`;
+
+exports[`source-map-loader should process server-relative-url-path: errors 1`] = `Array []`;
+
+exports[`source-map-loader should process server-relative-url-path: map 1`] = `
+Object {
+  "file": "server-relative-url-path.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/server-relative-url-path.js - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap
+// #sourceMappingURL=/server-relative-url-path.js.map
+// comment
+",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should process server-relative-url-path: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should reject http SourceMaps: css 1`] = `
 "with SourceMap

@@ -617,4 +617,45 @@ describe('source-map-loader', () => {
     expect(getWarnings(stats)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
+
+  it('should process server-relative-url-path', async () => {
+    const sourceRoot = path.resolve(__dirname, 'fixtures');
+    const javaScriptFilename = 'server-relative-url-path.js';
+    const sourceFilename = 'server-relative-url-path.js';
+    const sourceMapPath = path.join(
+      sourceRoot,
+      'server-relative-url-path.js.map'
+    );
+
+    // Create the sourcemap file
+    const rawSourceMap = {
+      version: 3,
+      file: javaScriptFilename,
+      sourceRoot,
+      sources: [sourceFilename],
+      mappings: 'AAAA',
+    };
+    fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));
+
+    const testId = 'server-relative-url-path.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it('should emit warning when unresolved server-relative-url-path', async () => {
+    const testId = 'unresolved-server-relative-url-path.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
 });

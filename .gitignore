@@ -7,6 +7,7 @@ test/fixtures/file-protocol-path.js.map
 test/fixtures/map-with-sourceroot.js.map
 test/fixtures/map-without-sourceroot.js.map
 test/fixtures/normal-map.js.map
+/test/fixtures/server-relative-url-path.js.map
 logs
 *.log
 npm-debug.log*
