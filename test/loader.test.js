@@ -655,7 +655,7 @@ describe('source-map-loader', () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.css).toMatchSnapshot('css');
-    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getWarnings(stats, true)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 });

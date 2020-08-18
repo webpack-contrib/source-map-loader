@@ -143,20 +143,39 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
   return buffer.toString();
 }
 
-async function fetchPathsFromFilesystem(loaderContext, possibleRequests) {
-  return fetchFromFilesystem(loaderContext, possibleRequests[0])
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      const [, ...tailPossibleRequests] = possibleRequests;
+async function fetchPathsFromFilesystem(
+  loaderContext,
+  possibleRequests,
+  errorsAccumulator = ''
+) {
+  let result;
 
-      if (tailPossibleRequests.length === 0) {
-        throw error;
-      }
+  try {
+    result = await fetchFromFilesystem(
+      loaderContext,
+      possibleRequests[0],
+      errorsAccumulator
+    );
+  } catch (error) {
+    // eslint-disable-next-line no-param-reassign
+    errorsAccumulator += `${error.message}\n\n`;
 
-      return fetchPathsFromFilesystem(loaderContext, tailPossibleRequests);
-    });
+    const [, ...tailPossibleRequests] = possibleRequests;
+
+    if (tailPossibleRequests.length === 0) {
+      error.message = errorsAccumulator;
+
+      throw error;
+    }
+
+    return fetchPathsFromFilesystem(
+      loaderContext,
+      tailPossibleRequests,
+      errorsAccumulator
+    );
+  }
+
+  return result;
 }
 
 async function fetchFromURL(

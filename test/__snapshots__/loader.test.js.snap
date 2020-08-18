@@ -26,8 +26,7 @@ exports[`source-map-loader should emit warning when unresolved server-relative-u
 
 exports[`source-map-loader should emit warning when unresolved server-relative-url-path: warnings 1`] = `
 Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from '/test/fixtures/unresolved-server-relative-url-path.js.map' file: Error: ENOENT: no such file or directory, open '/test/fixtures/unresolved-server-relative-url-path.js.map'",
+  "ModuleWarning: Module Warning (from \`replaced original path\`):",
 ]
 `;
 
