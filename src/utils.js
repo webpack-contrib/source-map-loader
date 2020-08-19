@@ -143,6 +143,41 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
   return buffer.toString();
 }
 
+async function fetchPathsFromFilesystem(
+  loaderContext,
+  possibleRequests,
+  errorsAccumulator = ''
+) {
+  let result;
+
+  try {
+    result = await fetchFromFilesystem(
+      loaderContext,
+      possibleRequests[0],
+      errorsAccumulator
+    );
+  } catch (error) {
+    // eslint-disable-next-line no-param-reassign
+    errorsAccumulator += `${error.message}\n\n`;
+
+    const [, ...tailPossibleRequests] = possibleRequests;
+
+    if (tailPossibleRequests.length === 0) {
+      error.message = errorsAccumulator;
+
+      throw error;
+    }
+
+    return fetchPathsFromFilesystem(
+      loaderContext,
+      tailPossibleRequests,
+      errorsAccumulator
+    );
+  }
+
+  return result;
+}
+
 async function fetchFromURL(
   loaderContext,
   context,
@@ -191,7 +226,18 @@ async function fetchFromURL(
     let sourceContent;
 
     if (!skipReading) {
-      sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
+      const possibleRequests = [sourceURL];
+
+      if (url.startsWith('/')) {
+        possibleRequests.push(
+          getAbsolutePath(context, sourceURL.slice(1), sourceRoot)
+        );
+      }
+
+      sourceContent = await fetchPathsFromFilesystem(
+        loaderContext,
+        possibleRequests
+      );
     }
 
     return { sourceURL, sourceContent };
