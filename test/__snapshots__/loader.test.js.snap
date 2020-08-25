@@ -423,7 +423,7 @@ Object {
 exports[`source-map-loader should skip webpack protocol path if sourcesContent is set: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should support absolute paths to sourcemaps: css 1`] = `
-"// Some content
+"// Some content 
  "
 `;
 
@@ -474,7 +474,7 @@ Object {
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should support file protocol path: css 1`] = `
-"// Some content
+"// Some content 
  "
 `;
 
@@ -562,7 +562,7 @@ Object {
 exports[`source-map-loader should support indexed sourcemaps: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should support mixed paths in sources with sourceRoot: css 1`] = `
-"// Some content
+"// Some content 
  "
 `;
 
@@ -600,7 +600,7 @@ Failed to parse source map: \\"http://path-to-map.com\\" URL is not supported",
 `;
 
 exports[`source-map-loader should support mixed paths in sources without sourceRoot: css 1`] = `
-"// Some content
+"// Some content 
  "
 `;
 
