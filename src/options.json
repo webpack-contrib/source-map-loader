@@ -1,4 +1,9 @@
 {
   "type": "object",
+  "properties": {
+    "noEmitWarnings": {
+      "type": "boolean"
+    }
+  },
   "additionalProperties": false
 }

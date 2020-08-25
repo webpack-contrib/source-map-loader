@@ -18,6 +18,12 @@ export default async function loader(input, inputMap) {
     baseDataPath: 'options',
   });
 
+  const emitWarning = (warning) => {
+    if (!options.noEmitWarnings) {
+      this.emitWarning(warning);
+    }
+  };
+
   const { sourceMappingURL, replacementString } = getSourceMappingURL(input);
   const callback = this.async();
 
@@ -37,7 +43,7 @@ export default async function loader(input, inputMap) {
       sourceMappingURL
     ));
   } catch (error) {
-    this.emitWarning(error);
+    emitWarning(error);
 
     callback(null, input, inputMap);
 
@@ -53,7 +59,7 @@ export default async function loader(input, inputMap) {
   try {
     map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
-    this.emitWarning(
+    emitWarning(
       new Error(`Failed to parse source map from '${sourceURL}': ${parseError}`)
     );
 
@@ -94,7 +100,7 @@ export default async function loader(input, inputMap) {
           skipReading
         ));
       } catch (error) {
-        this.emitWarning(error);
+        emitWarning(error);
 
         sourceURL = source;
       }
