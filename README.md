@@ -85,6 +85,38 @@ module.exports = {
 
 More information about the `warningsFilters` option you can find [here](https://webpack.js.org/configuration/stats/#statswarningsfilter);
 
+### Skipping files
+
+You can provide custom callback function `skipResource` in order to instruct `source-map-loader` to skip processing of any source map it will find.
+To do that, pass the function as the loader option. Function receives two arguments: loader context object (as defined in (webpack reference)[https://webpack.js.org/api/loaders/#the-loader-context]) and the source map url found in file.
+Function should return a truthful value if processing source map for the file should be skipped.
+Source map url is the string which may be an absolute file path, relative file path, file url, http url or data url.
+
+Example configuration:
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            skipResource: (loaderContext, url) => {
+              // Load source map only for files in package "my-package"
+              return loaderContext.context.match(/node_modules[\\/]my-package/);
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
 ## Contributing
 
 Please take a moment to read our contributing guidelines if you haven't yet done so.

@@ -1,4 +1,9 @@
 {
   "type": "object",
+  "properties": {
+    "skipResource": {
+      "instanceof": "Function"
+    }
+  },
   "additionalProperties": false
 }

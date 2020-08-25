@@ -18,10 +18,15 @@ export default async function loader(input, inputMap) {
     baseDataPath: 'options',
   });
 
+  const { skipResource } = options;
+
   const { sourceMappingURL, replacementString } = getSourceMappingURL(input);
   const callback = this.async();
 
-  if (!sourceMappingURL) {
+  const shouldSuppress =
+    sourceMappingURL && skipResource && skipResource(this, sourceMappingURL);
+
+  if (!sourceMappingURL || shouldSuppress) {
     callback(null, input, inputMap);
 
     return;

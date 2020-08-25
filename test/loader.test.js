@@ -658,4 +658,28 @@ describe('source-map-loader', () => {
     expect(getWarnings(stats, true)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
+
+  it('should skip SourceMaps for suppressed resources', async () => {
+    const testId = 'external-source-map.js';
+    const compiler = getCompiler(testId, {
+      skipResource: (loaderContext, url) => {
+        return url === 'external-source-map.map';
+      },
+    });
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+    const deps = stats.compilation.fileDependencies;
+
+    const dependencies = [
+      path.resolve(__dirname, 'fixtures', 'external-source-map.map'),
+    ];
+
+    dependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(false);
+    });
+    expect(codeFromBundle.map).toBeUndefined();
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
 });
