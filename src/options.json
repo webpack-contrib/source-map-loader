@@ -1,4 +1,9 @@
 {
   "type": "object",
-  "additionalProperties": false
+  "additionalProperties": false,
+  "properties": {
+    "filterSourceMappingUrl": {
+      "instanceof": "Function"
+    }
+  }
 }

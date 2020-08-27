@@ -19,12 +19,39 @@ export default async function loader(input, inputMap) {
   });
 
   const { sourceMappingURL, replacementString } = getSourceMappingURL(input);
+
   const callback = this.async();
 
   if (!sourceMappingURL) {
     callback(null, input, inputMap);
 
     return;
+  }
+
+  let consumeSourceMappingUrl;
+
+  try {
+    consumeSourceMappingUrl =
+      typeof options.filterSourceMappingUrl !== 'undefined'
+        ? options.filterSourceMappingUrl(this, sourceMappingURL)
+        : 'consume';
+  } catch (error) {
+    callback(error);
+
+    return;
+  }
+
+  // eslint-disable-next-line default-case
+  switch (consumeSourceMappingUrl) {
+    case 'skip':
+      callback(null, input, inputMap);
+      return;
+    case false:
+    case 'remove':
+      callback(null, input.replace(replacementString, ''), inputMap);
+      return;
+    case true:
+    case 'consume':
   }
 
   let sourceURL;

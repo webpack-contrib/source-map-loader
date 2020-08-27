@@ -58,6 +58,62 @@ Be mindful in setting [include](https://webpack.js.org/configuration/module/#rul
 
 And run `webpack` via your preferred method.
 
+## Options
+
+### filterSourceMappingUrl
+
+Type: `Function`
+Default: `undefined`
+
+You can provide custom callback function `filterSourceMappingUrl` in order to instruct `source-map-loader` to skip processing of any source map it will find.
+To do that, pass the function as the loader option.
+Function receives two arguments: loader context object (as defined in (webpack reference)[https://webpack.js.org/api/loaders/#the-loader-context]) and the source map url found in file.
+Source map url is the string which may be an absolute file path, relative file path, file url, http url or data url.
+
+The function must return one of the values:
+
+- `true<Boolean>` - process the source map, remove source map url from source (default behavior)
+- `false<Boolean>` - do not process the source map, remove source map url from source
+- `consume<String>` - process the source map, remove source map url from source (default behavior)
+- `remove<String>` - do not process the source map, remove source map url from source
+- `skip<String>` - do not process the source map, do not remove source map url from source
+
+Example configuration:
+
+**webpack.config.js**
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'source-map-loader',
+            options: {
+              filterSourceMappingUrl: (loaderContext, url) => {
+                if (/no need to process/i.test(url)) {
+                  return false;
+                }
+                if (
+                  /no need to process and no delete sourcemap url/i.test(url)
+                ) {
+                  return 'skip';
+                }
+
+                return true;
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
 ## Examples
 
 ### Ignoring Warnings
