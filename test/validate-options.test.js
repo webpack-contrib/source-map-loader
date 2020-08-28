@@ -2,6 +2,10 @@ import { getCompiler, compile } from './helpers';
 
 describe('validate options', () => {
   const tests = {
+    filterSourceMappingUrl: {
+      success: [() => false, () => 'false', () => 'remove', () => 'skip'],
+      failure: [1, true, false, 'test', /test/, [], {}, { foo: 'bar' }],
+    },
     unknown: {
       success: [],
       failure: [1, true, false, 'test', /test/, [], {}, { foo: 'bar' }],

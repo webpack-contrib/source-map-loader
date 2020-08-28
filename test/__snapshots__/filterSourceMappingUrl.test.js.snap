@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filterSourceMappingUrl option should emit error: errors 1`] = `
+Array [
+  "ModuleBuildError: Module build failed (from \`replaced original path\`):
+Error: error",
+]
+`;
+
+exports[`filterSourceMappingUrl option should emit error: warnings 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with "remove" value: css 1`] = `
+"with SourceMap
+// comment
+"
+`;
+
+exports[`filterSourceMappingUrl option should work with "remove" value: errors 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with "remove" value: warnings 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with "skip" value: css 1`] = `
+"with SourceMap
+//#sourceMappingURL=http://sampledomain.com/external-source-map2.map
+// comment
+"
+`;
+
+exports[`filterSourceMappingUrl option should work with "skip" value: errors 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with "skip" value: warnings 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with false value: css 1`] = `
+"with SourceMap
+// comment
+"
+`;
+
+exports[`filterSourceMappingUrl option should work with false value: errors 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with false value: warnings 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with true value: css 1`] = `
+"with SourceMap
+// comment"
+`;
+
+exports[`filterSourceMappingUrl option should work with true value: errors 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work with true value: map 1`] = `
+Object {
+  "file": "external-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/external-source-map.txt - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`filterSourceMappingUrl option should work with true value: warnings 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work: css 1`] = `
+"with SourceMap
+// comment"
+`;
+
+exports[`filterSourceMappingUrl option should work: errors 1`] = `Array []`;
+
+exports[`filterSourceMappingUrl option should work: map 1`] = `
+Object {
+  "file": "external-source-map.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/external-source-map.txt - (normalized for test)",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`filterSourceMappingUrl option should work: warnings 1`] = `Array []`;
