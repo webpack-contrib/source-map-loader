@@ -2,12 +2,11 @@ import path from 'path';
 import urlUtils from 'url';
 
 import sourceMap from 'source-map';
-import parseDataURL from 'data-urls';
 
 import { decode } from 'iconv-lite';
-
 import { urlToRequest } from 'loader-utils';
 
+import parseDataURL from './parse-data-url';
 import labelsToNames from './labels-to-names';
 
 // Matches only the last occurrence of sourceMappingURL
