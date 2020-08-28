@@ -9,11 +9,13 @@ import {
 
 describe('filterSourceMappingUrl option', () => {
   it('should work', async () => {
+    expect.assertions(6);
+
     const testId = 'external-source-map.js';
     const compiler = getCompiler(testId, {
-      filterSourceMappingUrl: (loaderContext, sourceMappingURL) => {
-        expect(loaderContext).toBeDefined();
+      filterSourceMappingUrl: (sourceMappingURL, resourcePath) => {
         expect(sourceMappingURL).toBeDefined();
+        expect(resourcePath).toBeDefined();
 
         return true;
       },

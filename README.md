@@ -48,35 +48,34 @@ module.exports = {
 };
 ```
 
-`source-map-loader` extracts existing source maps from all JavaScript entries.
+The `source-map-loader` extracts existing source maps from all JavaScript entries.
 This includes both inline source maps as well as those linked via URL.
 All source map data is passed to webpack for processing as per a chosen [source map style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.config.js](https://webpack.js.org/configuration/).
 This loader is especially useful when using 3rd-party libraries having their own source maps.
 If not extracted and processed into the source map of the webpack bundle, browsers may misinterpret source map data. `source-map-loader` allows webpack to maintain source map data continuity across libraries so ease of debugging is preserved.
-`source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory.
+The `source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory.
 Be mindful in setting [include](https://webpack.js.org/configuration/module/#rule-include) and [exclude](https://webpack.js.org/configuration/module/#rule-exclude) rule conditions to maximize bundling performance.
 
 And run `webpack` via your preferred method.
 
 ## Options
 
+|                 Name                 |     Type     |   Default   | Description                                    |
+| :----------------------------------: | :----------: | :---------: | :--------------------------------------------- |
+| **[`filterSourceMappingUrl`](#url)** | `{Function}` | `undefined` | Allows to control `SourceMappingURL` behaviour |
+
 ### filterSourceMappingUrl
 
 Type: `Function`
 Default: `undefined`
 
-You can provide custom callback function `filterSourceMappingUrl` in order to instruct `source-map-loader` to skip processing of any source map it will find.
-To do that, pass the function as the loader option.
-Function receives two arguments: loader context object (as defined in (webpack reference)[https://webpack.js.org/api/loaders/#the-loader-context]) and the source map url found in file.
-Source map url is the string which may be an absolute file path, relative file path, file url, http url or data url.
+Allows you to specify the behavior of the loader for `SourceMappingURL` comment.
 
 The function must return one of the values:
 
-- `true<Boolean>` - process the source map, remove source map url from source (default behavior)
-- `false<Boolean>` - do not process the source map, remove source map url from source
-- `consume<String>` - process the source map, remove source map url from source (default behavior)
-- `remove<String>` - do not process the source map, remove source map url from source
-- `skip<String>` - do not process the source map, do not remove source map url from source
+- `true` or `'consume'` - consume the source map and remove `SourceMappingURL` comment (default behavior)
+- `false` or `'remove'` - do not consume the source map and remove `SourceMappingURL` comment
+- `skip` - do not consume the source map and do not remove `SourceMappingURL` comment
 
 Example configuration:
 
@@ -93,13 +92,12 @@ module.exports = {
           {
             loader: 'source-map-loader',
             options: {
-              filterSourceMappingUrl: (loaderContext, url) => {
-                if (/no need to process/i.test(url)) {
+              filterSourceMappingUrl: (url, resourcePath) => {
+                if (/broker-source-map-url\.js$/i.test(url)) {
                   return false;
                 }
-                if (
-                  /no need to process and no delete sourcemap url/i.test(url)
-                ) {
+
+                if (/keep-source-mapping-url\.js$/i.test(resourcePath)) {
                   return 'skip';
                 }
 

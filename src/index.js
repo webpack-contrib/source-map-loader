@@ -28,12 +28,12 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  let consumeSourceMappingUrl;
+  let behaviourSourceMappingUrl;
 
   try {
-    consumeSourceMappingUrl =
+    behaviourSourceMappingUrl =
       typeof options.filterSourceMappingUrl !== 'undefined'
-        ? options.filterSourceMappingUrl(this, sourceMappingURL)
+        ? options.filterSourceMappingUrl(sourceMappingURL, this.resourcePath)
         : 'consume';
   } catch (error) {
     callback(error);
@@ -42,7 +42,7 @@ export default async function loader(input, inputMap) {
   }
 
   // eslint-disable-next-line default-case
-  switch (consumeSourceMappingUrl) {
+  switch (behaviourSourceMappingUrl) {
     case 'skip':
       callback(null, input, inputMap);
       return;
@@ -50,8 +50,6 @@ export default async function loader(input, inputMap) {
     case 'remove':
       callback(null, input.replace(replacementString, ''), inputMap);
       return;
-    case true:
-    case 'consume':
   }
 
   let sourceURL;
