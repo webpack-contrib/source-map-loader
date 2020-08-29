@@ -13,15 +13,15 @@ export default function parseDataUrl(stringInput) {
     return null;
   }
 
-  const input = serializeURL(urlRecord, true).substring('data:'.length);
+  // `5` is value of `'data:'.length`
+  const input = serializeURL(urlRecord, true).substring(5);
 
   let position = 0;
-
   let mimeType = '';
+
   while (position < input.length && input[position] !== ',') {
     mimeType += input[position];
-    // eslint-disable-next-line no-plusplus
-    ++position;
+    position += 1;
   }
 
   mimeType = mimeType.replace(/^[ \t\n\f\r]+/, '').replace(/[ \t\n\f\r]+$/, '');
@@ -30,8 +30,7 @@ export default function parseDataUrl(stringInput) {
     return null;
   }
 
-  // eslint-disable-next-line no-plusplus
-  ++position;
+  position += 1;
 
   const encodedBody = input.substring(position);
 
@@ -42,7 +41,6 @@ export default function parseDataUrl(stringInput) {
 
   if (mimeTypeBase64MatchResult) {
     const stringBody = body.toString('binary');
-
     const asString = atob(stringBody);
 
     if (asString === null) {
@@ -50,9 +48,7 @@ export default function parseDataUrl(stringInput) {
     }
 
     body = Buffer.from(asString, 'binary');
-
-    // eslint-disable-next-line prefer-destructuring
-    mimeType = mimeTypeBase64MatchResult[1];
+    [, mimeType] = mimeTypeBase64MatchResult;
   }
 
   if (mimeType.startsWith(';')) {
@@ -60,14 +56,12 @@ export default function parseDataUrl(stringInput) {
   }
 
   let mimeTypeRecord;
+
   try {
     mimeTypeRecord = new MIMEType(mimeType);
   } catch (e) {
     mimeTypeRecord = new MIMEType('text/plain;charset=US-ASCII');
   }
 
-  return {
-    mimeType: mimeTypeRecord,
-    body,
-  };
+  return { mimeType: mimeTypeRecord, body };
 }

@@ -77,5 +77,15 @@
   ["data:;charset,X", "text/plain", [88]],
   ["data:;charset=\"x\",X", "text/plain;charset=x", [88]],
   ["data:;CHARSET=\"X\",X", "text/plain;charset=X", [88]],
-  ["no-data:;CHARSET=\"X\",X", null]
+  ["no-data:;CHARSET=\"X\",X", null],
+  [
+    "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+    "image/gif",
+    [71, 73, 70, 56, 57, 97, 1, 0, 1, 0, 128, 0, 0, 255, 255, 255, 0, 0, 0, 33, 249, 4, 1, 0, 0, 0, 0, 44, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 68, 1, 0, 59]
+  ],
+  [
+    "DATA:IMAGE/GIF;BASE64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+    "image/gif",
+    [71, 73, 70, 56, 57, 97, 1, 0, 1, 0, 128, 0, 0, 255, 255, 255, 0, 0, 0, 33, 249, 4, 1, 0, 0, 0, 0, 44, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 68, 1, 0, 59]
+  ]
 ]
