@@ -60,9 +60,9 @@ And run `webpack` via your preferred method.
 
 ## Options
 
-|                 Name                 |     Type     |   Default   | Description                                    |
-| :----------------------------------: | :----------: | :---------: | :--------------------------------------------- |
-| **[`filterSourceMappingUrl`](#url)** | `{Function}` | `undefined` | Allows to control `SourceMappingURL` behaviour |
+|                          Name                           |     Type     |   Default   | Description                                    |
+| :-----------------------------------------------------: | :----------: | :---------: | :--------------------------------------------- |
+| **[`filterSourceMappingUrl`](#filtersourcemappingurl)** | `{Function}` | `undefined` | Allows to control `SourceMappingURL` behaviour |
 
 ### filterSourceMappingUrl
 
