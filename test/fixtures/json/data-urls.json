@@ -1,5 +1,6 @@
 [
   ["data://test/,X", ["text/plain;charset=US-ASCII", [88]]],
+  ["http://domain.com", null],
   ["data://test:test/,X", null],
   ["data:,X", ["text/plain;charset=US-ASCII", [88]]],
   ["data:", null],
