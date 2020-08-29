@@ -5,22 +5,15 @@ import dataUrls from './fixtures/json/data-urls.json';
 describe('parse-data-url', () => {
   dataUrls.forEach((entry) => {
     it(`should work with "${entry}" url`, async () => {
-      const [url, mimeType, value] = entry;
+      const [url, expected] = entry;
 
       const result = parseDataUrl(url);
 
-      if (mimeType) {
-        expect(mimeType).toEqual(result.mimeType.toString());
-      }
-
-      if (value) {
-        const body = result.body.toJSON().data;
-
-        value.forEach((item, index) => {
-          expect(value[index]).toEqual(body[index]);
-        });
+      if (result === null) {
+        expect(result).toBe(expected);
       } else {
-        expect(result).toEqual(null);
+        expect(result.mimeType.toString()).toEqual(expected[0]);
+        expect(result.body).toEqual(Buffer.from(expected[1]));
       }
     });
   });

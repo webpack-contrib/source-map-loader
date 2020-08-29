@@ -48,6 +48,7 @@ export default function parseDataUrl(stringInput) {
     }
 
     body = Buffer.from(asString, 'binary');
+
     [, mimeType] = mimeTypeBase64MatchResult;
   }
 
