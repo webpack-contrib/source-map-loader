@@ -46,8 +46,7 @@
     "loader-utils": "^2.0.0",
     "schema-utils": "^2.7.0",
     "source-map": "^0.6.1",
-    "whatwg-mimetype": "^2.3.0",
-    "whatwg-url": "^8.2.1"
+    "whatwg-mimetype": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
