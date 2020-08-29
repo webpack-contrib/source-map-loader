@@ -1,5 +1,5 @@
 const labelToNames = {
-  '866': 'IBM866',
+  866: 'IBM866',
   'unicode-1-1-utf-8': 'UTF-8',
   'utf-8': 'UTF-8',
   utf8: 'UTF-8',
