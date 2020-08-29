@@ -1,20 +1,24 @@
 import MIMEType from 'whatwg-mimetype';
-import { parseURL, serializeURL, percentDecode } from 'whatwg-url';
+import { percentDecode } from 'whatwg-url';
 import { atob } from 'abab';
 
 export default function parseDataUrl(stringInput) {
-  const urlRecord = parseURL(stringInput);
+  let parsedUrl;
 
-  if (urlRecord === null) {
+  try {
+    parsedUrl = new URL(stringInput);
+  } catch (error) {
     return null;
   }
 
-  if (urlRecord.scheme !== 'data') {
+  if (parsedUrl.protocol !== 'data:') {
     return null;
   }
+
+  parsedUrl.hash = '';
 
   // `5` is value of `'data:'.length`
-  const input = serializeURL(urlRecord, true).substring(5);
+  const input = parsedUrl.toString().substring(5);
 
   let position = 0;
   let mimeType = '';
