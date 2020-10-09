@@ -4,8 +4,8 @@
 */
 import path from 'path';
 
-import validateOptions from 'schema-utils';
 import { getOptions } from 'loader-utils';
+import { validate } from 'schema-utils';
 
 import schema from './options.json';
 import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from './utils';
@@ -13,7 +13,7 @@ import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from './utils';
 export default async function loader(input, inputMap) {
   const options = getOptions(this);
 
-  validateOptions(schema, options, {
+  validate(schema, options, {
     name: 'Source Map Loader',
     baseDataPath: 'options',
   });
