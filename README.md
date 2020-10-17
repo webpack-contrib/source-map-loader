@@ -131,13 +131,11 @@ module.exports = {
       },
     ],
   },
-  stats: {
-    warningsFilter: [/Failed to parse source map/],
-  },
+  ignoreWarnings: [/Failed to parse source map/],
 };
 ```
 
-More information about the `warningsFilters` option you can find [here](https://webpack.js.org/configuration/stats/#statswarningsfilter);
+More information about the `ignoreWarnings` option you can find [here](https://webpack.js.org/configuration/#options:~:text=ignoreWarnings);
 
 ## Contributing
 
