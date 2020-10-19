@@ -135,8 +135,6 @@ module.exports = {
 };
 ```
 
-More information about the `ignoreWarnings` option you can find [here](https://webpack.js.org/configuration/#options:~:text=ignoreWarnings);
-
 ## Contributing
 
 Please take a moment to read our contributing guidelines if you haven't yet done so.
