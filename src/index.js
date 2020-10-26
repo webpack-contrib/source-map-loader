@@ -104,10 +104,11 @@ export default async function loader(input, inputMap) {
       let sourceContent;
 
       const originalSourceContent =
-        map.sourcesContent && map.sourcesContent[i]
+        map.sourcesContent && typeof map.sourcesContent[i] !== 'undefined'
           ? map.sourcesContent[i]
           : // eslint-disable-next-line no-undefined
             undefined;
+      const skipReading = typeof originalSourceContent !== 'undefined';
       let errored = false;
 
       // We do not skipReading here, because we need absolute paths in sources.
@@ -119,7 +120,7 @@ export default async function loader(input, inputMap) {
           context,
           source,
           map.sourceRoot,
-          originalSourceContent
+          skipReading
         ));
       } catch (error) {
         errored = true;
@@ -127,7 +128,7 @@ export default async function loader(input, inputMap) {
         this.emitWarning(error);
       }
 
-      if (originalSourceContent) {
+      if (skipReading) {
         sourceContent = originalSourceContent;
       } else if (!errored && sourceURL) {
         this.addDependency(sourceURL);

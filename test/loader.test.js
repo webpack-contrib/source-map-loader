@@ -655,7 +655,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it('should add only valid `sources`', async () => {
+  it('should add only valid `sources` to dependencies', async () => {
     const testId = 'dependencies.js';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
@@ -671,6 +671,36 @@ describe('source-map-loader', () => {
       ),
     ];
     const notInDependencies = ['', 'data:invalid;A;a', './data/not-found.txt'];
+
+    dependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(true);
+    });
+    notInDependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(false);
+    });
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
+
+  it.only('should add only valid `sources` with `sourceContent` to dependencies', async () => {
+    const testId = 'dependencies2.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+    const deps = stats.compilation.fileDependencies;
+
+    const dependencies = [
+      path.resolve(__dirname, 'fixtures', 'dependencies2.js.map'),
+    ];
+    const notInDependencies = [
+      './data/relative-sourceRoot-source-map.txt',
+      path.resolve(__dirname, './data/relative-sourceRoot-source-map.txt'),
+      './data/not-found.txt',
+      'data:application/json;base64,c29tZSBraW5kIGNvbnRlbnQ=',
+      'data:invalid;A;a',
+    ];
 
     dependencies.forEach((fixture) => {
       expect(deps.has(fixture)).toBe(true);
