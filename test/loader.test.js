@@ -670,7 +670,7 @@ describe('source-map-loader', () => {
         'data/relative-sourceRoot-source-map.txt'
       ),
     ];
-    const notInDependencies = ['data:invalid;A;a', './data/not-found.txt'];
+    const notInDependencies = ['', 'data:invalid;A;a', './data/not-found.txt'];
 
     dependencies.forEach((fixture) => {
       expect(deps.has(fixture)).toBe(true);
