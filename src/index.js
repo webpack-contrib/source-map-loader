@@ -104,8 +104,8 @@ export default async function loader(input, inputMap) {
       const originalSourceContent =
         map.sourcesContent && map.sourcesContent[i]
           ? map.sourcesContent[i]
-          : null;
-      const skipReading = originalSourceContent !== null;
+          : // eslint-disable-next-line no-undefined
+            undefined;
 
       // We do not skipReading here, because we need absolute paths in sources.
       // This is necessary so that for sourceMaps with the same file structure in sources, name collisions do not occur.
@@ -116,7 +116,7 @@ export default async function loader(input, inputMap) {
           context,
           source,
           map.sourceRoot,
-          skipReading
+          originalSourceContent
         ));
       } catch (error) {
         this.emitWarning(error);
@@ -126,9 +126,7 @@ export default async function loader(input, inputMap) {
 
       if (originalSourceContent) {
         sourceContent = originalSourceContent;
-      }
-
-      if (sourceURL) {
+      } else if (sourceURL) {
         this.addDependency(sourceURL);
       }
 

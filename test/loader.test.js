@@ -368,8 +368,6 @@ describe('source-map-loader', () => {
     const dependencies = [
       path.join(currentDirPath, 'file.js'),
       path.join(currentDirPath, 'file.js.map'),
-      path.join(currentDirPath, 'nested1.js'),
-      path.normalize(`/different/root/nested2.js`),
     ];
 
     dependencies.forEach((fixture) => {
@@ -398,8 +396,6 @@ describe('source-map-loader', () => {
     const dependencies = [
       path.join(currentDirPath, 'file2.js'),
       path.join(currentDirPath, 'file2.js.map'),
-      path.join(currentDirPath, 'nested1.js'),
-      path.normalize(`/different/root/nested2.js`),
     ];
 
     dependencies.forEach((fixture) => {

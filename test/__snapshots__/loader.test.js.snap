@@ -400,11 +400,15 @@ Object {
     "webpack:///webpack/bootstrap",
     "webpack:///./src/index.js",
     "webpack:///external \\"$\\"",
+    "/test/fixtures/external {\\"commonjs\\":\\"react\\",\\"commonjs2\\":\\"react\\",\\"amd\\":\\"react\\",\\"root\\":\\"React\\"} - (normalized for test)",
+    "/test/fixtures/external {\\"commonjs\\":\\"react-dom\\",\\"commonjs2\\":\\"react-dom\\",\\"amd\\":\\"react-dom\\",\\"root\\":\\"ReactDOM\\"} - (normalized for test)",
   ],
   "sourcesContent": Array [
     " //webpack bootstrap;",
     "export default 3;",
     "module.exports = $;",
+    "module.exports = __WEBPACK_EXTERNAL_MODULE__5__;",
+    "module.exports = __WEBPACK_EXTERNAL_MODULE__6__;",
   ],
   "version": 3,
 }
