@@ -654,4 +654,33 @@ describe('source-map-loader', () => {
     expect(getWarnings(stats, true)).toMatchSnapshot('warnings');
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
+
+  it('should add only valid `sources`', async () => {
+    const testId = 'dependencies.js';
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+    const deps = stats.compilation.fileDependencies;
+
+    const dependencies = [
+      path.resolve(__dirname, 'fixtures', 'dependencies.js.map'),
+      path.resolve(
+        __dirname,
+        'fixtures',
+        'data/relative-sourceRoot-source-map.txt'
+      ),
+    ];
+    const notInDependencies = ['data:invalid;A;a', './data/not-found.txt'];
+
+    dependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(true);
+    });
+    notInDependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(false);
+    });
+    expect(codeFromBundle.css).toMatchSnapshot('css');
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot('map');
+    expect(getWarnings(stats)).toMatchSnapshot('warnings');
+    expect(getErrors(stats)).toMatchSnapshot('errors');
+  });
 });

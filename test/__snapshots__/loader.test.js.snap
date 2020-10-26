@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`source-map-loader should add only valid \`sources\`: css 1`] = `
+"// Dependencies
+"
+`;
+
+exports[`source-map-loader should add only valid \`sources\`: errors 1`] = `Array []`;
+
+exports[`source-map-loader should add only valid \`sources\`: map 1`] = `
+Object {
+  "file": "inline-sources.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/data/relative-sourceRoot-source-map.txt - (normalized for test)",
+    "./data/not-found.txt",
+    "",
+    "data:invalid;A;a",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap
+// comment",
+    "",
+    "some kind content",
+    "",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should add only valid \`sources\`: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Failed to parse source map from \\"data\\" URL: data:invalid;A;a",
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Failed to parse source map from '/test/fixtures/data/not-found.txt' file: Error: ENOENT: no such file or directory, open '/test/fixtures/data/not-found.txt'",
+]
+`;
+
 exports[`source-map-loader should allow to filter warnings: css 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,invalid/base64=
@@ -380,7 +417,7 @@ exports[`source-map-loader should skip invalid base64 SourceMap: errors 1`] = `A
 exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from 'undefined': SyntaxError: Unexpected end of JSON input",
+Failed to parse source map from '': SyntaxError: Unexpected end of JSON input",
 ]
 `;
 

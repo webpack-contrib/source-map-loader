@@ -191,7 +191,7 @@ async function fetchFromURL(
     if (protocol === 'data:') {
       const sourceContent = fetchFromDataURL(loaderContext, url);
 
-      return { sourceContent };
+      return { sourceURL: '', sourceContent };
     }
 
     if (skipReading) {
