@@ -684,7 +684,7 @@ describe('source-map-loader', () => {
     expect(getErrors(stats)).toMatchSnapshot('errors');
   });
 
-  it.only('should add only valid `sources` with `sourceContent` to dependencies', async () => {
+  it('should add only valid `sources` with `sourceContent` to dependencies', async () => {
     const testId = 'dependencies2.js';
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
