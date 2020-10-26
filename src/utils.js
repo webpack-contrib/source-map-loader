@@ -207,14 +207,14 @@ async function fetchFromURL(
     }
 
     throw new Error(
-      `Failed to parse source map: "${url}" URL is not supported`
+      `Failed to parse source map: '${url}' URL is not supported`
     );
   }
 
   // 2. It's a scheme-relative
   if (/^\/\//.test(url)) {
     throw new Error(
-      `Failed to parse source map: "${url}" URL is not supported`
+      `Failed to parse source map: '${url}' URL is not supported`
     );
   }
 

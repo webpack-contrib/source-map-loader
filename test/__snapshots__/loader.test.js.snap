@@ -317,7 +317,7 @@ exports[`source-map-loader should process protocol-relative-url-path: errors 1`]
 exports[`source-map-loader should process protocol-relative-url-path: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"//sampledomain.com/external-source-map2.map\\" URL is not supported",
+Failed to parse source map: '//sampledomain.com/external-source-map2.map' URL is not supported",
 ]
 `;
 
@@ -360,7 +360,7 @@ exports[`source-map-loader should reject http SourceMaps: errors 1`] = `Array []
 exports[`source-map-loader should reject http SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"http://sampledomain.com/external-source-map2.map\\" URL is not supported",
+Failed to parse source map: 'http://sampledomain.com/external-source-map2.map' URL is not supported",
 ]
 `;
 
@@ -380,7 +380,7 @@ exports[`source-map-loader should reject not support url: errors 1`] = `Array []
 exports[`source-map-loader should reject not support url: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"ftp://exampleurl.com\\" URL is not supported",
+Failed to parse source map: 'ftp://exampleurl.com' URL is not supported",
 ]
 `;
 
@@ -417,7 +417,7 @@ exports[`source-map-loader should skip invalid base64 SourceMap: errors 1`] = `A
 exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from '': SyntaxError: Unexpected end of JSON input",
+Failed to parse source map from 'data:application/source-map;base64,': SyntaxError: Unexpected end of JSON input",
 ]
 `;
 
@@ -624,9 +624,9 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 exports[`source-map-loader should support mixed paths in sources with sourceRoot: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"ftp://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'ftp://path-to-map.com' URL is not supported",
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"http://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'http://path-to-map.com' URL is not supported",
 ]
 `;
 
@@ -662,9 +662,9 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 exports[`source-map-loader should support mixed paths in sources without sourceRoot: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"ftp://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'ftp://path-to-map.com' URL is not supported",
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"http://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'http://path-to-map.com' URL is not supported",
 ]
 `;
 
@@ -727,7 +727,7 @@ exports[`source-map-loader should warn on invalid SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on invalid SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from '/test/fixtures/invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
+Failed to parse source map from 'invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
 ]
 `;
 
