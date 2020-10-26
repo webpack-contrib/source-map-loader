@@ -189,6 +189,10 @@ async function fetchFromURL(
     const { protocol } = urlUtils.parse(url);
 
     if (protocol === 'data:') {
+      if (skipReading) {
+        return { sourceURL: '' };
+      }
+
       const sourceContent = fetchFromDataURL(loaderContext, url);
 
       return { sourceURL: '', sourceContent };

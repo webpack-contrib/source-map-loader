@@ -52,7 +52,7 @@ Object {
     "/test/fixtures/data/relative-sourceRoot-source-map.txt - (normalized for test)",
     "/test/fixtures/data/not-found.txt - (normalized for test)",
     "",
-    "data:invalid;A;a",
+    "",
   ],
   "sourcesContent": Array [
     "foo",
@@ -64,12 +64,7 @@ Object {
 }
 `;
 
-exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: warnings 1`] = `
-Array [
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from \\"data\\" URL: data:invalid;A;a",
-]
-`;
+exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: warnings 1`] = `Array []`;
 
 exports[`source-map-loader should allow to filter warnings: css 1`] = `
 "without SourceMap
