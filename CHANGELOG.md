@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/webpack-contrib/source-map-loader/compare/v1.1.1...v1.1.2) (2020-10-27)
+
+
+### Bug Fixes
+
+* do not watch unnecessary `sources` ([23768df](https://github.com/webpack-contrib/source-map-loader/commit/23768df65e1ea4773114ec004a29d1271e9ab02d))
+
 ### [1.1.1](https://github.com/webpack-contrib/source-map-loader/compare/v1.1.0...v1.1.1) (2020-10-09)
 
 ### Chore
