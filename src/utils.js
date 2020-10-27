@@ -189,9 +189,13 @@ async function fetchFromURL(
     const { protocol } = urlUtils.parse(url);
 
     if (protocol === 'data:') {
+      if (skipReading) {
+        return { sourceURL: '' };
+      }
+
       const sourceContent = fetchFromDataURL(loaderContext, url);
 
-      return { sourceContent };
+      return { sourceURL: '', sourceContent };
     }
 
     if (skipReading) {
@@ -207,14 +211,14 @@ async function fetchFromURL(
     }
 
     throw new Error(
-      `Failed to parse source map: "${url}" URL is not supported`
+      `Failed to parse source map: '${url}' URL is not supported`
     );
   }
 
   // 2. It's a scheme-relative
   if (/^\/\//.test(url)) {
     throw new Error(
-      `Failed to parse source map: "${url}" URL is not supported`
+      `Failed to parse source map: '${url}' URL is not supported`
     );
   }
 

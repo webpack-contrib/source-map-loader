@@ -1,0 +1,11 @@
+{
+  "version":3,
+  "file":"inline-sources.js",
+  "sources":[
+    "./data/relative-sourceRoot-source-map.txt",
+    "./data/not-found.txt",
+    "data:application/json;base64,c29tZSBraW5kIGNvbnRlbnQ=",
+    "data:invalid;A;a"
+  ],
+  "mappings":"AAAA"
+}

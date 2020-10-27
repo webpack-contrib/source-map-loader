@@ -1,5 +1,71 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`source-map-loader should add only valid \`sources\` to dependencies: css 1`] = `
+"// Dependencies
+"
+`;
+
+exports[`source-map-loader should add only valid \`sources\` to dependencies: errors 1`] = `Array []`;
+
+exports[`source-map-loader should add only valid \`sources\` to dependencies: map 1`] = `
+Object {
+  "file": "inline-sources.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/data/relative-sourceRoot-source-map.txt - (normalized for test)",
+    "./data/not-found.txt",
+    "",
+    "data:invalid;A;a",
+  ],
+  "sourcesContent": Array [
+    "with SourceMap
+// comment",
+    "",
+    "some kind content",
+    "",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should add only valid \`sources\` to dependencies: warnings 1`] = `
+Array [
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Failed to parse source map from \\"data\\" URL: data:invalid;A;a",
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Failed to parse source map from '/test/fixtures/data/not-found.txt' file: Error: ENOENT: no such file or directory, open '/test/fixtures/data/not-found.txt'",
+]
+`;
+
+exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: css 1`] = `
+"// Dependencies
+"
+`;
+
+exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: errors 1`] = `Array []`;
+
+exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: map 1`] = `
+Object {
+  "file": "inline-sources.js",
+  "mappings": "AAAA",
+  "sources": Array [
+    "/test/fixtures/data/relative-sourceRoot-source-map.txt - (normalized for test)",
+    "/test/fixtures/data/not-found.txt - (normalized for test)",
+    "",
+    "",
+  ],
+  "sourcesContent": Array [
+    "foo",
+    "bar",
+    "",
+    "baz",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: warnings 1`] = `Array []`;
+
 exports[`source-map-loader should allow to filter warnings: css 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,invalid/base64=
@@ -280,7 +346,7 @@ exports[`source-map-loader should process protocol-relative-url-path: errors 1`]
 exports[`source-map-loader should process protocol-relative-url-path: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"//sampledomain.com/external-source-map2.map\\" URL is not supported",
+Failed to parse source map: '//sampledomain.com/external-source-map2.map' URL is not supported",
 ]
 `;
 
@@ -323,7 +389,7 @@ exports[`source-map-loader should reject http SourceMaps: errors 1`] = `Array []
 exports[`source-map-loader should reject http SourceMaps: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"http://sampledomain.com/external-source-map2.map\\" URL is not supported",
+Failed to parse source map: 'http://sampledomain.com/external-source-map2.map' URL is not supported",
 ]
 `;
 
@@ -343,7 +409,7 @@ exports[`source-map-loader should reject not support url: errors 1`] = `Array []
 exports[`source-map-loader should reject not support url: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"ftp://exampleurl.com\\" URL is not supported",
+Failed to parse source map: 'ftp://exampleurl.com' URL is not supported",
 ]
 `;
 
@@ -380,7 +446,7 @@ exports[`source-map-loader should skip invalid base64 SourceMap: errors 1`] = `A
 exports[`source-map-loader should skip invalid base64 SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from 'undefined': SyntaxError: Unexpected end of JSON input",
+Failed to parse source map from 'data:application/source-map;base64,': SyntaxError: Unexpected end of JSON input",
 ]
 `;
 
@@ -400,11 +466,15 @@ Object {
     "webpack:///webpack/bootstrap",
     "webpack:///./src/index.js",
     "webpack:///external \\"$\\"",
+    "/test/fixtures/external {\\"commonjs\\":\\"react\\",\\"commonjs2\\":\\"react\\",\\"amd\\":\\"react\\",\\"root\\":\\"React\\"} - (normalized for test)",
+    "/test/fixtures/external {\\"commonjs\\":\\"react-dom\\",\\"commonjs2\\":\\"react-dom\\",\\"amd\\":\\"react-dom\\",\\"root\\":\\"ReactDOM\\"} - (normalized for test)",
   ],
   "sourcesContent": Array [
     " //webpack bootstrap;",
     "export default 3;",
     "module.exports = $;",
+    "module.exports = __WEBPACK_EXTERNAL_MODULE__5__;",
+    "module.exports = __WEBPACK_EXTERNAL_MODULE__6__;",
   ],
   "version": 3,
 }
@@ -583,9 +653,9 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 exports[`source-map-loader should support mixed paths in sources with sourceRoot: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"ftp://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'ftp://path-to-map.com' URL is not supported",
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"http://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'http://path-to-map.com' URL is not supported",
 ]
 `;
 
@@ -621,9 +691,9 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 exports[`source-map-loader should support mixed paths in sources without sourceRoot: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"ftp://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'ftp://path-to-map.com' URL is not supported",
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map: \\"http://path-to-map.com\\" URL is not supported",
+Failed to parse source map: 'http://path-to-map.com' URL is not supported",
 ]
 `;
 
@@ -686,7 +756,7 @@ exports[`source-map-loader should warn on invalid SourceMap: errors 1`] = `Array
 exports[`source-map-loader should warn on invalid SourceMap: warnings 1`] = `
 Array [
   "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from '/test/fixtures/invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
+Failed to parse source map from 'invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
 ]
 `;
 

@@ -79,7 +79,9 @@ export default async function loader(input, inputMap) {
     map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ''));
   } catch (parseError) {
     this.emitWarning(
-      new Error(`Failed to parse source map from '${sourceURL}': ${parseError}`)
+      new Error(
+        `Failed to parse source map from '${sourceMappingURL}': ${parseError}`
+      )
     );
 
     callback(null, input, inputMap);
@@ -102,10 +104,12 @@ export default async function loader(input, inputMap) {
       let sourceContent;
 
       const originalSourceContent =
-        map.sourcesContent && map.sourcesContent[i]
+        map.sourcesContent && typeof map.sourcesContent[i] !== 'undefined'
           ? map.sourcesContent[i]
-          : null;
-      const skipReading = originalSourceContent !== null;
+          : // eslint-disable-next-line no-undefined
+            undefined;
+      const skipReading = typeof originalSourceContent !== 'undefined';
+      let errored = false;
 
       // We do not skipReading here, because we need absolute paths in sources.
       // This is necessary so that for sourceMaps with the same file structure in sources, name collisions do not occur.
@@ -119,20 +123,19 @@ export default async function loader(input, inputMap) {
           skipReading
         ));
       } catch (error) {
+        errored = true;
+
         this.emitWarning(error);
-
-        sourceURL = source;
       }
 
-      if (originalSourceContent) {
+      if (skipReading) {
         sourceContent = originalSourceContent;
-      }
-
-      if (sourceURL) {
+      } else if (!errored && sourceURL) {
         this.addDependency(sourceURL);
       }
 
-      return { sourceURL, sourceContent };
+      // Return original value of `source` when error happens
+      return { sourceURL: errored ? source : sourceURL, sourceContent };
     })
   );
 
