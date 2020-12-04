@@ -87,8 +87,12 @@ function getSourceMappingURL(code) {
     }
   }
 
+  const sourceMappingURL = match ? match[1] || match[2] || '' : null;
+
   return {
-    sourceMappingURL: match ? match[1] || match[2] || '' : null,
+    sourceMappingURL: sourceMappingURL
+      ? decodeURI(sourceMappingURL)
+      : sourceMappingURL,
     replacementString: match ? match[0] : null,
   };
 }

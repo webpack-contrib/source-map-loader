@@ -334,6 +334,16 @@ Object {
 
 exports[`source-map-loader should process inlined sources: warnings 1`] = `Array []`;
 
+exports[`source-map-loader should process percent-encoding path: css 1`] = `
+"with SourceMap
+// comment
+"
+`;
+
+exports[`source-map-loader should process percent-encoding path: errors 1`] = `Array []`;
+
+exports[`source-map-loader should process percent-encoding path: warnings 1`] = `Array []`;
+
 exports[`source-map-loader should process protocol-relative-url-path: css 1`] = `
 "// Some content
 // # sourceMappingURL=//sampledomain.com/external-source-map2.map
