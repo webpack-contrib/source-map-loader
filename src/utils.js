@@ -1,33 +1,33 @@
-import path from 'path';
-import urlUtils from 'url';
+import path from "path";
+import urlUtils from "url";
 
-import sourceMap from 'source-map';
+import sourceMap from "source-map";
 
-import { decode } from 'iconv-lite';
-import { urlToRequest } from 'loader-utils';
+import { decode } from "iconv-lite";
+import { urlToRequest } from "loader-utils";
 
-import parseDataURL from './parse-data-url';
-import labelsToNames from './labels-to-names';
+import parseDataURL from "./parse-data-url";
+import labelsToNames from "./labels-to-names";
 
 // Matches only the last occurrence of sourceMappingURL
 const innerRegex = /\s*[#@]\s*sourceMappingURL\s*=\s*([^\s'"]*)\s*/;
 
 /* eslint-disable prefer-template */
 const sourceMappingURLRegex = RegExp(
-  '(?:' +
-    '/\\*' +
-    '(?:\\s*\r?\n(?://)?)?' +
-    '(?:' +
+  "(?:" +
+    "/\\*" +
+    "(?:\\s*\r?\n(?://)?)?" +
+    "(?:" +
     innerRegex.source +
-    ')' +
-    '\\s*' +
-    '\\*/' +
-    '|' +
-    '//(?:' +
+    ")" +
+    "\\s*" +
+    "\\*/" +
+    "|" +
+    "//(?:" +
     innerRegex.source +
-    ')' +
-    ')' +
-    '\\s*'
+    ")" +
+    ")" +
+    "\\s*"
 );
 /* eslint-enable prefer-template */
 
@@ -87,7 +87,7 @@ function getSourceMappingURL(code) {
     }
   }
 
-  const sourceMappingURL = match ? match[1] || match[2] || '' : null;
+  const sourceMappingURL = match ? match[1] || match[2] || "" : null;
 
   return {
     sourceMappingURL: sourceMappingURL
@@ -116,7 +116,7 @@ function fetchFromDataURL(loaderContext, sourceURL) {
 
   if (dataURL) {
     dataURL.encodingName =
-      labelToName(dataURL.mimeType.parameters.get('charset')) || 'UTF-8';
+      labelToName(dataURL.mimeType.parameters.get("charset")) || "UTF-8";
 
     return decode(dataURL.body, dataURL.encodingName);
   }
@@ -149,7 +149,7 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
 async function fetchPathsFromFilesystem(
   loaderContext,
   possibleRequests,
-  errorsAccumulator = ''
+  errorsAccumulator = ""
 ) {
   let result;
 
@@ -192,21 +192,21 @@ async function fetchFromURL(
   if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
     const { protocol } = urlUtils.parse(url);
 
-    if (protocol === 'data:') {
+    if (protocol === "data:") {
       if (skipReading) {
-        return { sourceURL: '' };
+        return { sourceURL: "" };
       }
 
       const sourceContent = fetchFromDataURL(loaderContext, url);
 
-      return { sourceURL: '', sourceContent };
+      return { sourceURL: "", sourceContent };
     }
 
     if (skipReading) {
       return { sourceURL: url };
     }
 
-    if (protocol === 'file:') {
+    if (protocol === "file:") {
       const pathFromURL = urlUtils.fileURLToPath(url);
       const sourceURL = path.normalize(pathFromURL);
       const sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
@@ -235,7 +235,7 @@ async function fetchFromURL(
     if (!skipReading) {
       const possibleRequests = [sourceURL];
 
-      if (url.startsWith('/')) {
+      if (url.startsWith("/")) {
         possibleRequests.push(
           getAbsolutePath(context, sourceURL.slice(1), sourceRoot)
         );

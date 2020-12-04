@@ -1,8 +1,8 @@
-import parseDataUrl from '../src/parse-data-url';
+import parseDataUrl from "../src/parse-data-url";
 
-import dataUrls from './fixtures/json/data-urls.json';
+import dataUrls from "./fixtures/json/data-urls.json";
 
-describe('parse-data-url', () => {
+describe("parse-data-url", () => {
   dataUrls.forEach((entry) => {
     it(`should work with "${entry}" url`, async () => {
       const [url, expected] = entry;

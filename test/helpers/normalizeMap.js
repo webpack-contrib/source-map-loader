@@ -24,7 +24,7 @@ function normalizeArr(arr) {
       return str;
     }
 
-    if (str.replace(/\\/g, '/') === normilized) {
+    if (str.replace(/\\/g, "/") === normilized) {
       return normilized;
     }
 
@@ -33,14 +33,14 @@ function normalizeArr(arr) {
 }
 
 function removeCWD(str) {
-  const isWin = process.platform === 'win32';
+  const isWin = process.platform === "win32";
   let cwd = process.cwd();
 
   if (isWin) {
     // eslint-disable-next-line no-param-reassign
-    str = str.replace(/\\/g, '/');
-    cwd = cwd.replace(/\\/g, '/');
+    str = str.replace(/\\/g, "/");
+    cwd = cwd.replace(/\\/g, "/");
   }
 
-  return str.replace(new RegExp(cwd, 'g'), '');
+  return str.replace(new RegExp(cwd, "g"), "");
 }

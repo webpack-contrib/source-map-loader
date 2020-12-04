@@ -29,7 +29,7 @@ Then add the plugin to your `webpack` config. For example:
 **file.js**
 
 ```js
-import css from 'file.css';
+import css from "file.css";
 ```
 
 **webpack.config.js**
@@ -40,8 +40,8 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        enforce: 'pre',
-        use: ['source-map-loader'],
+        enforce: "pre",
+        use: ["source-map-loader"],
       },
     ],
   },
@@ -87,10 +87,10 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        enforce: 'pre',
+        enforce: "pre",
         use: [
           {
-            loader: 'source-map-loader',
+            loader: "source-map-loader",
             options: {
               filterSourceMappingUrl: (url, resourcePath) => {
                 if (/broker-source-map-url\.js$/i.test(url)) {
@@ -98,7 +98,7 @@ module.exports = {
                 }
 
                 if (/keep-source-mapping-url\.js$/i.test(resourcePath)) {
-                  return 'skip';
+                  return "skip";
                 }
 
                 return true;
@@ -126,8 +126,8 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        enforce: 'pre',
-        use: ['source-map-loader'],
+        enforce: "pre",
+        use: ["source-map-loader"],
       },
     ],
   },
