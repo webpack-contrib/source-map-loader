@@ -1,5 +1,5 @@
-import MIMEType from 'whatwg-mimetype';
-import { atob } from 'abab';
+import MIMEType from "whatwg-mimetype";
+import { atob } from "abab";
 
 function isASCIIHex(c) {
   return (
@@ -46,24 +46,24 @@ export default function parseDataUrl(stringInput) {
     return null;
   }
 
-  if (parsedUrl.protocol !== 'data:') {
+  if (parsedUrl.protocol !== "data:") {
     return null;
   }
 
-  parsedUrl.hash = '';
+  parsedUrl.hash = "";
 
   // `5` is value of `'data:'.length`
   const input = parsedUrl.toString().substring(5);
 
   let position = 0;
-  let mimeType = '';
+  let mimeType = "";
 
-  while (position < input.length && input[position] !== ',') {
+  while (position < input.length && input[position] !== ",") {
     mimeType += input[position];
     position += 1;
   }
 
-  mimeType = mimeType.replace(/^[ \t\n\f\r]+/, '').replace(/[ \t\n\f\r]+$/, '');
+  mimeType = mimeType.replace(/^[ \t\n\f\r]+/, "").replace(/[ \t\n\f\r]+$/, "");
 
   if (position === input.length) {
     return null;
@@ -73,25 +73,25 @@ export default function parseDataUrl(stringInput) {
 
   const encodedBody = input.substring(position);
 
-  let body = Buffer.from(percentDecodeBytes(Buffer.from(encodedBody, 'utf-8')));
+  let body = Buffer.from(percentDecodeBytes(Buffer.from(encodedBody, "utf-8")));
 
   // Can't use /i regexp flag because it isn't restricted to ASCII.
   const mimeTypeBase64MatchResult = /(.*); *[Bb][Aa][Ss][Ee]64$/.exec(mimeType);
 
   if (mimeTypeBase64MatchResult) {
-    const stringBody = body.toString('binary');
+    const stringBody = body.toString("binary");
     const asString = atob(stringBody);
 
     if (asString === null) {
       return null;
     }
 
-    body = Buffer.from(asString, 'binary');
+    body = Buffer.from(asString, "binary");
 
     [, mimeType] = mimeTypeBase64MatchResult;
   }
 
-  if (mimeType.startsWith(';')) {
+  if (mimeType.startsWith(";")) {
     mimeType = `text/plain ${mimeType}`;
   }
 
@@ -100,7 +100,7 @@ export default function parseDataUrl(stringInput) {
   try {
     mimeTypeRecord = new MIMEType(mimeType);
   } catch (e) {
-    mimeTypeRecord = new MIMEType('text/plain;charset=US-ASCII');
+    mimeTypeRecord = new MIMEType("text/plain;charset=US-ASCII");
   }
 
   return { mimeType: mimeTypeRecord, body };

@@ -2,20 +2,20 @@
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
 */
-import path from 'path';
+import path from "path";
 
-import { getOptions } from 'loader-utils';
-import { validate } from 'schema-utils';
+import { getOptions } from "loader-utils";
+import { validate } from "schema-utils";
 
-import schema from './options.json';
-import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from './utils';
+import schema from "./options.json";
+import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from "./utils";
 
 export default async function loader(input, inputMap) {
   const options = getOptions(this);
 
   validate(schema, options, {
-    name: 'Source Map Loader',
-    baseDataPath: 'options',
+    name: "Source Map Loader",
+    baseDataPath: "options",
   });
 
   const { sourceMappingURL, replacementString } = getSourceMappingURL(input);
@@ -32,9 +32,9 @@ export default async function loader(input, inputMap) {
 
   try {
     behaviourSourceMappingUrl =
-      typeof options.filterSourceMappingUrl !== 'undefined'
+      typeof options.filterSourceMappingUrl !== "undefined"
         ? options.filterSourceMappingUrl(sourceMappingURL, this.resourcePath)
-        : 'consume';
+        : "consume";
   } catch (error) {
     callback(error);
 
@@ -43,12 +43,12 @@ export default async function loader(input, inputMap) {
 
   // eslint-disable-next-line default-case
   switch (behaviourSourceMappingUrl) {
-    case 'skip':
+    case "skip":
       callback(null, input, inputMap);
       return;
     case false:
-    case 'remove':
-      callback(null, input.replace(replacementString, ''), inputMap);
+    case "remove":
+      callback(null, input.replace(replacementString, ""), inputMap);
       return;
   }
 
@@ -76,7 +76,7 @@ export default async function loader(input, inputMap) {
   let map;
 
   try {
-    map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ''));
+    map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ""));
   } catch (parseError) {
     this.emitWarning(
       new Error(
@@ -104,11 +104,11 @@ export default async function loader(input, inputMap) {
       let sourceContent;
 
       const originalSourceContent =
-        map.sourcesContent && typeof map.sourcesContent[i] !== 'undefined'
+        map.sourcesContent && typeof map.sourcesContent[i] !== "undefined"
           ? map.sourcesContent[i]
           : // eslint-disable-next-line no-undefined
             undefined;
-      const skipReading = typeof originalSourceContent !== 'undefined';
+      const skipReading = typeof originalSourceContent !== "undefined";
       let errored = false;
 
       // We do not skipReading here, because we need absolute paths in sources.
@@ -150,8 +150,8 @@ export default async function loader(input, inputMap) {
     // eslint-disable-next-line no-shadow
     const { sourceURL, sourceContent } = source;
 
-    newMap.sources.push(sourceURL || '');
-    newMap.sourcesContent.push(sourceContent || '');
+    newMap.sources.push(sourceURL || "");
+    newMap.sourcesContent.push(sourceContent || "");
   });
 
   const sourcesContentIsEmpty =
@@ -161,5 +161,5 @@ export default async function loader(input, inputMap) {
     delete newMap.sourcesContent;
   }
 
-  callback(null, input.replace(replacementString, ''), newMap);
+  callback(null, input.replace(replacementString, ""), newMap);
 }

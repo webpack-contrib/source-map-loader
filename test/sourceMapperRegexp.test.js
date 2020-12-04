@@ -1,16 +1,16 @@
-import { getSourceMappingURL } from '../src/utils';
+import { getSourceMappingURL } from "../src/utils";
 
-describe('source-map-loader', () => {
+describe("source-map-loader", () => {
   const cases = [
-    '/*#sourceMappingURL=absolute-sourceRoot-source-map.map*/',
-    '/*  #sourceMappingURL=absolute-sourceRoot-source-map.map  */',
-    '//#sourceMappingURL=absolute-sourceRoot-source-map.map',
-    '//@sourceMappingURL=absolute-sourceRoot-source-map.map',
-    ' //  #sourceMappingURL=absolute-sourceRoot-source-map.map',
-    ' //  #  sourceMappingURL  =   absolute-sourceRoot-source-map.map  ',
-    '// #sourceMappingURL = http://sampledomain.com/external-source-map2.map',
-    '// #sourceMappingURL = //sampledomain.com/external-source-map2.map',
-    '// @sourceMappingURL=data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ==',
+    "/*#sourceMappingURL=absolute-sourceRoot-source-map.map*/",
+    "/*  #sourceMappingURL=absolute-sourceRoot-source-map.map  */",
+    "//#sourceMappingURL=absolute-sourceRoot-source-map.map",
+    "//@sourceMappingURL=absolute-sourceRoot-source-map.map",
+    " //  #sourceMappingURL=absolute-sourceRoot-source-map.map",
+    " //  #  sourceMappingURL  =   absolute-sourceRoot-source-map.map  ",
+    "// #sourceMappingURL = http://sampledomain.com/external-source-map2.map",
+    "// #sourceMappingURL = //sampledomain.com/external-source-map2.map",
+    "// @sourceMappingURL=data:application/source-map;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5saW5lLXNvdXJjZS1tYXAuanMiLCJzb3VyY2VzIjpbImlubGluZS1zb3VyY2UtbWFwLnR4dCJdLCJzb3VyY2VzQ29udGVudCI6WyJ3aXRoIFNvdXJjZU1hcCJdLCJtYXBwaW5ncyI6IkFBQUEifQ==",
     `
     with SourceMap
 
@@ -34,7 +34,7 @@ describe('source-map-loader', () => {
     it(`should work with "${item}" url`, async () => {
       const { sourceMappingURL } = getSourceMappingURL(item);
 
-      expect(sourceMappingURL).toMatchSnapshot('result');
+      expect(sourceMappingURL).toMatchSnapshot("result");
     });
   });
 });
