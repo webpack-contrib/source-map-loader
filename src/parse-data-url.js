@@ -1,5 +1,6 @@
-import MIMEType from "whatwg-mimetype";
 import { atob } from "abab";
+
+import getMimeTypeRecord from "./parse-mimetype";
 
 function isASCIIHex(c) {
   return (
@@ -98,9 +99,9 @@ export default function parseDataUrl(stringInput) {
   let mimeTypeRecord;
 
   try {
-    mimeTypeRecord = new MIMEType(mimeType);
+    mimeTypeRecord = getMimeTypeRecord(mimeType);
   } catch (e) {
-    mimeTypeRecord = new MIMEType("text/plain;charset=US-ASCII");
+    mimeTypeRecord = getMimeTypeRecord("text/plain;charset=US-ASCII");
   }
 
   return { mimeType: mimeTypeRecord, body };
