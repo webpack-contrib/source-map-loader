@@ -1,4 +1,5 @@
 {
+  "title": "Source Map Loader options",
   "type": "object",
   "additionalProperties": false,
   "properties": {
