@@ -96,35 +96,13 @@ function getSourceMappingURL(code) {
   };
 }
 
-function urlToRequest(url) {
-  // we can't use path.win32.isAbsolute because it also matches paths starting with a forward slash
-  const matchNativeWin32Path = /^[A-Z]:[/\\]|^\\\\/i;
-
-  let request;
-
-  if (matchNativeWin32Path.test(url)) {
-    // absolute windows path, keep it
-    request = url;
-  } else if (/^\.\.?\//.test(url)) {
-    // A relative url stays
-    request = url;
-  } else {
-    // every other url is threaded like a relative url
-    request = `./${url}`;
-  }
-
-  return request;
-}
-
-function getAbsolutePath(context, url, sourceRoot) {
-  const request = urlToRequest(url);
-
+function getAbsolutePath(context, request, sourceRoot) {
   if (sourceRoot) {
     if (path.isAbsolute(sourceRoot)) {
       return path.join(sourceRoot, request);
     }
 
-    return path.join(context, urlToRequest(sourceRoot), request);
+    return path.join(context, sourceRoot, request);
   }
 
   return path.join(context, request);
@@ -134,8 +112,7 @@ function fetchFromDataURL(loaderContext, sourceURL) {
   const dataURL = parseDataURL(sourceURL);
 
   if (dataURL) {
-    dataURL.encodingName =
-      labelToName(dataURL.mimeType.parameters.get("charset")) || "UTF-8";
+    dataURL.encodingName = labelToName(dataURL.charset) || "UTF-8";
 
     return decode(dataURL.body, dataURL.encodingName);
   }

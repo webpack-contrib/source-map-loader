@@ -1,6 +1,6 @@
 import { atob } from "abab";
 
-import getMimeTypeRecord from "./parse-mimetype";
+import getMimeCharset from "./parse-mimetype";
 
 function isASCIIHex(c) {
   return (
@@ -96,13 +96,13 @@ export default function parseDataUrl(stringInput) {
     mimeType = `text/plain ${mimeType}`;
   }
 
-  let mimeTypeRecord;
+  let mimeCharset;
 
   try {
-    mimeTypeRecord = getMimeTypeRecord(mimeType);
+    mimeCharset = getMimeCharset(mimeType);
   } catch (e) {
-    mimeTypeRecord = getMimeTypeRecord("text/plain;charset=US-ASCII");
+    mimeCharset = getMimeCharset("text/plain;charset=US-ASCII");
   }
 
-  return { mimeType: mimeTypeRecord, body };
+  return { charset: mimeCharset, body };
 }

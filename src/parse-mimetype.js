@@ -16,30 +16,6 @@ const soleyContainsHTTPQuotedStringTokenCodePoints = (string) =>
 const asciiLowercase = (string) =>
   string.replace(/[A-Z]/g, (l) => l.toLowerCase());
 
-const serialize = (mimeType) => {
-  let serialization = `${mimeType.type}/${mimeType.subtype}`;
-
-  if (mimeType.parameters.size === 0) {
-    return serialization;
-  }
-
-  // eslint-disable-next-line prefer-const
-  for (let [name, value] of mimeType.parameters) {
-    serialization += ";";
-    serialization += name;
-    serialization += "=";
-
-    if (!solelyContainsHTTPTokenCodePoints(value) || value.length === 0) {
-      value = value.replace(/(["\\])/g, "\\$1");
-      value = `"${value}"`;
-    }
-
-    serialization += value;
-  }
-
-  return serialization;
-};
-
 function parcer(data) {
   const input = removeLeadingAndTrailingHTTPWhitespace(data);
 
@@ -74,8 +50,6 @@ function parcer(data) {
   }
 
   const mimeType = {
-    type: asciiLowercase(type),
-    subtype: asciiLowercase(subtype),
     parameters: new Map(),
   };
 
@@ -156,14 +130,10 @@ function parcer(data) {
   return mimeType;
 }
 
-function getMimeTypeRecord(input) {
+function getMimeCharset(input) {
   const result = parcer(input);
 
-  result.toString = function toString() {
-    return serialize(this);
-  };
-
-  return result;
+  return result.parameters.get("charset");
 }
 
-export default getMimeTypeRecord;
+export default getMimeCharset;

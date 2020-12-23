@@ -12,7 +12,7 @@ describe("parse-data-url", () => {
       if (result === null) {
         expect(result).toBe(expected);
       } else {
-        expect(result.mimeType.toString()).toEqual(expected[0]);
+        expect(result.charset || "").toEqual(expected[0]);
         expect(result.body).toEqual(Buffer.from(expected[1]));
       }
     });
