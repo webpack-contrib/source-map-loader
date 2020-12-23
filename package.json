@@ -38,7 +38,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "webpack": "^4.0.0 || ^5.0.0"
+    "webpack": "^5.11.0"
   },
   "dependencies": {
     "abab": "^2.0.5",
