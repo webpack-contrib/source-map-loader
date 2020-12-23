@@ -4,7 +4,6 @@ import urlUtils from "url";
 import sourceMap from "source-map";
 
 import { decode } from "iconv-lite";
-import { urlToRequest } from "loader-utils";
 
 import parseDataURL from "./parse-data-url";
 import labelsToNames from "./labels-to-names";
@@ -97,15 +96,35 @@ function getSourceMappingURL(code) {
   };
 }
 
+function urlToRequest(url) {
+  // we can't use path.win32.isAbsolute because it also matches paths starting with a forward slash
+  const matchNativeWin32Path = /^[A-Z]:[/\\]|^\\\\/i;
+
+  let request;
+
+  if (matchNativeWin32Path.test(url)) {
+    // absolute windows path, keep it
+    request = url;
+  } else if (/^\.\.?\//.test(url)) {
+    // A relative url stays
+    request = url;
+  } else {
+    // every other url is threaded like a relative url
+    request = `./${url}`;
+  }
+
+  return request;
+}
+
 function getAbsolutePath(context, url, sourceRoot) {
-  const request = urlToRequest(url, true);
+  const request = urlToRequest(url);
 
   if (sourceRoot) {
     if (path.isAbsolute(sourceRoot)) {
       return path.join(sourceRoot, request);
     }
 
-    return path.join(context, urlToRequest(sourceRoot, true), request);
+    return path.join(context, urlToRequest(sourceRoot), request);
   }
 
   return path.join(context, request);
