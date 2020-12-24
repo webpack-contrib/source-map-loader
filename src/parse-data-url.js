@@ -156,7 +156,6 @@ export default function parseDataUrl(stringInput) {
     [, mediaType] = mimeTypeBase64MatchResult;
   }
 
-  // TODO bug with "data:;charset="x",X"
   if (mediaType.startsWith(";")) {
     mediaType = `text/plain ${mediaType}`;
   }
