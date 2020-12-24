@@ -267,7 +267,7 @@ export default function parseDataUrl(stringInput) {
 
   try {
     mediaType = parseMediaType(mimeType);
-  } catch (e) {
+  } catch (error) {
     mediaType = {
       type: "text",
       subtype: "plain",
