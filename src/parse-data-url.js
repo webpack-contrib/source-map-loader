@@ -62,113 +62,6 @@ const collectAnHTTPQuotedString = (input, position) => {
   return [value, position];
 };
 
-function parseMediaType(data) {
-  const input = removeLeadingAndTrailingHTTPWhitespace(data);
-
-  let position = 0;
-  let type = "";
-
-  while (position < input.length && input[position] !== "/") {
-    type += input[position];
-    position += 1;
-  }
-
-  if (type.length === 0 || !solelyContainsHTTPTokenCodePoints(type)) {
-    return null;
-  }
-
-  if (position >= input.length) {
-    return null;
-  }
-
-  // Skips past "/"
-  position += 1;
-
-  let subtype = "";
-
-  while (position < input.length && input[position] !== ";") {
-    subtype += input[position];
-    position += 1;
-  }
-
-  subtype = removeTrailingHTTPWhitespace(subtype);
-
-  if (subtype.length === 0 || !solelyContainsHTTPTokenCodePoints(subtype)) {
-    return null;
-  }
-
-  const mimeType = {
-    type: asciiLowercase(type),
-    subtype: asciiLowercase(subtype),
-    parameters: new Map(),
-  };
-
-  while (position < input.length) {
-    // Skip past ";"
-    position += 1;
-
-    while (isHTTPWhitespaceChar(input[position])) {
-      position += 1;
-    }
-
-    let parameterName = "";
-
-    while (
-      position < input.length &&
-      input[position] !== ";" &&
-      input[position] !== "="
-    ) {
-      parameterName += input[position];
-      position += 1;
-    }
-
-    parameterName = asciiLowercase(parameterName);
-
-    if (position < input.length) {
-      if (input[position] === ";") {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      // Skip past "="
-      position += 1;
-    }
-
-    let parameterValue = "";
-
-    if (input[position] === '"') {
-      [parameterValue, position] = collectAnHTTPQuotedString(input, position);
-
-      while (position < input.length && input[position] !== ";") {
-        position += 1;
-      }
-    } else {
-      while (position < input.length && input[position] !== ";") {
-        parameterValue += input[position];
-        position += 1;
-      }
-
-      parameterValue = removeTrailingHTTPWhitespace(parameterValue);
-
-      if (parameterValue === "") {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-    }
-
-    if (
-      parameterName.length > 0 &&
-      solelyContainsHTTPTokenCodePoints(parameterName) &&
-      soleyContainsHTTPQuotedStringTokenCodePoints(parameterValue) &&
-      !mimeType.parameters.has(parameterName)
-    ) {
-      mimeType.parameters.set(parameterName, parameterValue);
-    }
-  }
-
-  return mimeType;
-}
-
 function isASCIIHex(c) {
   return (
     (c >= 0x30 && c <= 0x39) ||
@@ -263,11 +156,139 @@ export default function parseDataUrl(stringInput) {
     [, mediaType] = mimeTypeBase64MatchResult;
   }
 
+  // TODO bug with "data:;charset="x",X"
   if (mediaType.startsWith(";")) {
     mediaType = `text/plain ${mediaType}`;
   }
 
-  const parsedMediaType = parseMediaType(mediaType);
+  const result = {
+    // eslint-disable-next-line no-undefined
+    type: undefined,
+    // eslint-disable-next-line no-undefined
+    subtype: undefined,
+    parameters: new Map(),
+    isBase64: Boolean(mimeTypeBase64MatchResult),
+    body,
+  };
 
-  return { ...parsedMediaType, body };
+  if (!mediaType) {
+    return result;
+  }
+
+  const inputMediaType = removeLeadingAndTrailingHTTPWhitespace(mediaType);
+
+  let positionMediaType = 0;
+  let type = "";
+
+  while (
+    positionMediaType < inputMediaType.length &&
+    inputMediaType[positionMediaType] !== "/"
+  ) {
+    type += inputMediaType[positionMediaType];
+    positionMediaType += 1;
+  }
+
+  if (type.length === 0 || !solelyContainsHTTPTokenCodePoints(type)) {
+    return result;
+  }
+
+  if (positionMediaType >= inputMediaType.length) {
+    return result;
+  }
+
+  // Skips past "/"
+  positionMediaType += 1;
+
+  let subtype = "";
+
+  while (
+    positionMediaType < inputMediaType.length &&
+    inputMediaType[positionMediaType] !== ";"
+  ) {
+    subtype += inputMediaType[positionMediaType];
+    positionMediaType += 1;
+  }
+
+  subtype = removeTrailingHTTPWhitespace(subtype);
+
+  if (subtype.length === 0 || !solelyContainsHTTPTokenCodePoints(subtype)) {
+    return result;
+  }
+
+  result.type = asciiLowercase(type);
+  result.subtype = asciiLowercase(subtype);
+
+  while (positionMediaType < inputMediaType.length) {
+    // Skip past ";"
+    positionMediaType += 1;
+
+    while (isHTTPWhitespaceChar(inputMediaType[positionMediaType])) {
+      positionMediaType += 1;
+    }
+
+    let parameterName = "";
+
+    while (
+      positionMediaType < inputMediaType.length &&
+      inputMediaType[positionMediaType] !== ";" &&
+      inputMediaType[positionMediaType] !== "="
+    ) {
+      parameterName += inputMediaType[positionMediaType];
+      positionMediaType += 1;
+    }
+
+    parameterName = asciiLowercase(parameterName);
+
+    if (positionMediaType < inputMediaType.length) {
+      if (inputMediaType[positionMediaType] === ";") {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      // Skip past "="
+      positionMediaType += 1;
+    }
+
+    let parameterValue = "";
+
+    if (inputMediaType[positionMediaType] === '"') {
+      [parameterValue, positionMediaType] = collectAnHTTPQuotedString(
+        inputMediaType,
+        positionMediaType
+      );
+
+      while (
+        positionMediaType < inputMediaType.length &&
+        inputMediaType[positionMediaType] !== ";"
+      ) {
+        positionMediaType += 1;
+      }
+    } else {
+      while (
+        positionMediaType < inputMediaType.length &&
+        inputMediaType[positionMediaType] !== ";"
+      ) {
+        parameterValue += inputMediaType[positionMediaType];
+        positionMediaType += 1;
+      }
+
+      parameterValue = removeTrailingHTTPWhitespace(parameterValue);
+
+      if (parameterValue === "") {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+    }
+
+    if (
+      parameterName.length > 0 &&
+      solelyContainsHTTPTokenCodePoints(parameterName) &&
+      soleyContainsHTTPQuotedStringTokenCodePoints(parameterValue) &&
+      !result.parameters.has(parameterName)
+    ) {
+      result.parameters.set(parameterName, parameterValue);
+    }
+  }
+
+  return result;
 }

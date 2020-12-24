@@ -169,6 +169,19 @@ const dataUrls = [
   "data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==",
   "data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E",
   "data:text/html,<script>alert('hi');</script>\n",
+  "data:,а",
+  "data:,a",
+  "data:text/plain;,hello",
+  "data:text;,hello",
+  "data:text/0000;,hello",
+  "data:text/   ;,hello",
+  "data:text/html;charset=foo,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "data:text/html;charset=utf-8;charset=foo,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "data:text/html;charset=utf-8;foo=bar,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "data:text/html;charset=utf-8;foo=bar;foo=baz,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "data:application/json;charset=utf-8;base64,eyJmb28iOiJiYXIifQ==",
+  "data:application/json;base64,eyJmb28iOiJiYXIifQ==",
+  "data:application/zzz;base64,eyJmb28iOiJiYXIifQ==",
 ];
 describe("parse-data-url", () => {
   dataUrls.forEach((dataUrl, index) => {

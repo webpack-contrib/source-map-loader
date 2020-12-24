@@ -11,11 +11,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -45,11 +43,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -77,11 +73,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -97,11 +91,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -117,11 +109,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -137,9 +127,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -157,9 +145,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -177,9 +163,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain%20",
     "type": "text",
   },
@@ -197,9 +181,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain%0c",
     "type": "text",
   },
@@ -217,9 +199,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain%0c",
     "type": "text",
   },
@@ -237,9 +217,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -258,8 +236,8 @@ Object {
     },
     "isBase64": false,
     "parameters": Map {
-      "charset" => "x",
       "x" => "x",
+      "charset" => "x",
     },
     "subtype": "plain",
     "type": "text",
@@ -279,7 +257,6 @@ Object {
     },
     "isBase64": false,
     "parameters": Map {
-      "charset" => "US-ASCII",
       "x" => "x",
     },
     "subtype": "plain",
@@ -342,9 +319,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "gif",
     "type": "image",
   },
@@ -363,9 +338,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "gif",
     "type": "image",
   },
@@ -385,7 +358,6 @@ Object {
     },
     "isBase64": false,
     "parameters": Map {
-      "charset" => "US-ASCII",
       "hi" => "x",
     },
     "subtype": "gif",
@@ -426,11 +398,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -446,11 +416,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -466,11 +434,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -486,11 +452,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -506,11 +470,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -526,11 +488,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -546,9 +506,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "html",
     "type": "text",
   },
@@ -566,11 +524,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -586,11 +542,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -606,9 +560,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "%e2%80%a0",
     "type": "%e2%80%a0",
   },
@@ -626,11 +578,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -648,9 +598,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "png",
     "type": "image",
   },
@@ -670,9 +618,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "javascript",
     "type": "application",
   },
@@ -692,9 +638,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "xml",
     "type": "application",
   },
@@ -714,9 +658,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "javascript",
     "type": "text",
   },
@@ -736,9 +678,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -758,9 +698,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "unknown",
     "type": "unknown",
   },
@@ -781,7 +719,6 @@ Object {
     },
     "isBase64": false,
     "parameters": Map {
-      "charset" => "US-ASCII",
       "a" => "",
     },
     "subtype": "plain",
@@ -802,7 +739,6 @@ Object {
     },
     "isBase64": false,
     "parameters": Map {
-      "charset" => "US-ASCII",
       "a" => "%2C",
     },
     "subtype": "plain",
@@ -822,9 +758,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -842,9 +776,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "x",
     "type": "x",
   },
@@ -904,9 +836,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "x",
     "type": "x",
   },
@@ -924,11 +854,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -944,11 +872,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -965,11 +891,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -986,11 +910,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1007,11 +929,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1027,11 +947,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1047,11 +965,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1088,9 +1004,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -1108,11 +1022,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1128,11 +1040,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1149,9 +1059,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -1169,11 +1077,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1190,9 +1096,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -1211,11 +1115,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1271,9 +1173,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -1311,9 +1211,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -1331,9 +1229,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -1440,9 +1336,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "gif",
     "type": "image",
   },
@@ -1502,9 +1396,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "gif",
     "type": "image",
   },
@@ -1534,11 +1426,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1556,11 +1446,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1578,11 +1466,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1600,11 +1486,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1622,11 +1506,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1642,11 +1524,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1663,11 +1543,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1683,11 +1561,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1704,11 +1580,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1725,11 +1599,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1747,11 +1619,9 @@ b",
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1769,11 +1639,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1791,11 +1659,9 @@ b",
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1813,11 +1679,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1842,11 +1706,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1874,11 +1736,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1924,11 +1784,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1974,11 +1832,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -1994,11 +1850,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -2015,11 +1869,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -2037,9 +1889,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2059,9 +1909,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2081,9 +1929,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2129,9 +1975,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2150,9 +1994,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2261,9 +2103,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2303,9 +2143,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2479,9 +2317,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2502,9 +2338,7 @@ cd",
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2524,9 +2358,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2547,9 +2379,7 @@ cd",
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2569,9 +2399,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2600,9 +2428,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2628,9 +2454,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2654,9 +2478,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2681,9 +2503,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2702,9 +2522,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2724,9 +2542,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2758,9 +2574,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2779,9 +2593,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2808,9 +2620,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2854,11 +2664,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -2894,11 +2702,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -2926,9 +2732,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": true,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -2967,9 +2771,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "html",
     "type": "text",
   },
@@ -3016,9 +2818,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "html",
     "type": "text",
   },
@@ -3037,11 +2837,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -3057,11 +2855,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -3081,9 +2877,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "plain",
     "type": "text",
   },
@@ -3105,11 +2899,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -3129,9 +2921,7 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
+    "parameters": Map {},
     "subtype": "0000",
     "type": "text",
   },
@@ -3153,11 +2943,9 @@ Object {
       "type": "Buffer",
     },
     "isBase64": false,
-    "parameters": Map {
-      "charset" => "US-ASCII",
-    },
-    "subtype": "plain",
-    "type": "text",
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
   },
 }
 `;
@@ -3352,6 +3140,98 @@ Object {
     },
     "subtype": "html",
     "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "178" index 1`] = `
+Object {
+  "original": "data:application/json;charset=utf-8;base64,eyJmb28iOiJiYXIifQ==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        123,
+        34,
+        102,
+        111,
+        111,
+        34,
+        58,
+        34,
+        98,
+        97,
+        114,
+        34,
+        125,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {
+      "charset" => "utf-8",
+    },
+    "subtype": "json",
+    "type": "application",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "179" index 1`] = `
+Object {
+  "original": "data:application/json;base64,eyJmb28iOiJiYXIifQ==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        123,
+        34,
+        102,
+        111,
+        111,
+        34,
+        58,
+        34,
+        98,
+        97,
+        114,
+        34,
+        125,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "json",
+    "type": "application",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "180" index 1`] = `
+Object {
+  "original": "data:application/zzz;base64,eyJmb28iOiJiYXIifQ==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        123,
+        34,
+        102,
+        111,
+        111,
+        34,
+        58,
+        34,
+        98,
+        97,
+        114,
+        34,
+        125,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "zzz",
+    "type": "application",
   },
 }
 `;
