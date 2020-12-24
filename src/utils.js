@@ -111,10 +111,12 @@ function fetchFromDataURL(loaderContext, sourceURL) {
   const dataURL = parseDataURL(sourceURL);
 
   if (dataURL) {
-    dataURL.encodingName =
+    // https://tools.ietf.org/html/rfc4627
+    // JSON text SHALL be encoded in Unicode. The default encoding is UTF-8.
+    const encodingName =
       labelToName(dataURL.parameters.get("charset")) || "UTF-8";
 
-    return decode(dataURL.body, dataURL.encodingName);
+    return decode(dataURL.body, encodingName);
   }
 
   throw new Error(`Failed to parse source map from "data" URL: ${sourceURL}`);

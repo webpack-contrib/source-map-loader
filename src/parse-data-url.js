@@ -224,14 +224,16 @@ export default function parseDataUrl(stringInput) {
   const input = parsedUrl.toString().substring(5);
 
   let position = 0;
-  let mimeType = "";
+  let mediaType = "";
 
   while (position < input.length && input[position] !== ",") {
-    mimeType += input[position];
+    mediaType += input[position];
     position += 1;
   }
 
-  mimeType = mimeType.replace(/^[ \t\n\f\r]+/, "").replace(/[ \t\n\f\r]+$/, "");
+  mediaType = mediaType
+    .replace(/^[ \t\n\f\r]+/, "")
+    .replace(/[ \t\n\f\r]+$/, "");
 
   if (position === input.length) {
     return null;
@@ -244,7 +246,9 @@ export default function parseDataUrl(stringInput) {
   let body = Buffer.from(percentDecodeBytes(Buffer.from(encodedBody, "utf-8")));
 
   // Can't use /i regexp flag because it isn't restricted to ASCII.
-  const mimeTypeBase64MatchResult = /(.*); *[Bb][Aa][Ss][Ee]64$/.exec(mimeType);
+  const mimeTypeBase64MatchResult = /(.*); *[Bb][Aa][Ss][Ee]64$/.exec(
+    mediaType
+  );
 
   if (mimeTypeBase64MatchResult) {
     const stringBody = body.toString("binary");
@@ -256,26 +260,14 @@ export default function parseDataUrl(stringInput) {
 
     body = Buffer.from(asString, "binary");
 
-    [, mimeType] = mimeTypeBase64MatchResult;
+    [, mediaType] = mimeTypeBase64MatchResult;
   }
 
-  if (mimeType.startsWith(";")) {
-    mimeType = `text/plain ${mimeType}`;
+  if (mediaType.startsWith(";")) {
+    mediaType = `text/plain ${mediaType}`;
   }
 
-  let mediaType;
+  const parsedMediaType = parseMediaType(mediaType);
 
-  try {
-    mediaType = parseMediaType(mimeType);
-  } catch (error) {
-    mediaType = {
-      type: "text",
-      subtype: "plain",
-      parameters: new Map(),
-    };
-
-    mediaType.parameters.set("charset", "US-ASCII");
-  }
-
-  return { ...mediaType, body };
+  return { ...parsedMediaType, body };
 }
