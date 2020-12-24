@@ -3235,3 +3235,24 @@ Object {
   },
 }
 `;
+
+exports[`parse-data-url should work with url by "181" index 1`] = `
+Object {
+  "original": "data:,test",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        116,
+        101,
+        115,
+        116,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;

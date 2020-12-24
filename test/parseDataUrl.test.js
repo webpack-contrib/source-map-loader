@@ -182,6 +182,7 @@ const dataUrls = [
   "data:application/json;charset=utf-8;base64,eyJmb28iOiJiYXIifQ==",
   "data:application/json;base64,eyJmb28iOiJiYXIifQ==",
   "data:application/zzz;base64,eyJmb28iOiJiYXIifQ==",
+  "data:,test",
 ];
 describe("parse-data-url", () => {
   dataUrls.forEach((dataUrl, index) => {
