@@ -2,7 +2,6 @@ import path from "path";
 import urlUtils from "url";
 
 import sourceMap from "source-map";
-
 import { decode } from "iconv-lite";
 
 import parseDataURL from "./parse-data-url";
@@ -112,7 +111,8 @@ function fetchFromDataURL(loaderContext, sourceURL) {
   const dataURL = parseDataURL(sourceURL);
 
   if (dataURL) {
-    dataURL.encodingName = labelToName(dataURL.charset) || "UTF-8";
+    dataURL.encodingName =
+      labelToName(dataURL.parameters.get("charset")) || "UTF-8";
 
     return decode(dataURL.body, dataURL.encodingName);
   }

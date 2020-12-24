@@ -166,15 +166,11 @@ const dataUrls = [
   "data:text/plain;base64,abcd\\0nonsense",
 ];
 describe("parse-data-url", () => {
-  dataUrls.forEach((dataUrl) => {
-    it(`should work with "${dataUrl}" url`, async () => {
-      const result = parseDataUrl(dataUrl);
+  dataUrls.forEach((dataUrl, index) => {
+    it(`should work with url by "${index}" index`, async () => {
+      const parsed = parseDataUrl(dataUrl);
 
-      if (result) {
-        result.body = result.body.toString("binary");
-      }
-
-      expect(result).toMatchSnapshot();
+      expect({ original: dataUrl, parsed }).toMatchSnapshot();
     });
   });
 });
