@@ -2,9 +2,7 @@ import path from "path";
 import urlUtils from "url";
 
 import sourceMap from "source-map";
-
 import { decode } from "iconv-lite";
-import { urlToRequest } from "loader-utils";
 
 import parseDataURL from "./parse-data-url";
 import labelsToNames from "./labels-to-names";
@@ -97,15 +95,13 @@ function getSourceMappingURL(code) {
   };
 }
 
-function getAbsolutePath(context, url, sourceRoot) {
-  const request = urlToRequest(url, true);
-
+function getAbsolutePath(context, request, sourceRoot) {
   if (sourceRoot) {
     if (path.isAbsolute(sourceRoot)) {
       return path.join(sourceRoot, request);
     }
 
-    return path.join(context, urlToRequest(sourceRoot, true), request);
+    return path.join(context, sourceRoot, request);
   }
 
   return path.join(context, request);
@@ -115,10 +111,12 @@ function fetchFromDataURL(loaderContext, sourceURL) {
   const dataURL = parseDataURL(sourceURL);
 
   if (dataURL) {
-    dataURL.encodingName =
-      labelToName(dataURL.mimeType.parameters.get("charset")) || "UTF-8";
+    // https://tools.ietf.org/html/rfc4627
+    // JSON text SHALL be encoded in Unicode. The default encoding is UTF-8.
+    const encodingName =
+      labelToName(dataURL.parameters.get("charset")) || "UTF-8";
 
-    return decode(dataURL.body, dataURL.encodingName);
+    return decode(dataURL.body, encodingName);
   }
 
   throw new Error(`Failed to parse source map from "data" URL: ${sourceURL}`);

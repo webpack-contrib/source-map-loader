@@ -1,0 +1,3258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse-data-url should work with url by "0" index 1`] = `
+Object {
+  "original": "data://test/,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "1" index 1`] = `
+Object {
+  "original": "http://domain.com",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "2" index 1`] = `
+Object {
+  "original": "data://test:test/,X",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "3" index 1`] = `
+Object {
+  "original": "data:,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "4" index 1`] = `
+Object {
+  "original": "data:text/html",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "5" index 1`] = `
+Object {
+  "original": "data:text/html    ;charset=x   ",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "6" index 1`] = `
+Object {
+  "original": "data:,",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "7" index 1`] = `
+Object {
+  "original": "data:,X#X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "8" index 1`] = `
+Object {
+  "original": "data:,%FF",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "9" index 1`] = `
+Object {
+  "original": "data:text/plain,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "10" index 1`] = `
+Object {
+  "original": "data:text/plain ,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "11" index 1`] = `
+Object {
+  "original": "data:text/plain%20,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain%20",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "12" index 1`] = `
+Object {
+  "original": "data:text/plain,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain%0c",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "13" index 1`] = `
+Object {
+  "original": "data:text/plain%0C,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain%0c",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "14" index 1`] = `
+Object {
+  "original": "data:text/plain;,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "15" index 1`] = `
+Object {
+  "original": "data:;x=x;charset=x,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "x" => "x",
+      "charset" => "x",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "16" index 1`] = `
+Object {
+  "original": "data:;x=x,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "x" => "x",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "17" index 1`] = `
+Object {
+  "original": "data:text/plain;charset=windows-1252,%C2%B1",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        194,
+        177,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "windows-1252",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "18" index 1`] = `
+Object {
+  "original": "data:text/plain;Charset=UTF-8,%C2%B1",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        194,
+        177,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "UTF-8",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "19" index 1`] = `
+Object {
+  "original": "data:image/gif,%C2%B1",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        194,
+        177,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "gif",
+    "type": "image",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "20" index 1`] = `
+Object {
+  "original": "data:IMAGE/gif,%C2%B1",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        194,
+        177,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "gif",
+    "type": "image",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "21" index 1`] = `
+Object {
+  "original": "data:IMAGE/gif;hi=x,%C2%B1",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        194,
+        177,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "hi" => "x",
+    },
+    "subtype": "gif",
+    "type": "image",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "22" index 1`] = `
+Object {
+  "original": "data:IMAGE/gif;CHARSET=x,%C2%B1",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        194,
+        177,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "x",
+    },
+    "subtype": "gif",
+    "type": "image",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "23" index 1`] = `
+Object {
+  "original": "data: ,%FF",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "24" index 1`] = `
+Object {
+  "original": "data:%20,%FF",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "25" index 1`] = `
+Object {
+  "original": "data:,%FF",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "26" index 1`] = `
+Object {
+  "original": "data:%1F,%FF",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "27" index 1`] = `
+Object {
+  "original": "data: ,%FF",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "28" index 1`] = `
+Object {
+  "original": "data:%00,%FF",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "29" index 1`] = `
+Object {
+  "original": "data:text/html  ,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "html",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "30" index 1`] = `
+Object {
+  "original": "data:text / html,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "31" index 1`] = `
+Object {
+  "original": "data:†,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "32" index 1`] = `
+Object {
+  "original": "data:†/†,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "%e2%80%a0",
+    "type": "%e2%80%a0",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "33" index 1`] = `
+Object {
+  "original": "data:X,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "34" index 1`] = `
+Object {
+  "original": "data:image/png,X X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+        32,
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "png",
+    "type": "image",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "35" index 1`] = `
+Object {
+  "original": "data:application/javascript,X X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+        32,
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "javascript",
+    "type": "application",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "36" index 1`] = `
+Object {
+  "original": "data:application/xml,X X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+        32,
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "xml",
+    "type": "application",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "37" index 1`] = `
+Object {
+  "original": "data:text/javascript,X X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+        32,
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "javascript",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "38" index 1`] = `
+Object {
+  "original": "data:text/plain,X X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+        32,
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "39" index 1`] = `
+Object {
+  "original": "data:unknown/unknown,X X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+        32,
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "unknown",
+    "type": "unknown",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "40" index 1`] = `
+Object {
+  "original": "data:text/plain;a=\\",\\",X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        34,
+        44,
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "a" => "",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "41" index 1`] = `
+Object {
+  "original": "data:text/plain;a=%2C,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "a" => "%2C",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "42" index 1`] = `
+Object {
+  "original": "data:;base64;base64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "43" index 1`] = `
+Object {
+  "original": "data:x/x;base64;base64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "x",
+    "type": "x",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "44" index 1`] = `
+Object {
+  "original": "data:x/x;base64;charset=x,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "x",
+    },
+    "subtype": "x",
+    "type": "x",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "45" index 1`] = `
+Object {
+  "original": "data:x/x;base64;charset=x;base64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {
+      "charset" => "x",
+    },
+    "subtype": "x",
+    "type": "x",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "46" index 1`] = `
+Object {
+  "original": "data:x/x;base64;base64x,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "x",
+    "type": "x",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "47" index 1`] = `
+Object {
+  "original": "data:;base64,W%20A",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "48" index 1`] = `
+Object {
+  "original": "data:;base64,W%0CA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "49" index 1`] = `
+Object {
+  "original": "data:x;base64x,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "50" index 1`] = `
+Object {
+  "original": "data:x;base64;x,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "51" index 1`] = `
+Object {
+  "original": "data:x;base64=x,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "52" index 1`] = `
+Object {
+  "original": "data:; base64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "53" index 1`] = `
+Object {
+  "original": "data:;  base64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "54" index 1`] = `
+Object {
+  "original": "data:  ;charset=x   ;  base64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {
+      "charset" => "x",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "55" index 1`] = `
+Object {
+  "original": "data:;base64;,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "56" index 1`] = `
+Object {
+  "original": "data:;base64 ,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "57" index 1`] = `
+Object {
+  "original": "data:;base64   ,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "58" index 1`] = `
+Object {
+  "original": "data:;base 64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "59" index 1`] = `
+Object {
+  "original": "data:;BASe64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "60" index 1`] = `
+Object {
+  "original": "data:;%62ase64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "61" index 1`] = `
+Object {
+  "original": "data:%3Bbase64,WA",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        87,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "62" index 1`] = `
+Object {
+  "original": "data:;charset=x,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "x",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "63" index 1`] = `
+Object {
+  "original": "data:; charset=x,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "x",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "64" index 1`] = `
+Object {
+  "original": "data:;charset =x,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "65" index 1`] = `
+Object {
+  "original": "data:;charset= x,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => " x",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "66" index 1`] = `
+Object {
+  "original": "data:;charset=,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "67" index 1`] = `
+Object {
+  "original": "data:;charset,X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "68" index 1`] = `
+Object {
+  "original": "data:;charset=\\"x\\",X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "x",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "69" index 1`] = `
+Object {
+  "original": "data:;CHARSET=\\"X\\",X",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        88,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "X",
+    },
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "70" index 1`] = `
+Object {
+  "original": "no-data:;CHARSET=\\"X\\",X",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "71" index 1`] = `
+Object {
+  "original": "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        71,
+        73,
+        70,
+        56,
+        57,
+        97,
+        1,
+        0,
+        1,
+        0,
+        128,
+        0,
+        0,
+        255,
+        255,
+        255,
+        0,
+        0,
+        0,
+        33,
+        249,
+        4,
+        1,
+        0,
+        0,
+        0,
+        0,
+        44,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        2,
+        2,
+        68,
+        1,
+        0,
+        59,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "gif",
+    "type": "image",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "72" index 1`] = `
+Object {
+  "original": "DATA:IMAGE/GIF;BASE64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        71,
+        73,
+        70,
+        56,
+        57,
+        97,
+        1,
+        0,
+        1,
+        0,
+        128,
+        0,
+        0,
+        255,
+        255,
+        255,
+        0,
+        0,
+        0,
+        33,
+        249,
+        4,
+        1,
+        0,
+        0,
+        0,
+        0,
+        44,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        2,
+        2,
+        68,
+        1,
+        0,
+        59,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "gif",
+    "type": "image",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "73" index 1`] = `
+Object {
+  "original": "data:,Hello%2C%20World!",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        72,
+        101,
+        108,
+        108,
+        111,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "74" index 1`] = `
+Object {
+  "original": "data:,%%%",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        37,
+        37,
+        37,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "75" index 1`] = `
+Object {
+  "original": "data:,%%a",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        37,
+        37,
+        97,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "76" index 1`] = `
+Object {
+  "original": "data:,%%1",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        37,
+        37,
+        49,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "77" index 1`] = `
+Object {
+  "original": "data:,%1%",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        37,
+        49,
+        37,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "78" index 1`] = `
+Object {
+  "original": "data:,a",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "79" index 1`] = `
+Object {
+  "original": "data:, a",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        32,
+        97,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "80" index 1`] = `
+Object {
+  "original": "data:,a ",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "81" index 1`] = `
+Object {
+  "original": "data:, a ",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        32,
+        97,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "82" index 1`] = `
+Object {
+  "original": "data:,a	b",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+        98,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "83" index 1`] = `
+Object {
+  "original": "data:,a
+b",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+        98,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "84" index 1`] = `
+Object {
+  "original": "data:,ab",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+        12,
+        98,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "85" index 1`] = `
+Object {
+  "original": "data:,a
+b",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+        98,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "86" index 1`] = `
+Object {
+  "original": "data:,a b",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+        32,
+        98,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "87" index 1`] = `
+Object {
+  "original": "data:,ab\\\\u00a0cd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+        98,
+        92,
+        117,
+        48,
+        48,
+        97,
+        48,
+        99,
+        100,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "88" index 1`] = `
+Object {
+  "original": "data:,ab\\\\t\\\\n\\\\f\\\\r cd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+        98,
+        92,
+        116,
+        92,
+        110,
+        92,
+        102,
+        92,
+        114,
+        32,
+        99,
+        100,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "89" index 1`] = `
+Object {
+  "original": "data:, \\\\t\\\\n\\\\f\\\\r ab\\\\t\\\\n\\\\f\\\\r cd\\\\t\\\\n\\\\f\\\\r ",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        32,
+        92,
+        116,
+        92,
+        110,
+        92,
+        102,
+        92,
+        114,
+        32,
+        97,
+        98,
+        92,
+        116,
+        92,
+        110,
+        92,
+        102,
+        92,
+        114,
+        32,
+        99,
+        100,
+        92,
+        116,
+        92,
+        110,
+        92,
+        102,
+        92,
+        114,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "90" index 1`] = `
+Object {
+  "original": "data:, ab\\\\t\\\\n\\\\f\\\\r =\\\\t\\\\n\\\\f\\\\r =\\\\t\\\\n\\\\f\\\\r  ",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        32,
+        97,
+        98,
+        92,
+        116,
+        92,
+        110,
+        92,
+        102,
+        92,
+        114,
+        32,
+        61,
+        92,
+        116,
+        92,
+        110,
+        92,
+        102,
+        92,
+        114,
+        32,
+        61,
+        92,
+        116,
+        92,
+        110,
+        92,
+        102,
+        92,
+        114,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "91" index 1`] = `
+Object {
+  "original": "data:,/",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        47,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "92" index 1`] = `
+Object {
+  "original": "data:,/A",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        47,
+        65,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "93" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "94" index 1`] = `
+Object {
+  "original": "data:text/plain;base64, abcd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "95" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd ",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "96" index 1`] = `
+Object {
+  "original": "data:text/plain;base64, abcd===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "97" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd=== ",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "98" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd ===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "99" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "100" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "101" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "102" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcde",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "103" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,𐀀",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "104" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "105" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,==",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "106" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "107" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "108" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,=====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "109" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "110" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a==",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "111" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "112" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "113" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a=====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "114" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "115" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "116" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "117" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "118" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab=====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "119" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc=",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "120" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc==",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "121" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "122" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "123" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc=====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "124" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "125" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd==",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "126" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "127" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "128" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd=====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "129" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcde=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "130" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcde==",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "131" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcde===",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "132" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcde====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "133" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcde=====",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "134" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,=a",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "135" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,=a=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "136" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a=b",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "137" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,a=b=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "138" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab=c",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "139" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab=c=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "140" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc=d",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "141" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abc=d=",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "142" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab	cd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "143" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab
+cd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "144" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "145" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab
+cd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "146" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab cd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "147" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab cd",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "148" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab	
+
+ cd",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "149" index 1`] = `
+Object {
+  "original": "data:text/plain;base64, 	
+
+ ab	
+
+ cd	
+
+ ",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+        183,
+        29,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "150" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,ab	
+
+ =	
+
+ =	
+
+ ",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        105,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "151" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,A",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "152" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,/A",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        252,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "153" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,//A",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+        240,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "154" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,///A",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        255,
+        255,
+        192,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "155" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,////A",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "156" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,/",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "157" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,A/",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        3,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "158" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,AA/",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        0,
+        15,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "159" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,AAAA/",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "160" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,AAA/",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        0,
+        0,
+        63,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "161" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,\\\\0nonsense",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "162" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,abcd\\\\0nonsense",
+  "parsed": null,
+}
+`;
+
+exports[`parse-data-url should work with url by "163" index 1`] = `
+Object {
+  "original": "data:,Hello%2C%20World!",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        72,
+        101,
+        108,
+        108,
+        111,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "164" index 1`] = `
+Object {
+  "original": "data:,Привет%2C%20Мир!",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        208,
+        159,
+        209,
+        128,
+        208,
+        184,
+        208,
+        178,
+        208,
+        181,
+        209,
+        130,
+        44,
+        32,
+        208,
+        156,
+        208,
+        184,
+        209,
+        128,
+        33,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "165" index 1`] = `
+Object {
+  "original": "data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        72,
+        101,
+        108,
+        108,
+        111,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "166" index 1`] = `
+Object {
+  "original": "data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        60,
+        104,
+        49,
+        62,
+        72,
+        101,
+        108,
+        108,
+        111,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+        60,
+        47,
+        104,
+        49,
+        62,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "html",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "167" index 1`] = `
+Object {
+  "original": "data:text/html,<script>alert('hi');</script>
+",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        60,
+        115,
+        99,
+        114,
+        105,
+        112,
+        116,
+        62,
+        97,
+        108,
+        101,
+        114,
+        116,
+        40,
+        39,
+        104,
+        105,
+        39,
+        41,
+        59,
+        60,
+        47,
+        115,
+        99,
+        114,
+        105,
+        112,
+        116,
+        62,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "html",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "168" index 1`] = `
+Object {
+  "original": "data:,а",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        208,
+        176,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "169" index 1`] = `
+Object {
+  "original": "data:,a",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        97,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "170" index 1`] = `
+Object {
+  "original": "data:text/plain;,hello",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        104,
+        101,
+        108,
+        108,
+        111,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "plain",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "171" index 1`] = `
+Object {
+  "original": "data:text;,hello",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        104,
+        101,
+        108,
+        108,
+        111,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "172" index 1`] = `
+Object {
+  "original": "data:text/0000;,hello",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        104,
+        101,
+        108,
+        108,
+        111,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": "0000",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "173" index 1`] = `
+Object {
+  "original": "data:text/   ;,hello",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        104,
+        101,
+        108,
+        108,
+        111,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "174" index 1`] = `
+Object {
+  "original": "data:text/html;charset=foo,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        60,
+        104,
+        49,
+        62,
+        208,
+        159,
+        209,
+        128,
+        208,
+        184,
+        208,
+        178,
+        208,
+        181,
+        209,
+        130,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+        60,
+        47,
+        104,
+        49,
+        62,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "foo",
+    },
+    "subtype": "html",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "175" index 1`] = `
+Object {
+  "original": "data:text/html;charset=utf-8;charset=foo,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        60,
+        104,
+        49,
+        62,
+        208,
+        159,
+        209,
+        128,
+        208,
+        184,
+        208,
+        178,
+        208,
+        181,
+        209,
+        130,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+        60,
+        47,
+        104,
+        49,
+        62,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "utf-8",
+    },
+    "subtype": "html",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "176" index 1`] = `
+Object {
+  "original": "data:text/html;charset=utf-8;foo=bar,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        60,
+        104,
+        49,
+        62,
+        208,
+        159,
+        209,
+        128,
+        208,
+        184,
+        208,
+        178,
+        208,
+        181,
+        209,
+        130,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+        60,
+        47,
+        104,
+        49,
+        62,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "utf-8",
+      "foo" => "bar",
+    },
+    "subtype": "html",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "177" index 1`] = `
+Object {
+  "original": "data:text/html;charset=utf-8;foo=bar;foo=baz,<h1>%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20World!<%2Fh1>",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        60,
+        104,
+        49,
+        62,
+        208,
+        159,
+        209,
+        128,
+        208,
+        184,
+        208,
+        178,
+        208,
+        181,
+        209,
+        130,
+        44,
+        32,
+        87,
+        111,
+        114,
+        108,
+        100,
+        33,
+        60,
+        47,
+        104,
+        49,
+        62,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {
+      "charset" => "utf-8",
+      "foo" => "bar",
+    },
+    "subtype": "html",
+    "type": "text",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "178" index 1`] = `
+Object {
+  "original": "data:application/json;charset=utf-8;base64,eyJmb28iOiJiYXIifQ==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        123,
+        34,
+        102,
+        111,
+        111,
+        34,
+        58,
+        34,
+        98,
+        97,
+        114,
+        34,
+        125,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {
+      "charset" => "utf-8",
+    },
+    "subtype": "json",
+    "type": "application",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "179" index 1`] = `
+Object {
+  "original": "data:application/json;base64,eyJmb28iOiJiYXIifQ==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        123,
+        34,
+        102,
+        111,
+        111,
+        34,
+        58,
+        34,
+        98,
+        97,
+        114,
+        34,
+        125,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "json",
+    "type": "application",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "180" index 1`] = `
+Object {
+  "original": "data:application/zzz;base64,eyJmb28iOiJiYXIifQ==",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        123,
+        34,
+        102,
+        111,
+        111,
+        34,
+        58,
+        34,
+        98,
+        97,
+        114,
+        34,
+        125,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": true,
+    "parameters": Map {},
+    "subtype": "zzz",
+    "type": "application",
+  },
+}
+`;
+
+exports[`parse-data-url should work with url by "181" index 1`] = `
+Object {
+  "original": "data:,test",
+  "parsed": Object {
+    "body": Object {
+      "data": Array [
+        116,
+        101,
+        115,
+        116,
+      ],
+      "type": "Buffer",
+    },
+    "isBase64": false,
+    "parameters": Map {},
+    "subtype": undefined,
+    "type": undefined,
+  },
+}
+`;
