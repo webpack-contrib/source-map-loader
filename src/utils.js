@@ -1,7 +1,7 @@
 import path from "path";
 import urlUtils from "url";
 
-import sourceMap from "source-map";
+import sourceMap from "source-map-js";
 import { decode } from "iconv-lite";
 
 import parseDataURL from "./parse-data-url";
@@ -141,7 +141,7 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
     );
   }
 
-  return buffer.toString();
+  return { path: sourceURL, data: buffer.toString() };
 }
 
 async function fetchPathsFromFilesystem(
@@ -207,7 +207,10 @@ async function fetchFromURL(
     if (protocol === "file:") {
       const pathFromURL = urlUtils.fileURLToPath(url);
       const sourceURL = path.normalize(pathFromURL);
-      const sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
+      const { data: sourceContent } = await fetchFromFilesystem(
+        loaderContext,
+        sourceURL
+      );
 
       return { sourceURL, sourceContent };
     }
@@ -226,7 +229,7 @@ async function fetchFromURL(
 
   // 3. Absolute path
   if (path.isAbsolute(url)) {
-    const sourceURL = path.normalize(url);
+    let sourceURL = path.normalize(url);
 
     let sourceContent;
 
@@ -239,10 +242,13 @@ async function fetchFromURL(
         );
       }
 
-      sourceContent = await fetchPathsFromFilesystem(
+      const result = await fetchPathsFromFilesystem(
         loaderContext,
         possibleRequests
       );
+
+      sourceURL = result.path;
+      sourceContent = result.data;
     }
 
     return { sourceURL, sourceContent };
@@ -254,7 +260,9 @@ async function fetchFromURL(
   let sourceContent;
 
   if (!skipReading) {
-    sourceContent = await fetchFromFilesystem(loaderContext, sourceURL);
+    const { data } = await fetchFromFilesystem(loaderContext, sourceURL);
+
+    sourceContent = data;
   }
 
   return { sourceURL, sourceContent };
