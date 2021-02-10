@@ -1,7 +1,7 @@
 import path from "path";
 import urlUtils from "url";
 
-import sourceMap from "source-map";
+import sourceMap from "source-map-js";
 import { decode } from "iconv-lite";
 
 import parseDataURL from "./parse-data-url";
