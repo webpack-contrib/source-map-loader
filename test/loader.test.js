@@ -643,7 +643,7 @@ describe("source-map-loader", () => {
       sources: [sourceFilename],
       mappings: "AAAA",
     };
-    console.log(rawSourceMap);
+
     fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));
 
     const testId = "server-relative-url-path.js";
