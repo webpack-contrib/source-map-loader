@@ -466,6 +466,9 @@ describe("source-map-loader", () => {
           .replace("..", "")
       )
     );
+    
+    console.log(new Set(normalizedSources));
+    console.log(new Set(dependencies));
 
     expect(new Set(normalizedSources)).toEqual(new Set(dependencies));
   });
