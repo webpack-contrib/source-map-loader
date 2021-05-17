@@ -458,6 +458,9 @@ describe("source-map-loader", () => {
       path.normalize("/different/root/nested2.js"),
     ];
 
+    console.log(dependencies);
+    console.log(bundle);
+
     dependencies.forEach((fixture) => {
       expect(bundle.indexOf(fixture) !== -1).toBe(true);
     });
