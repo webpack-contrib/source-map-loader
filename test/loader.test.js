@@ -436,6 +436,8 @@ describe("source-map-loader", () => {
       "indexed-sourcemap/nested1.js",
       "different/root/nested2.js",
     ];
+    
+    console.log(dependencies);
 
     dependencies.forEach((fixture) => {
       expect(bundle.indexOf(fixture) !== -1).toBe(true);
