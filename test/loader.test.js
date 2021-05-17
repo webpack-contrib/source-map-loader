@@ -454,7 +454,7 @@ describe("source-map-loader", () => {
     const bundle = readAsset("main.bundle.js.map", compiler, stats);
 
     const dependencies = [
-      "indexed-sourcemap/nested1.js",
+      path.normalize("indexed-sourcemap/nested1.js"),
       path.normalize("/different/root/nested2.js"),
     ];
 
@@ -467,8 +467,9 @@ describe("source-map-loader", () => {
       )
     );
     
-    console.log(new Set(normalizedSources));
-    console.log(new Set(dependencies));
+    console.log(map);
+    console.log(normalizedSources);
+    console.log(dependencies);
 
     expect(new Set(normalizedSources)).toEqual(new Set(dependencies));
   });
