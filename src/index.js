@@ -94,7 +94,9 @@ export default async function loader(input, inputMap) {
       let sourceContent;
 
       const originalSourceContent =
-        map.sourcesContent && typeof map.sourcesContent[i] !== "undefined"
+        map.sourcesContent &&
+        typeof map.sourcesContent[i] !== "undefined" &&
+        map.sourcesContent[i] !== null
           ? map.sourcesContent[i]
           : // eslint-disable-next-line no-undefined
             undefined;
