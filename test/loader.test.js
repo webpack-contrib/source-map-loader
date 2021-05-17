@@ -107,6 +107,27 @@ describe("source-map-loader", () => {
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
 
+  it("should process null in sources content", async () => {
+    const testId = "null-in-sources-content.js";
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+    const deps = stats.compilation.fileDependencies;
+
+    const dependencies = [
+      path.resolve(__dirname, "fixtures", "null-in-sources-content.js.map"),
+    ];
+
+    dependencies.forEach((fixture) => {
+      expect(deps.has(fixture)).toBe(true);
+    });
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
+    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(getWarnings(stats)).toMatchSnapshot("warnings");
+    expect(getErrors(stats)).toMatchSnapshot("errors");
+  });
+
   it("should reject http SourceMaps", async () => {
     const testId = "http-source-map.js";
     const compiler = getCompiler(testId);
