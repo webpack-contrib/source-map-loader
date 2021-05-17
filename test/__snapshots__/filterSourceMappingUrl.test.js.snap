@@ -9,7 +9,7 @@ Error: error",
 
 exports[`filterSourceMappingUrl option should emit error: warnings 1`] = `Array []`;
 
-exports[`filterSourceMappingUrl option should work with "remove" value: css 1`] = `
+exports[`filterSourceMappingUrl option should work with "remove" value: code 1`] = `
 "with SourceMap
 // comment
 "
@@ -19,7 +19,7 @@ exports[`filterSourceMappingUrl option should work with "remove" value: errors 1
 
 exports[`filterSourceMappingUrl option should work with "remove" value: warnings 1`] = `Array []`;
 
-exports[`filterSourceMappingUrl option should work with "skip" value: css 1`] = `
+exports[`filterSourceMappingUrl option should work with "skip" value: code 1`] = `
 "with SourceMap
 //#sourceMappingURL=http://sampledomain.com/external-source-map2.map
 // comment
@@ -30,7 +30,7 @@ exports[`filterSourceMappingUrl option should work with "skip" value: errors 1`]
 
 exports[`filterSourceMappingUrl option should work with "skip" value: warnings 1`] = `Array []`;
 
-exports[`filterSourceMappingUrl option should work with false value: css 1`] = `
+exports[`filterSourceMappingUrl option should work with false value: code 1`] = `
 "with SourceMap
 // comment
 "
@@ -40,7 +40,7 @@ exports[`filterSourceMappingUrl option should work with false value: errors 1`] 
 
 exports[`filterSourceMappingUrl option should work with false value: warnings 1`] = `Array []`;
 
-exports[`filterSourceMappingUrl option should work with true value: css 1`] = `
+exports[`filterSourceMappingUrl option should work with true value: code 1`] = `
 "with SourceMap
 // comment"
 `;
@@ -63,7 +63,7 @@ Object {
 
 exports[`filterSourceMappingUrl option should work with true value: warnings 1`] = `Array []`;
 
-exports[`filterSourceMappingUrl option should work: css 1`] = `
+exports[`filterSourceMappingUrl option should work: code 1`] = `
 "with SourceMap
 // comment"
 `;

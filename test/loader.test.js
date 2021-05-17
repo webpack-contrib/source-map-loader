@@ -21,7 +21,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -33,7 +33,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -46,7 +46,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -58,7 +58,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeDefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -79,7 +79,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -102,7 +102,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -123,7 +123,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -134,7 +134,7 @@ describe("source-map-loader", () => {
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -182,7 +182,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -195,7 +195,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -208,7 +208,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -221,7 +221,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -233,7 +233,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -245,7 +245,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -265,7 +265,7 @@ describe("source-map-loader", () => {
       expect(deps.has(fixture)).toBe(true);
     });
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -277,7 +277,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -298,7 +298,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -311,7 +311,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -348,7 +348,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -380,7 +380,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -408,7 +408,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -436,7 +436,7 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -477,7 +477,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -514,7 +514,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -549,7 +549,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -582,7 +582,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -593,7 +593,7 @@ describe("source-map-loader", () => {
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -606,7 +606,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -619,7 +619,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -632,7 +632,7 @@ describe("source-map-loader", () => {
 
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -647,7 +647,7 @@ describe("source-map-loader", () => {
       stats.toString({ warningsFilter: /Failed to parse source map/ })
     ).not.toContain("Failed to parse source map");
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -677,7 +677,7 @@ describe("source-map-loader", () => {
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
@@ -689,7 +689,7 @@ describe("source-map-loader", () => {
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats, true)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -717,7 +717,7 @@ describe("source-map-loader", () => {
     notInDependencies.forEach((fixture) => {
       expect(deps.has(fixture)).toBe(false);
     });
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
@@ -747,7 +747,7 @@ describe("source-map-loader", () => {
     notInDependencies.forEach((fixture) => {
       expect(deps.has(fixture)).toBe(false);
     });
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
