@@ -454,15 +454,20 @@ describe("source-map-loader", () => {
     const bundle = readAsset("main.bundle.js.map", compiler, stats);
 
     const dependencies = [
-      "indexed-sourcemap/nested1.js",
-      "nested2.js",
-      "webpack/bootstrap",
+      path.normalize("indexed-sourcemap/nested1.js"),
+      path.normalize("/different/root/nested2.js"),
     ];
 
-    // Todo: rewrite when we will fix issue whith unresolved paths
-    dependencies.forEach((fixture) => {
-      expect(bundle.indexOf(fixture) !== -1).toBe(true);
-    });
+    const map = JSON.parse(bundle);
+    const normalizedSources = map.sources.map((source) =>
+      path.normalize(
+        source
+          .replace(/webpack:\/\/sourceMapLoaderExport\//, "")
+          .replace("..", "")
+      )
+    );
+
+    expect(new Set(normalizedSources)).toEqual(new Set(dependencies));
   });
 
   it("should process protocol-relative-url-path", async () => {
