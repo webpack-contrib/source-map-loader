@@ -458,12 +458,16 @@ describe("source-map-loader", () => {
       path.normalize("/different/root/nested2.js"),
     ];
 
-    console.log(dependencies);
-    console.log(bundle);
+    const map = JSON.parse(bundle);
+    const normalizedSources = map.sources.map((source) =>
+      path.normalize(
+        source
+          .replace(/webpack:\/\/sourceMapLoaderExport\//, "")
+          .replace("..", "")
+      )
+    );
 
-    dependencies.forEach((fixture) => {
-      expect(bundle.indexOf(fixture) !== -1).toBe(true);
-    });
+    expect(new Set(normalizedSources)).toEqual(new Set(dependencies));
   });
 
   it("should process protocol-relative-url-path", async () => {
