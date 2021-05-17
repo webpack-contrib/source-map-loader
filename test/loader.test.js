@@ -434,11 +434,9 @@ describe("source-map-loader", () => {
 
     const dependencies = [
       "indexed-sourcemap/nested1.js",
-      "nested2.js",
-      "webpack/bootstrap",
+      "different/root/nested2.js",
     ];
 
-    // Todo: rewrite when we will fix issue whith unresolved paths
     dependencies.forEach((fixture) => {
       expect(bundle.indexOf(fixture) !== -1).toBe(true);
     });
