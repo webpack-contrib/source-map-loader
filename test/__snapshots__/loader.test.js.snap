@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`source-map-loader should add only valid \`sources\` to dependencies: css 1`] = `
+exports[`source-map-loader should add only valid \`sources\` to dependencies: code 1`] = `
 "// Dependencies
 "
 `;
@@ -37,7 +37,7 @@ Failed to parse source map from '/test/fixtures/data/not-found.txt' file: Error:
 ]
 `;
 
-exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: css 1`] = `
+exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: code 1`] = `
 "// Dependencies
 "
 `;
@@ -66,7 +66,7 @@ Object {
 
 exports[`source-map-loader should add only valid \`sources\` with \`sourceContent\` to dependencies: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should allow to filter warnings: css 1`] = `
+exports[`source-map-loader should allow to filter warnings: code 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,invalid/base64=
 // comment"
@@ -81,7 +81,7 @@ Failed to parse source map from \\"data\\" URL: data:application/source-map;base
 ]
 `;
 
-exports[`source-map-loader should emit warning when unresolved server-relative-url-path: css 1`] = `
+exports[`source-map-loader should emit warning when unresolved server-relative-url-path: code 1`] = `
 "with SourceMap
 // #sourceMappingURL=/unresolved-server-relative-url-path.js.map
 // comment
@@ -96,13 +96,13 @@ Array [
 ]
 `;
 
-exports[`source-map-loader should leave normal files untouched: css 1`] = `"without SourceMap"`;
+exports[`source-map-loader should leave normal files untouched: code 1`] = `"without SourceMap"`;
 
 exports[`source-map-loader should leave normal files untouched: errors 1`] = `Array []`;
 
 exports[`source-map-loader should leave normal files untouched: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should leave normal files with fake source-map untouched: css 1`] = `
+exports[`source-map-loader should leave normal files with fake source-map untouched: code 1`] = `
 "// without SourceMap
 anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
 // comment
@@ -113,7 +113,7 @@ exports[`source-map-loader should leave normal files with fake source-map untouc
 
 exports[`source-map-loader should leave normal files with fake source-map untouched: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process css sourceMap: css 1`] = `
+exports[`source-map-loader should process css sourceMap: code 1`] = `
 "* {
   box-sizing: border-box; }
 
@@ -138,7 +138,7 @@ exports[`source-map-loader should process css sourceMap: css 1`] = `
 "
 `;
 
-exports[`source-map-loader should process css sourceMap: css 2`] = `
+exports[`source-map-loader should process css sourceMap: code 2`] = `
 "// Skip SourcesContent in SourceMap
 // comment
 "
@@ -218,7 +218,7 @@ Failed to parse source map from '/test/fixtures/unresolved-file.js' file: Error:
 ]
 `;
 
-exports[`source-map-loader should process external SourceMaps (external sources): css 1`] = `
+exports[`source-map-loader should process external SourceMaps (external sources): code 1`] = `
 "with SourceMap
 // comment"
 `;
@@ -241,7 +241,7 @@ Object {
 
 exports[`source-map-loader should process external SourceMaps (external sources): warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process external SourceMaps: css 1`] = `
+exports[`source-map-loader should process external SourceMaps: code 1`] = `
 "with SourceMap
 // comment"
 `;
@@ -264,7 +264,7 @@ Object {
 
 exports[`source-map-loader should process external SourceMaps: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process inlined SourceMaps with charset: css 1`] = `
+exports[`source-map-loader should process inlined SourceMaps with charset: code 1`] = `
 "with SourceMap
 // comment"
 `;
@@ -287,7 +287,7 @@ Object {
 
 exports[`source-map-loader should process inlined SourceMaps with charset: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process inlined SourceMaps: css 1`] = `
+exports[`source-map-loader should process inlined SourceMaps: code 1`] = `
 "with SourceMap
 // comment"
 `;
@@ -310,7 +310,7 @@ Object {
 
 exports[`source-map-loader should process inlined SourceMaps: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process inlined sources: css 1`] = `
+exports[`source-map-loader should process inlined sources: code 1`] = `
 "// Inline Sources in SourceMap
 // comment
 "
@@ -334,7 +334,7 @@ Object {
 
 exports[`source-map-loader should process inlined sources: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process null in sources content: css 1`] = `
+exports[`source-map-loader should process null in sources content: code 1`] = `
 "with SourceMap
 // comment
 "
@@ -360,7 +360,7 @@ Object {
 
 exports[`source-map-loader should process null in sources content: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process percent-encoding path: css 1`] = `
+exports[`source-map-loader should process percent-encoding path: code 1`] = `
 "with SourceMap
 // comment
 "
@@ -370,7 +370,7 @@ exports[`source-map-loader should process percent-encoding path: errors 1`] = `A
 
 exports[`source-map-loader should process percent-encoding path: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should process protocol-relative-url-path: css 1`] = `
+exports[`source-map-loader should process protocol-relative-url-path: code 1`] = `
 "// Some content
 // # sourceMappingURL=//sampledomain.com/external-source-map2.map
 // comment
@@ -386,7 +386,7 @@ Failed to parse source map: '//sampledomain.com/external-source-map2.map' URL is
 ]
 `;
 
-exports[`source-map-loader should process server-relative-url-path: css 1`] = `
+exports[`source-map-loader should process server-relative-url-path: code 1`] = `
 "with SourceMap
 // comment
 "
@@ -413,7 +413,7 @@ Object {
 
 exports[`source-map-loader should process server-relative-url-path: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should reject http SourceMaps: css 1`] = `
+exports[`source-map-loader should reject http SourceMaps: code 1`] = `
 "with SourceMap
 //#sourceMappingURL=http://sampledomain.com/external-source-map2.map
 // comment
@@ -433,7 +433,7 @@ exports[`source-map-loader should reject not exist file: SourceMaps: errors 1`] 
 
 exports[`source-map-loader should reject not exist file: SourceMaps: warnings 1`] = `"TypeError [ERR_INVALID_FILE"`;
 
-exports[`source-map-loader should reject not support url: css 1`] = `
+exports[`source-map-loader should reject not support url: code 1`] = `
 "// with SourceMap
 //#sourceMappingURL=ftp://exampleurl.com
 // comment
@@ -449,7 +449,7 @@ Failed to parse source map: 'ftp://exampleurl.com' URL is not supported",
 ]
 `;
 
-exports[`source-map-loader should skip file protocol path if sourcesContent is set: css 1`] = `
+exports[`source-map-loader should skip file protocol path if sourcesContent is set: code 1`] = `
 "// Some content
  "
 `;
@@ -471,7 +471,7 @@ Object {
 
 exports[`source-map-loader should skip file protocol path if sourcesContent is set: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should skip invalid base64 SourceMap: css 1`] = `
+exports[`source-map-loader should skip invalid base64 SourceMap: code 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,\\"something invalid\\"
 // comment"
@@ -486,7 +486,7 @@ Failed to parse source map from 'data:application/source-map;base64,': SyntaxErr
 ]
 `;
 
-exports[`source-map-loader should skip webpack protocol path if sourcesContent is set: css 1`] = `
+exports[`source-map-loader should skip webpack protocol path if sourcesContent is set: code 1`] = `
 "!function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){\\"undefined\\"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:\\"Module\\"}),Object.defineProperty(e,\\"__esModule\\",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&\\"object\\"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,\\"default\\",{enumerable:!0,value:e}),2&t&&\\"string\\"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,\\"a\\",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p=\\"\\",r(r.s=0)}([function(e,t,r){\\"use strict\\";r.r(t),t.default=3}]);
 "
 `;
@@ -518,7 +518,7 @@ Object {
 
 exports[`source-map-loader should skip webpack protocol path if sourcesContent is set: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should support absolute paths to sourcemaps: css 1`] = `
+exports[`source-map-loader should support absolute paths to sourcemaps: code 1`] = `
 "// Some content 
  "
 `;
@@ -545,7 +545,7 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 
 exports[`source-map-loader should support absolute paths to sourcemaps: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: css 1`] = `
+exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: code 1`] = `
 "with SourceMap
 // comment"
 `;
@@ -569,7 +569,7 @@ Object {
 
 exports[`source-map-loader should support absolute sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should support file protocol path: css 1`] = `
+exports[`source-map-loader should support file protocol path: code 1`] = `
 "// Some content 
  "
 `;
@@ -596,7 +596,7 @@ anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\
 
 exports[`source-map-loader should support file protocol path: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should support indexed sourcemaps 2: css 1`] = `
+exports[`source-map-loader should support indexed sourcemaps 2: code 1`] = `
 "console.log('with SourceMap')
 "
 `;
@@ -625,7 +625,7 @@ Object {
 
 exports[`source-map-loader should support indexed sourcemaps 2: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should support indexed sourcemaps: css 1`] = `
+exports[`source-map-loader should support indexed sourcemaps: code 1`] = `
 "console.log('with SourceMap')
 // Map taken from here
 // https://github.com/mozilla/source-map/blob/master/test/util.js - indexedTestMapDifferentSourceRoots
@@ -657,7 +657,7 @@ Object {
 
 exports[`source-map-loader should support indexed sourcemaps: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should support mixed paths in sources with sourceRoot: css 1`] = `
+exports[`source-map-loader should support mixed paths in sources with sourceRoot: code 1`] = `
 "// Some content 
  "
 `;
@@ -695,7 +695,7 @@ Failed to parse source map: 'http://path-to-map.com' URL is not supported",
 ]
 `;
 
-exports[`source-map-loader should support mixed paths in sources without sourceRoot: css 1`] = `
+exports[`source-map-loader should support mixed paths in sources without sourceRoot: code 1`] = `
 "// Some content 
  "
 `;
@@ -733,7 +733,7 @@ Failed to parse source map: 'http://path-to-map.com' URL is not supported",
 ]
 `;
 
-exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: css 1`] = `
+exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: code 1`] = `
 "with SourceMap
 // comment"
 `;
@@ -757,7 +757,7 @@ Object {
 
 exports[`source-map-loader should support relative sourceRoot paths in sourcemaps: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should use last SourceMap directive: css 1`] = `
+exports[`source-map-loader should use last SourceMap directive: code 1`] = `
 "with SourceMap
 anInvalidDirective = \\"\\\\n/*# sourceMappingURL=data:application/json;base64,\\"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+\\" */\\";
 // comment"
@@ -781,7 +781,7 @@ Object {
 
 exports[`source-map-loader should use last SourceMap directive: warnings 1`] = `Array []`;
 
-exports[`source-map-loader should warn on invalid SourceMap: css 1`] = `
+exports[`source-map-loader should warn on invalid SourceMap: code 1`] = `
 "with SourceMap
 //#sourceMappingURL=invalid-source-map.map
 // comment"
@@ -796,7 +796,7 @@ Failed to parse source map from 'invalid-source-map.map': SyntaxError: Unexpecte
 ]
 `;
 
-exports[`source-map-loader should warn on invalid base64 SourceMap: css 1`] = `
+exports[`source-map-loader should warn on invalid base64 SourceMap: code 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,invalid/base64=
 // comment"
@@ -811,7 +811,7 @@ Failed to parse source map from \\"data\\" URL: data:application/source-map;base
 ]
 `;
 
-exports[`source-map-loader should warn on missing SourceMap: css 1`] = `
+exports[`source-map-loader should warn on missing SourceMap: code 1`] = `
 "with SourceMap
 //#sourceMappingURL=missing-source-map.map
 // comment"
@@ -826,7 +826,7 @@ Failed to parse source map from '/test/fixtures/missing-source-map.map' file: Er
 ]
 `;
 
-exports[`source-map-loader should warn on missing source file: css 1`] = `
+exports[`source-map-loader should warn on missing source file: code 1`] = `
 "with SourceMap
 // comment"
 `;

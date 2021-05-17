@@ -23,7 +23,7 @@ describe("filterSourceMappingUrl option", () => {
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
@@ -37,7 +37,7 @@ describe("filterSourceMappingUrl option", () => {
     const stats = await compile(compiler);
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
@@ -52,7 +52,7 @@ describe("filterSourceMappingUrl option", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -66,7 +66,7 @@ describe("filterSourceMappingUrl option", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
@@ -80,7 +80,7 @@ describe("filterSourceMappingUrl option", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(codeFromBundle.map).toBeUndefined();
-    expect(codeFromBundle.css).toMatchSnapshot("css");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });

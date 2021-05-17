@@ -1,5 +1,5 @@
 function testLoader(content, sourceMap) {
-  const result = { css: content };
+  const result = { code: content };
 
   if (sourceMap) {
     result.map = sourceMap;
