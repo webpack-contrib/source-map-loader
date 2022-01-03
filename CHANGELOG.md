@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/webpack-contrib/source-map-loader/compare/v3.0.0...v3.0.1) (2022-01-03)
+
+### Chore
+
+* update `source-map-js`
+
 ## [3.0.0](https://github.com/webpack-contrib/source-map-loader/compare/v2.0.2...v3.0.0) (2021-05-21)
 
 
