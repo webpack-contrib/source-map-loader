@@ -20,7 +20,7 @@ Extracts source maps from existing source files (from their <code>sourceMappingU
 To begin, you'll need to install `source-map-loader`:
 
 ```console
-npm install source-map-loader --save-dev
+npm install -D source-map-loader
 ```
 
 ```console
