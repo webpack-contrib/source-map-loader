@@ -19,8 +19,16 @@ Extracts source maps from existing source files (from their <code>sourceMappingU
 
 To begin, you'll need to install `source-map-loader`:
 
-```bash
-npm i -D source-map-loader
+```console
+npm install source-map-loader --save-dev
+```
+
+```console
+yarn add -D source-map-loader
+```
+
+```console
+pnpm add -D source-map-loader
 ```
 
 Then add the plugin to your `webpack` config. For example:
