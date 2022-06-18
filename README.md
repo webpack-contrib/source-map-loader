@@ -23,9 +23,13 @@ To begin, you'll need to install `source-map-loader`:
 npm i -D source-map-loader
 ```
 
+or
+
 ```console
 yarn add -D source-map-loader
 ```
+
+or
 
 ```console
 pnpm add -D source-map-loader
