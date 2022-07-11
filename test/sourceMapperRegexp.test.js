@@ -1,4 +1,4 @@
-import { getSourceMappingURL } from "../src/utils";
+const getSourceMappingURL = require("../src/utils");
 
 describe("source-map-loader", () => {
   const cases = [

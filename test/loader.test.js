@@ -1,7 +1,7 @@
-import path from "path";
-import fs from "fs";
+const path = require("path");
+const fs = require("fs");
 
-import {
+const {
   compile,
   getCodeFromBundle,
   getCompiler,
@@ -9,7 +9,7 @@ import {
   normalizeMap,
   getWarnings,
   readAsset,
-} from "./helpers";
+} = require("./helpers");
 
 const isWin = process.platform === "win32";
 

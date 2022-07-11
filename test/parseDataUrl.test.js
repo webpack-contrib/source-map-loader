@@ -1,4 +1,4 @@
-import parseDataUrl from "../src/parse-data-url";
+const parseDataUrl = require("../src/parse-data-url");
 
 const dataUrls = [
   "data://test/,X",

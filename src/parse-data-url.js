@@ -1,4 +1,4 @@
-import { atob } from "abab";
+const atob = require("abab");
 
 const removeLeadingAndTrailingHTTPWhitespace = (string) =>
   string.replace(/^[ \t\n\r]+/, "").replace(/[ \t\n\r]+$/, "");
@@ -98,7 +98,7 @@ function percentDecodeBytes(input) {
   return output.slice(0, outputIndex);
 }
 
-export default function parseDataUrl(stringInput) {
+module.exports = function parseDataUrl(stringInput) {
   let parsedUrl;
 
   try {
@@ -290,4 +290,4 @@ export default function parseDataUrl(stringInput) {
   }
 
   return result;
-}
+};

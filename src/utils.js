@@ -1,11 +1,11 @@
-import path from "path";
-import urlUtils from "url";
+const path = require("path");
+const urlUtils = require("url");
 
-import sourceMap from "source-map-js";
-import { decode } from "iconv-lite";
+const sourceMap = require("source-map-js");
+const { decode } = require("iconv-lite");
 
-import parseDataURL from "./parse-data-url";
-import labelsToNames from "./labels-to-names";
+const parseDataURL = require("./parse-data-url");
+const labelsToNames = require("./labels-to-names");
 
 // Matches only the last occurrence of sourceMappingURL
 const innerRegex = /\s*[#@]\s*sourceMappingURL\s*=\s*([^\s'"]*)\s*/;
@@ -268,4 +268,4 @@ async function fetchFromURL(
   return { sourceURL, sourceContent };
 }
 
-export { getSourceMappingURL, fetchFromURL, flattenSourceMap };
+module.exports = { getSourceMappingURL, fetchFromURL, flattenSourceMap };

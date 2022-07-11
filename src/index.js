@@ -2,12 +2,16 @@
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
 */
-import path from "path";
+const path = require("path");
 
-import schema from "./options.json";
-import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from "./utils";
+const schema = require("./options.json");
+const {
+  getSourceMappingURL,
+  fetchFromURL,
+  flattenSourceMap,
+} = require("./utils");
 
-export default async function loader(input, inputMap) {
+module.exports = async function loader(input, inputMap) {
   const options = this.getOptions(schema);
   const { sourceMappingURL, replacementString } = getSourceMappingURL(input);
   const callback = this.async();
@@ -154,4 +158,4 @@ export default async function loader(input, inputMap) {
   }
 
   callback(null, input.replace(replacementString, ""), newMap);
-}
+};

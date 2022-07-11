@@ -1,15 +1,15 @@
-import compile from "./compile";
-import execute from "./execute";
-import getCodeFromBundle from "./getCodeFromBundle";
-import getCompiler from "./getCompiler";
-import getErrors from "./getErrors";
-import normalizeMap from "./normalizeMap";
-import getWarnings from "./getWarnings";
-import normalizeErrors from "./normalizeErrors";
-import readAsset from "./readAsset";
-import readsAssets from "./readAssets";
+const compile = require("./compile");
+const execute = require("./execute");
+const getCodeFromBundle = require("./getCodeFromBundle");
+const getCompiler = require("./getCompiler");
+const getErrors = require("./getErrors");
+const normalizeMap = require("./normalizeMap");
+const getWarnings = require("./getWarnings");
+const normalizeErrors = require("./normalizeErrors");
+const readAsset = require("./readAsset");
+const readsAssets = require("./readAssets");
 
-export {
+module.exports = {
   compile,
   execute,
   getCodeFromBundle,

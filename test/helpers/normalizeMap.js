@@ -1,4 +1,4 @@
-export default (map) => {
+module.exports = (map) => {
   const result = map;
 
   if (result.sources) {

@@ -1,11 +1,11 @@
-import {
+const {
   compile,
   getCodeFromBundle,
   getCompiler,
   getErrors,
   normalizeMap,
   getWarnings,
-} from "./helpers";
+} = require("./helpers");
 
 describe("filterSourceMappingUrl option", () => {
   it("should work", async () => {

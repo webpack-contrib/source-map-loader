@@ -206,4 +206,4 @@ const labelToNames = {
   "utf-16le": "UTF-16LE",
 };
 
-export default labelToNames;
+module.exports = labelToNames;

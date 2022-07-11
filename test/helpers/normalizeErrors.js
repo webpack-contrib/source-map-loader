@@ -14,7 +14,7 @@ function removeCWD(str) {
     .replace(new RegExp(cwd, "g"), "");
 }
 
-export default (errors, shortError) =>
+module.exports = (errors, shortError) =>
   errors.map((error) => {
     let errorMessage = error.toString();
 
