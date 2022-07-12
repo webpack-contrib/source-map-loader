@@ -1,4 +1,4 @@
 const loader = require("./index");
 
-module.exports = loader.default;
+module.exports = loader;
 module.exports.raw = loader.raw;

@@ -1,4 +1,4 @@
-const atob = require("abab");
+const { atob } = require("abab");
 
 const removeLeadingAndTrailingHTTPWhitespace = (string) =>
   string.replace(/^[ \t\n\r]+/, "").replace(/[ \t\n\r]+$/, "");
