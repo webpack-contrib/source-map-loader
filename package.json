@@ -45,9 +45,9 @@
     "source-map-js": "^1.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.9",
-    "@babel/core": "^7.18.9",
-    "@babel/preset-env": "^7.18.9",
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
     "@commitlint/cli": "^16.3.0",
     "@commitlint/config-conventional": "^16.2.4",
     "@webpack-contrib/eslint-config-webpack": "^3.0.0",
@@ -55,7 +55,7 @@
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "del-cli": "^4.0.1",
-    "eslint": "^8.21.0",
+    "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
