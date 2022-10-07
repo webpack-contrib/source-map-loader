@@ -752,4 +752,17 @@ describe("source-map-loader", () => {
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
+
+  it("should process absolute URL in sourceRoot", async () => {
+    const testId = "absolute-source-root.js";
+    const compiler = getCompiler(testId);
+    const stats = await compile(compiler);
+    const codeFromBundle = getCodeFromBundle(stats, compiler);
+
+    expect(codeFromBundle.map).toBeDefined();
+    expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
+    expect(codeFromBundle.code).toMatchSnapshot("code");
+    expect(getWarnings(stats)).toMatchSnapshot("warnings");
+    expect(getErrors(stats)).toMatchSnapshot("errors");
+  });
 });

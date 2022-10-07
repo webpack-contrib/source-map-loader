@@ -96,6 +96,10 @@ function getSourceMappingURL(code) {
 }
 
 function getAbsolutePath(context, request, sourceRoot) {
+  if (isURL(sourceRoot)) {
+    return new URL(request, sourceRoot).toString();
+  }
+
   if (sourceRoot) {
     if (path.isAbsolute(sourceRoot)) {
       return path.join(sourceRoot, request);
@@ -179,6 +183,10 @@ async function fetchPathsFromFilesystem(
   return result;
 }
 
+function isURL(value) {
+  return /^[a-z][a-z0-9+.-]*:/i.test(value) && !path.win32.isAbsolute(value);
+}
+
 async function fetchFromURL(
   loaderContext,
   context,
@@ -187,7 +195,7 @@ async function fetchFromURL(
   skipReading = false
 ) {
   // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
-  if (/^[a-z][a-z0-9+.-]*:/i.test(url) && !path.win32.isAbsolute(url)) {
+  if (isURL(url)) {
     const { protocol } = urlUtils.parse(url);
 
     if (protocol === "data:") {
