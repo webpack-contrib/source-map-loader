@@ -129,6 +129,10 @@ function fetchFromDataURL(loaderContext, sourceURL) {
 async function fetchFromFilesystem(loaderContext, sourceURL) {
   let buffer;
 
+  if (isURL(sourceURL)) {
+    return { path: sourceURL };
+  }
+
   try {
     buffer = await new Promise((resolve, reject) => {
       loaderContext.fs.readFile(sourceURL, (error, data) => {
@@ -276,4 +280,4 @@ async function fetchFromURL(
   return { sourceURL, sourceContent };
 }
 
-export { getSourceMappingURL, fetchFromURL, flattenSourceMap };
+export { getSourceMappingURL, fetchFromURL, flattenSourceMap, isURL };
