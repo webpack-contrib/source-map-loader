@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/webpack-contrib/source-map-loader/compare/v3.0.1...v3.0.2) (2022-10-21)
+
+
+### Bug Fixes
+
+* logic when sourceRoot contains absolute URL ([#191](https://github.com/webpack-contrib/source-map-loader/issues/191)) ([625cc81](https://github.com/webpack-contrib/source-map-loader/commit/625cc810095ce3025051c7466637dce974cfe68e))
+
 ### [3.0.1](https://github.com/webpack-contrib/source-map-loader/compare/v3.0.0...v3.0.1) (2022-01-03)
 
 ### Chore
