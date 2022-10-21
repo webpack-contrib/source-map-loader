@@ -5,7 +5,12 @@
 import path from "path";
 
 import schema from "./options.json";
-import { getSourceMappingURL, fetchFromURL, flattenSourceMap } from "./utils";
+import {
+  getSourceMappingURL,
+  fetchFromURL,
+  flattenSourceMap,
+  isURL,
+} from "./utils";
 
 export default async function loader(input, inputMap) {
   const options = this.getOptions(schema);
@@ -122,7 +127,7 @@ export default async function loader(input, inputMap) {
 
       if (skipReading) {
         sourceContent = originalSourceContent;
-      } else if (!errored && sourceURL) {
+      } else if (!errored && sourceURL && !isURL(sourceURL)) {
         this.addDependency(sourceURL);
       }
 
