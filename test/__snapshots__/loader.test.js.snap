@@ -810,13 +810,6 @@ exports[`source-map-loader should warn on invalid SourceMap: code 1`] = `
 
 exports[`source-map-loader should warn on invalid SourceMap: errors 1`] = `[]`;
 
-exports[`source-map-loader should warn on invalid SourceMap: warnings 1`] = `
-[
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from 'invalid-source-map.map': SyntaxError: Unexpected string in JSON at position 102",
-]
-`;
-
 exports[`source-map-loader should warn on invalid base64 SourceMap: code 1`] = `
 "without SourceMap
 // @sourceMappingURL=data:application/source-map;base64,invalid/base64=
