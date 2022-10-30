@@ -266,7 +266,17 @@ describe("source-map-loader", () => {
     });
     expect(codeFromBundle.map).toBeUndefined();
     expect(codeFromBundle.code).toMatchSnapshot("code");
-    expect(getWarnings(stats)).toMatchSnapshot("warnings");
+    // expect(getWarnings(stats)).toMatchSnapshot("warnings");
+
+ if (process.version.startsWith("v19")) {
+      expect(getWarnings(stats)[0]).toContain(
+        `SyntaxError: Unexpected non-whitespace character after JSON at position 102`
+      );
+    } else {
+      expect(getWarnings(stats)[0]).toContain(
+        `SyntaxError: Unexpected string in JSON at position 102`
+      );
+    }
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
 
