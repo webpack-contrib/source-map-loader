@@ -29,6 +29,9 @@
     "**/__snapshots__/**",
     "package-lock.json",
     "test/fixtures/file-protocol-path.js",
-    "test/fixtures/absolute-path.js"
+    "test/fixtures/absolute-path.js",
+    "node_modules",
+    "coverage",
+    "*.log"
   ]
 }
