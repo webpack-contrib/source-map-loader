@@ -1,5 +1,3 @@
-import { atob } from "abab";
-
 const removeLeadingAndTrailingHTTPWhitespace = (string) =>
   string.replace(/^[ \t\n\r]+/, "").replace(/[ \t\n\r]+$/, "");
 
