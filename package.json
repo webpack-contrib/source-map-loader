@@ -44,7 +44,6 @@
     "webpack": "^5.72.1"
   },
   "dependencies": {
-    "abab": "^2.0.6",
     "iconv-lite": "^0.6.3",
     "source-map-js": "^1.0.2"
   },
