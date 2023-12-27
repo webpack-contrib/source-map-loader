@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/webpack-contrib/source-map-loader/compare/v4.0.1...v4.0.2) (2023-12-27)
+
+
+### Bug Fixes
+
+* avoid deprecation message of `abab` package ([#228](https://github.com/webpack-contrib/source-map-loader/issues/228)) ([9daafb3](https://github.com/webpack-contrib/source-map-loader/commit/9daafb3662f32c30dc84d068c86085dfad025563))
+
 ### [4.0.1](https://github.com/webpack-contrib/source-map-loader/compare/v4.0.0...v4.0.1) (2022-10-07)
 
 
