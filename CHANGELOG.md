@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/webpack-contrib/source-map-loader/compare/v4.0.2...v5.0.0) (2024-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* minimum supported Node.js version is `18.12.0` ([#230](https://github.com/webpack-contrib/source-map-loader/issues/230)) ([7fcab17](https://github.com/webpack-contrib/source-map-loader/commit/7fcab17805723d5c93eeb0703448b1722cbc93d5))
+
 ### [4.0.2](https://github.com/webpack-contrib/source-map-loader/compare/v4.0.1...v4.0.2) (2023-12-27)
 
 
