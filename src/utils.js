@@ -25,7 +25,7 @@ const sourceMappingURLRegex = RegExp(
     innerRegex.source +
     ")" +
     ")" +
-    "\\s*"
+    "\\s*",
 );
 /* eslint-enable prefer-template */
 
@@ -145,7 +145,7 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
     });
   } catch (error) {
     throw new Error(
-      `Failed to parse source map from '${sourceURL}' file: ${error}`
+      `Failed to parse source map from '${sourceURL}' file: ${error}`,
     );
   }
 
@@ -155,7 +155,7 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
 async function fetchPathsFromFilesystem(
   loaderContext,
   possibleRequests,
-  errorsAccumulator = ""
+  errorsAccumulator = "",
 ) {
   let result;
 
@@ -163,7 +163,7 @@ async function fetchPathsFromFilesystem(
     result = await fetchFromFilesystem(
       loaderContext,
       possibleRequests[0],
-      errorsAccumulator
+      errorsAccumulator,
     );
   } catch (error) {
     // eslint-disable-next-line no-param-reassign
@@ -180,7 +180,7 @@ async function fetchPathsFromFilesystem(
     return fetchPathsFromFilesystem(
       loaderContext,
       tailPossibleRequests,
-      errorsAccumulator
+      errorsAccumulator,
     );
   }
 
@@ -196,7 +196,7 @@ async function fetchFromURL(
   context,
   url,
   sourceRoot,
-  skipReading = false
+  skipReading = false,
 ) {
   // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
   if (isURL(url)) {
@@ -221,21 +221,21 @@ async function fetchFromURL(
       const sourceURL = path.normalize(pathFromURL);
       const { data: sourceContent } = await fetchFromFilesystem(
         loaderContext,
-        sourceURL
+        sourceURL,
       );
 
       return { sourceURL, sourceContent };
     }
 
     throw new Error(
-      `Failed to parse source map: '${url}' URL is not supported`
+      `Failed to parse source map: '${url}' URL is not supported`,
     );
   }
 
   // 2. It's a scheme-relative
   if (/^\/\//.test(url)) {
     throw new Error(
-      `Failed to parse source map: '${url}' URL is not supported`
+      `Failed to parse source map: '${url}' URL is not supported`,
     );
   }
 
@@ -250,13 +250,13 @@ async function fetchFromURL(
 
       if (url.startsWith("/")) {
         possibleRequests.push(
-          getAbsolutePath(context, sourceURL.slice(1), sourceRoot)
+          getAbsolutePath(context, sourceURL.slice(1), sourceRoot),
         );
       }
 
       const result = await fetchPathsFromFilesystem(
         loaderContext,
-        possibleRequests
+        possibleRequests,
       );
 
       sourceURL = result.path;
