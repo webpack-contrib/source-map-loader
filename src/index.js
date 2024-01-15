@@ -54,7 +54,7 @@ export default async function loader(input, inputMap) {
     ({ sourceURL, sourceContent } = await fetchFromURL(
       this,
       this.context,
-      sourceMappingURL
+      sourceMappingURL,
     ));
   } catch (error) {
     this.emitWarning(error);
@@ -75,8 +75,8 @@ export default async function loader(input, inputMap) {
   } catch (parseError) {
     this.emitWarning(
       new Error(
-        `Failed to parse source map from '${sourceMappingURL}': ${parseError}`
-      )
+        `Failed to parse source map from '${sourceMappingURL}': ${parseError}`,
+      ),
     );
 
     callback(null, input, inputMap);
@@ -117,7 +117,7 @@ export default async function loader(input, inputMap) {
           context,
           source,
           map.sourceRoot,
-          skipReading
+          skipReading,
         ));
       } catch (error) {
         errored = true;
@@ -133,7 +133,7 @@ export default async function loader(input, inputMap) {
 
       // Return original value of `source` when error happens
       return { sourceURL: errored ? source : sourceURL, sourceContent };
-    })
+    }),
   );
 
   const newMap = { ...map };

@@ -85,7 +85,7 @@ function percentDecodeBytes(input) {
     } else {
       output[outputIndex] = parseInt(
         String.fromCodePoint(input[i + 1], input[i + 2]),
-        16
+        16,
       );
       i += 2;
     }
@@ -249,7 +249,7 @@ export default function parseDataUrl(stringInput) {
 
   // Can't use /i regexp flag because it isn't restricted to ASCII.
   const mimeTypeBase64MatchResult = /(.*); *[Bb][Aa][Ss][Ee]64$/.exec(
-    mediaType
+    mediaType,
   );
 
   if (mimeTypeBase64MatchResult) {
@@ -362,7 +362,7 @@ export default function parseDataUrl(stringInput) {
     if (inputMediaType[positionMediaType] === '"') {
       [parameterValue, positionMediaType] = collectAnHTTPQuotedString(
         inputMediaType,
-        positionMediaType
+        positionMediaType,
       );
 
       while (

@@ -172,7 +172,7 @@ describe("source-map-loader", () => {
     // Create the entryPointFile file
     const entryFileContent = `// Some content \r\n // # sourceMappingURL=file://${sourceMapPath.replace(
       /\\/g,
-      "/"
+      "/",
     )}`;
     fs.writeFileSync(entryFileAbsolutePath, entryFileContent);
 
@@ -267,13 +267,16 @@ describe("source-map-loader", () => {
     expect(codeFromBundle.map).toBeUndefined();
     expect(codeFromBundle.code).toMatchSnapshot("code");
 
-    if (process.version.startsWith("v20")) {
+    if (
+      process.version.startsWith("v20") ||
+      process.version.startsWith("v21")
+    ) {
       expect(getWarnings(stats)[0]).toContain(
-        `SyntaxError: Unexpected non-whitespace character after JSON at position 102`
+        `SyntaxError: Unexpected non-whitespace character after JSON at position 102`,
       );
     } else {
       expect(getWarnings(stats)[0]).toContain(
-        `SyntaxError: Unexpected string in JSON at position 102`
+        `SyntaxError: Unexpected string in JSON at position 102`,
       );
     }
     expect(getErrors(stats)).toMatchSnapshot("errors");
@@ -332,7 +335,7 @@ describe("source-map-loader", () => {
     const rootRelativeSourcePath = path.join(sourceRoot, sourceFilename);
     const sourceMapPath = path.join(
       sourceRoot,
-      "absolute-sourceRoot-source-map.map"
+      "absolute-sourceRoot-source-map.map",
     );
 
     // Create the sourcemap file
@@ -368,12 +371,12 @@ describe("source-map-loader", () => {
       __dirname,
       "fixtures",
       "data",
-      sourceFilename
+      sourceFilename,
     );
     const sourceMapPath = path.join(
       __dirname,
       "fixtures",
-      "relative-sourceRoot-source-map.map"
+      "relative-sourceRoot-source-map.map",
     );
 
     const testId = "relative-sourceRoot-source-map.js";
@@ -398,7 +401,7 @@ describe("source-map-loader", () => {
     const currentDirPath = path.join(
       __dirname,
       "fixtures",
-      "indexed-sourcemap"
+      "indexed-sourcemap",
     );
 
     const testId = path.join(currentDirPath, "file.js");
@@ -426,7 +429,7 @@ describe("source-map-loader", () => {
     const currentDirPath = path.join(
       __dirname,
       "fixtures",
-      "indexed-sourcemap"
+      "indexed-sourcemap",
     );
 
     const testId = path.join(currentDirPath, "file2.js");
@@ -454,7 +457,7 @@ describe("source-map-loader", () => {
     const currentDirPath = path.join(
       __dirname,
       "fixtures",
-      "indexed-sourcemap"
+      "indexed-sourcemap",
     );
 
     const testId = path.join(currentDirPath, "file.js");
@@ -472,8 +475,8 @@ describe("source-map-loader", () => {
       path.normalize(
         source
           .replace(/webpack:\/\/sourceMapLoaderExport\//, "")
-          .replace("..", "")
-      )
+          .replace("..", ""),
+      ),
     );
 
     expect(new Set(normalizedSources)).toEqual(new Set(dependencies));
@@ -497,7 +500,7 @@ describe("source-map-loader", () => {
     const entryFileAbsolutePath = path.join(sourceRoot, javaScriptFilename);
     const sourceMapPath = path.join(
       sourceRoot,
-      "map-without-sourceroot.js.map"
+      "map-without-sourceroot.js.map",
     );
 
     // Create the sourcemap file
@@ -653,7 +656,7 @@ describe("source-map-loader", () => {
     const codeFromBundle = getCodeFromBundle(stats, compiler);
 
     expect(
-      stats.toString({ warningsFilter: /Failed to parse source map/ })
+      stats.toString({ warningsFilter: /Failed to parse source map/ }),
     ).not.toContain("Failed to parse source map");
     expect(codeFromBundle.map).toBeUndefined();
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -667,7 +670,7 @@ describe("source-map-loader", () => {
     const sourceFilename = "server-relative-url-path.js";
     const sourceMapPath = path.join(
       sourceRoot,
-      "server-relative-url-path.js.map"
+      "server-relative-url-path.js.map",
     );
 
     // Create the sourcemap file
@@ -715,7 +718,7 @@ describe("source-map-loader", () => {
       path.resolve(
         __dirname,
         "fixtures",
-        "data/relative-sourceRoot-source-map.txt"
+        "data/relative-sourceRoot-source-map.txt",
       ),
     ];
     const notInDependencies = ["", "data:invalid;A;a", "./data/not-found.txt"];
