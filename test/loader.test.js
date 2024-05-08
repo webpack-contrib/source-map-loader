@@ -264,13 +264,15 @@ describe("source-map-loader", () => {
     dependencies.forEach((fixture) => {
       expect(deps.has(fixture)).toBe(true);
     });
+
     expect(codeFromBundle.map).toBeUndefined();
     expect(codeFromBundle.code).toMatchSnapshot("code");
 
-    if (
-      process.version.startsWith("v20") ||
-      process.version.startsWith("v21")
-    ) {
+    const match = process.version.match(
+      /^v(\d{1,2})\.(\d{1,2})\.(\d{1,2})(?:-([0-9A-Za-z-.]+))?(?:\+([0-9A-Za-z-.]+))?$/,
+    );
+
+    if (parseInt(match[1], 10) >= 20) {
       expect(getWarnings(stats)[0]).toContain(
         `SyntaxError: Unexpected non-whitespace character after JSON at position 102`,
       );
