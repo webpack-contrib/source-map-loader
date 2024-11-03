@@ -65,7 +65,7 @@ All source map data is passed to webpack for processing as per a chosen [source 
 This loader is especially useful when using 3rd-party libraries having their own source maps.
 If not extracted and processed into the source map of the webpack bundle, browsers may misinterpret source map data. `source-map-loader` allows webpack to maintain source map data continuity across libraries so ease of debugging is preserved.
 The `source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory.
-Be mindful in setting [include](https://webpack.js.org/configuration/module/#rule-include) and [exclude](https://webpack.js.org/configuration/module/#rule-exclude) rule conditions to maximize bundling performance.
+Be mindful in setting [include](https://webpack.js.org/configuration/module/#ruleinclude) and [exclude](https://webpack.js.org/configuration/module/#ruleexclude) rule conditions to maximize bundling performance.
 
 And run `webpack` via your preferred method.
 
