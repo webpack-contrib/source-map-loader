@@ -35,6 +35,12 @@ or
 pnpm add -D source-map-loader
 ```
 
+or
+
+```console
+bun add -D source-map-loader
+```
+
 Then add the plugin to your `webpack` config. For example:
 
 **file.js**
