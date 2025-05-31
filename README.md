@@ -13,7 +13,7 @@
 
 # source-map-loader
 
-Extracts source maps from existing source files (from their <code>sourceMappingURL</code>).
+Extracts source maps from existing source files (from their `<code>sourceMappingURL</code>`).
 
 ## Getting Started
 
@@ -35,7 +35,7 @@ or
 pnpm add -D source-map-loader
 ```
 
-Then add the plugin to your `webpack` config. For example:
+Then add the loader to your `webpack` configuration. For example:
 
 **file.js**
 
@@ -60,14 +60,20 @@ module.exports = {
 ```
 
 The `source-map-loader` extracts existing source maps from all JavaScript entries.
-This includes both inline source maps as well as those linked via URL.
+This includes both inline source maps as well as those linked via a `sourceMappingURL`.
+
 All source map data is passed to webpack for processing as per a chosen [source map style](https://webpack.js.org/configuration/devtool/) specified by the `devtool` option in [webpack.config.js](https://webpack.js.org/configuration/).
-This loader is especially useful when using 3rd-party libraries having their own source maps.
-If not extracted and processed into the source map of the webpack bundle, browsers may misinterpret source map data. `source-map-loader` allows webpack to maintain source map data continuity across libraries so ease of debugging is preserved.
+
+This loader is especially useful when using third-party libraries having their own source maps.
+If not extracted and processed into the source map of the webpack bundle, browsers may misinterpret or ignore source map data.
+
+The `source-map-loader` allows webpack to maintain source map data continuity across libraries so ease of debugging is preserved.
+
 The `source-map-loader` will extract from any JavaScript file, including those in the `node_modules` directory.
+
 Be mindful in setting [include](https://webpack.js.org/configuration/module/#ruleinclude) and [exclude](https://webpack.js.org/configuration/module/#ruleexclude) rule conditions to maximize bundling performance.
 
-And run `webpack` via your preferred method.
+Finally, run `webpack` using the method you normally use (e.g., via CLI or an npm script).
 
 ## Options
 
@@ -82,7 +88,7 @@ Default: `undefined`
 
 Allows you to specify the behavior of the loader for `SourceMappingURL` comment.
 
-The function must return one of the values:
+The function must return one of the following values:
 
 - `true` or `'consume'` - consume the source map and remove `SourceMappingURL` comment (default behavior)
 - `false` or `'remove'` - do not consume the source map and remove `SourceMappingURL` comment
@@ -150,7 +156,8 @@ More information about the `ignoreWarnings` option can be found [here](https://w
 
 ## Contributing
 
-Please take a moment to read our contributing guidelines if you haven't yet done so.
+We welcome all contributions!
+If you're new here, please take a moment to review our contributing guidelines before submitting issues or pull requests.
 
 [CONTRIBUTING](./.github/CONTRIBUTING.md)
 
