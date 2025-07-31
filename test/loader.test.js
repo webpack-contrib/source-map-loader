@@ -1,13 +1,13 @@
-import path from "path";
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
 
 import {
   compile,
   getCodeFromBundle,
   getCompiler,
   getErrors,
-  normalizeMap,
   getWarnings,
+  normalizeMap,
   readAsset,
 } from "./helpers";
 
@@ -74,9 +74,9 @@ describe("source-map-loader", () => {
       path.resolve(__dirname, "fixtures", "external-source-map.map"),
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -97,9 +97,9 @@ describe("source-map-loader", () => {
       path.resolve(__dirname, "fixtures", "external-source-map2.txt"),
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -118,9 +118,9 @@ describe("source-map-loader", () => {
       path.resolve(__dirname, "fixtures", "null-in-sources-content.js.map"),
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -163,15 +163,15 @@ describe("source-map-loader", () => {
         "normal-file.js",
         `file://${path
           .resolve(__dirname, "fixtures", "normal-file2.js")
-          .replace(/\\/g, "/")}`,
+          .replaceAll("\\", "/")}`,
       ],
       mappings: "CAAC,IAAI,IAAM,SAAUA,GAClB,OAAOA",
     };
     fs.writeFileSync(sourceMapPath, JSON.stringify(rawSourceMap));
 
     // Create the entryPointFile file
-    const entryFileContent = `// Some content \r\n // # sourceMappingURL=file://${sourceMapPath.replace(
-      /\\/g,
+    const entryFileContent = `// Some content \r\n // # sourceMappingURL=file://${sourceMapPath.replaceAll(
+      "\\",
       "/",
     )}`;
     fs.writeFileSync(entryFileAbsolutePath, entryFileContent);
@@ -261,9 +261,9 @@ describe("source-map-loader", () => {
       path.resolve(__dirname, "fixtures", "invalid-source-map.map"),
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
 
     expect(codeFromBundle.map).toBeUndefined();
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -272,13 +272,13 @@ describe("source-map-loader", () => {
       /^v(\d{1,2})\.(\d{1,2})\.(\d{1,2})(?:-([0-9A-Za-z-.]+))?(?:\+([0-9A-Za-z-.]+))?$/,
     );
 
-    if (parseInt(match[1], 10) >= 20) {
+    if (Number.parseInt(match[1], 10) >= 20) {
       expect(getWarnings(stats)[0]).toContain(
-        `SyntaxError: Unexpected non-whitespace character after JSON at position 102`,
+        "SyntaxError: Unexpected non-whitespace character after JSON at position 102",
       );
     } else {
       expect(getWarnings(stats)[0]).toContain(
-        `SyntaxError: Unexpected string in JSON at position 102`,
+        "SyntaxError: Unexpected string in JSON at position 102",
       );
     }
     expect(getErrors(stats)).toMatchSnapshot("errors");
@@ -307,9 +307,9 @@ describe("source-map-loader", () => {
       path.resolve(__dirname, "fixtures", "missing-source-map2.map"),
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -357,9 +357,9 @@ describe("source-map-loader", () => {
 
     const dependencies = [sourceMapPath, rootRelativeSourcePath];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -389,9 +389,9 @@ describe("source-map-loader", () => {
 
     const dependencies = [sourceMapPath, rootRelativeSourcePath];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -417,9 +417,9 @@ describe("source-map-loader", () => {
       path.join(currentDirPath, "file.js.map"),
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -445,9 +445,9 @@ describe("source-map-loader", () => {
       path.join(currentDirPath, "file2.js.map"),
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
+    }
     expect(codeFromBundle.map).toBeDefined();
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(codeFromBundle.code).toMatchSnapshot("code");
@@ -638,7 +638,7 @@ describe("source-map-loader", () => {
     expect(getErrors(stats)).toMatchSnapshot("errors");
   });
 
-  it("should process css sourceMap", async () => {
+  it("should process css sourceMap and skip source content", async () => {
     const testId = "skip-sourcesContent.js";
     const compiler = getCompiler(testId);
     const stats = await compile(compiler);
@@ -725,12 +725,12 @@ describe("source-map-loader", () => {
     ];
     const notInDependencies = ["", "data:invalid;A;a", "./data/not-found.txt"];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
-    notInDependencies.forEach((fixture) => {
+    }
+    for (const fixture of notInDependencies) {
       expect(deps.has(fixture)).toBe(false);
-    });
+    }
     expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");
@@ -755,12 +755,12 @@ describe("source-map-loader", () => {
       "data:invalid;A;a",
     ];
 
-    dependencies.forEach((fixture) => {
+    for (const fixture of dependencies) {
       expect(deps.has(fixture)).toBe(true);
-    });
-    notInDependencies.forEach((fixture) => {
+    }
+    for (const fixture of notInDependencies) {
       expect(deps.has(fixture)).toBe(false);
-    });
+    }
     expect(codeFromBundle.code).toMatchSnapshot("code");
     expect(normalizeMap(codeFromBundle.map)).toMatchSnapshot("map");
     expect(getWarnings(stats)).toMatchSnapshot("warnings");

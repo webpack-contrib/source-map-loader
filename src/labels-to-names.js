@@ -1,3 +1,5 @@
+/* eslint-disable camelcase, unicorn/text-encoding-identifier-case */
+
 const labelToNames = {
   866: "IBM866",
   "unicode-1-1-utf-8": "UTF-8",

@@ -2,13 +2,13 @@
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
 */
-import path from "path";
+import path from "node:path";
 
 import schema from "./options.json";
 import {
-  getSourceMappingURL,
   fetchFromURL,
   flattenSourceMap,
+  getSourceMappingURL,
   isURL,
 } from "./utils";
 
@@ -36,7 +36,6 @@ export default async function loader(input, inputMap) {
     return;
   }
 
-  // eslint-disable-next-line default-case
   switch (behaviourSourceMappingUrl) {
     case "skip":
       callback(null, input, inputMap);
@@ -72,10 +71,10 @@ export default async function loader(input, inputMap) {
 
   try {
     map = JSON.parse(sourceContent.replace(/^\)\]\}'/, ""));
-  } catch (parseError) {
+  } catch (err) {
     this.emitWarning(
       new Error(
-        `Failed to parse source map from '${sourceMappingURL}': ${parseError}`,
+        `Failed to parse source map from '${sourceMappingURL}': ${err}`,
       ),
     );
 
@@ -87,15 +86,13 @@ export default async function loader(input, inputMap) {
   const context = sourceURL ? path.dirname(sourceURL) : this.context;
 
   if (map.sections) {
-    // eslint-disable-next-line no-param-reassign
     map = await flattenSourceMap(map);
   }
 
   const resolvedSources = await Promise.all(
     map.sources.map(async (source, i) => {
-      // eslint-disable-next-line no-shadow
       let sourceURL;
-      // eslint-disable-next-line no-shadow
+
       let sourceContent;
 
       const originalSourceContent =
@@ -103,8 +100,7 @@ export default async function loader(input, inputMap) {
         typeof map.sourcesContent[i] !== "undefined" &&
         map.sourcesContent[i] !== null
           ? map.sourcesContent[i]
-          : // eslint-disable-next-line no-undefined
-            undefined;
+          : undefined;
       const skipReading = typeof originalSourceContent !== "undefined";
       let errored = false;
 
@@ -143,16 +139,15 @@ export default async function loader(input, inputMap) {
 
   delete newMap.sourceRoot;
 
-  resolvedSources.forEach((source) => {
-    // eslint-disable-next-line no-shadow
+  for (const source of resolvedSources) {
     const { sourceURL, sourceContent } = source;
 
     newMap.sources.push(sourceURL || "");
     newMap.sourcesContent.push(sourceContent || "");
-  });
+  }
 
   const sourcesContentIsEmpty =
-    newMap.sourcesContent.filter((entry) => Boolean(entry)).length === 0;
+    newMap.sourcesContent.filter(Boolean).length === 0;
 
   if (sourcesContentIsEmpty) {
     delete newMap.sourcesContent;

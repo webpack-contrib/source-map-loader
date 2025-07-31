@@ -3,8 +3,8 @@ import {
   getCodeFromBundle,
   getCompiler,
   getErrors,
-  normalizeMap,
   getWarnings,
+  normalizeMap,
 } from "./helpers";
 
 describe("filterSourceMappingUrl option", () => {

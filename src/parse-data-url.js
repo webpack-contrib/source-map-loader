@@ -14,15 +14,13 @@ const soleyContainsHTTPQuotedStringTokenCodePoints = (string) =>
   /^[\t\u0020-\u007E\u0080-\u00FF]*$/.test(string);
 
 const asciiLowercase = (string) =>
-  string.replace(/[A-Z]/g, (l) => l.toLowerCase());
+  string.replaceAll(/[A-Z]/g, (l) => l.toLowerCase());
 
 const collectAnHTTPQuotedString = (input, position) => {
   let value = "";
 
-  // eslint-disable-next-line no-param-reassign
   position += 1;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     while (
       position < input.length &&
@@ -30,7 +28,7 @@ const collectAnHTTPQuotedString = (input, position) => {
       input[position] !== "\\"
     ) {
       value += input[position];
-      // eslint-disable-next-line no-param-reassign
+
       position += 1;
     }
 
@@ -40,7 +38,6 @@ const collectAnHTTPQuotedString = (input, position) => {
 
     const quoteOrBackslash = input[position];
 
-    // eslint-disable-next-line no-param-reassign
     position += 1;
 
     if (quoteOrBackslash === "\\") {
@@ -50,7 +47,7 @@ const collectAnHTTPQuotedString = (input, position) => {
       }
 
       value += input[position];
-      // eslint-disable-next-line no-param-reassign
+
       position += 1;
     } else {
       break;
@@ -60,11 +57,11 @@ const collectAnHTTPQuotedString = (input, position) => {
   return [value, position];
 };
 
-function isASCIIHex(c) {
+function isASCIIHex(character) {
   return (
-    (c >= 0x30 && c <= 0x39) ||
-    (c >= 0x41 && c <= 0x46) ||
-    (c >= 0x61 && c <= 0x66)
+    (character >= 0x30 && character <= 0x39) ||
+    (character >= 0x41 && character <= 0x46) ||
+    (character >= 0x61 && character <= 0x66)
   );
 }
 
@@ -83,7 +80,7 @@ function percentDecodeBytes(input) {
     ) {
       output[outputIndex] = byte;
     } else {
-      output[outputIndex] = parseInt(
+      output[outputIndex] = Number.parseInt(
         String.fromCodePoint(input[i + 1], input[i + 2]),
         16,
       );
@@ -107,7 +104,7 @@ const characters =
 function atobLookup(chr) {
   const index = characters.indexOf(chr);
   // Throw exception if character is not in the lookup string; should not be hit in tests
-  // eslint-disable-next-line no-undefined
+
   return index < 0 ? undefined : index;
 }
 
@@ -116,18 +113,17 @@ function atobLookup(chr) {
  * instead of throwing INVALID_CHARACTER_ERR we return null.
  */
 function atob(input) {
-  /* eslint-disable no-bitwise */
   // Web IDL requires DOMStrings to just be converted using ECMAScript
   // ToString, which in our case amounts to using a template literal.
   let data = `${input}`;
 
   // "Remove all ASCII whitespace from data."
-  data = data.replace(/[ \t\n\f\r]/g, "");
+  data = data.replaceAll(/[ \t\n\f\r]/g, "");
 
   // "If data's length divides by 4 leaving no remainder, then: if data ends
   // with one or two U+003D (=) code points, then remove them from data."
   if (data.length % 4 === 0) {
-    data = data.replace(/==?$/, "");
+    data = data.replace(/[=]=?$/, "");
   }
 
   // "If data's length divides by 4 leaving a remainder of 1, then return
@@ -167,10 +163,9 @@ function atob(input) {
     // first."
     //
     // atobLookup() implements the table from RFC 4648.
-    // eslint-disable-next-line no-bitwise
+
     buffer <<= 6;
 
-    // eslint-disable-next-line no-bitwise
     buffer |= atobLookup(data[i]);
     accumulatedBits += 6;
 
@@ -201,7 +196,6 @@ function atob(input) {
     output += String.fromCharCode((buffer & 0xff00) >> 8);
     output += String.fromCharCode(buffer & 0xff);
   }
-  /* eslint-enable no-bitwise */
 
   // "Return output."
   return output;
@@ -212,7 +206,7 @@ export default function parseDataUrl(stringInput) {
 
   try {
     parsedUrl = new URL(stringInput);
-  } catch (error) {
+  } catch {
     return null;
   }
 
@@ -223,7 +217,7 @@ export default function parseDataUrl(stringInput) {
   parsedUrl.hash = "";
 
   // `5` is value of `'data:'.length`
-  const input = parsedUrl.toString().substring(5);
+  const input = parsedUrl.toString().slice(5);
 
   let position = 0;
   let mediaType = "";
@@ -243,9 +237,9 @@ export default function parseDataUrl(stringInput) {
 
   position += 1;
 
-  const encodedBody = input.substring(position);
+  const encodedBody = input.slice(Math.max(0, position));
 
-  let body = Buffer.from(percentDecodeBytes(Buffer.from(encodedBody, "utf-8")));
+  let body = Buffer.from(percentDecodeBytes(Buffer.from(encodedBody, "utf8")));
 
   // Can't use /i regexp flag because it isn't restricted to ASCII.
   const mimeTypeBase64MatchResult = /(.*); *[Bb][Aa][Ss][Ee]64$/.exec(
@@ -270,9 +264,8 @@ export default function parseDataUrl(stringInput) {
   }
 
   const result = {
-    // eslint-disable-next-line no-undefined
     type: undefined,
-    // eslint-disable-next-line no-undefined
+
     subtype: undefined,
     parameters: new Map(),
     isBase64: Boolean(mimeTypeBase64MatchResult),
@@ -349,7 +342,6 @@ export default function parseDataUrl(stringInput) {
 
     if (positionMediaType < inputMediaType.length) {
       if (inputMediaType[positionMediaType] === ";") {
-        // eslint-disable-next-line no-continue
         continue;
       }
 
@@ -383,7 +375,6 @@ export default function parseDataUrl(stringInput) {
       parameterValue = removeTrailingHTTPWhitespace(parameterValue);
 
       if (parameterValue === "") {
-        // eslint-disable-next-line no-continue
         continue;
       }
     }

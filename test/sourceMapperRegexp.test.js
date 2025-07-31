@@ -26,15 +26,15 @@ describe("source-map-loader", () => {
     `,
     `"
     /*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";`,
-    `anInvalidDirective = "\\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";`,
-    `// # sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+"`,
+    'anInvalidDirective = "\\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";',
+    '// # sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+"',
   ];
 
-  cases.forEach((item) => {
+  for (const item of cases) {
     it(`should work with "${item}" url`, async () => {
       const { sourceMappingURL } = getSourceMappingURL(item);
 
       expect(sourceMappingURL).toMatchSnapshot("result");
     });
-  });
+  }
 });
