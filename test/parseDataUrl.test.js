@@ -148,7 +148,7 @@ const dataUrls = [
   "data:text/plain;base64,ab\fcd",
   "data:text/plain;base64,ab\rcd",
   "data:text/plain;base64,ab cd",
-  "data:text/plain;base64,ab\u00a0cd",
+  "data:text/plain;base64,ab\u00A0cd",
   "data:text/plain;base64,ab\t\n\f\r cd",
   "data:text/plain;base64, \t\n\f\r ab\t\n\f\r cd\t\n\f\r ",
   "data:text/plain;base64,ab\t\n\f\r =\t\n\f\r =\t\n\f\r ",
@@ -184,12 +184,13 @@ const dataUrls = [
   "data:application/zzz;base64,eyJmb28iOiJiYXIifQ==",
   "data:,test",
 ];
+
 describe("parse-data-url", () => {
-  dataUrls.forEach((dataUrl, index) => {
+  for (const [index, dataUrl] of dataUrls.entries()) {
     it(`should work with url by "${index}" index`, async () => {
       const parsed = parseDataUrl(dataUrl);
 
       expect({ original: dataUrl, parsed }).toMatchSnapshot();
     });
-  });
+  }
 });

@@ -1,17 +1,17 @@
-import path from "path";
-import urlUtils from "url";
+import path from "node:path";
+import urlUtils from "node:url";
 
-import sourceMap from "source-map-js";
 import { decode } from "iconv-lite";
+import sourceMap from "source-map-js";
 
-import parseDataURL from "./parse-data-url";
 import labelsToNames from "./labels-to-names";
+import parseDataURL from "./parse-data-url";
 
 // Matches only the last occurrence of sourceMappingURL
 const innerRegex = /\s*[#@]\s*sourceMappingURL\s*=\s*([^\s'"]*)\s*/;
 
 /* eslint-disable prefer-template */
-const sourceMappingURLRegex = RegExp(
+const sourceMappingURLRegex = new RegExp(
   "(?:" +
     "/\\*" +
     "(?:\\s*\r?\n(?://)?)?" +
@@ -43,10 +43,10 @@ async function flattenSourceMap(map) {
       })
     : new sourceMap.SourceMapGenerator();
 
-  consumer.sources.forEach((sourceFile) => {
+  for (const sourceFile of consumer.sources) {
     const sourceContent = consumer.sourceContentFor(sourceFile, true);
     generatedMap.setSourceContent(sourceFile, sourceContent);
-  });
+  }
 
   consumer.eachMapping((mapping) => {
     const { source } = consumer.originalPositionFor({
@@ -95,6 +95,10 @@ function getSourceMappingURL(code) {
   };
 }
 
+function isURL(value) {
+  return /^[a-z][a-z0-9+.-]*:/i.test(value) && !path.win32.isAbsolute(value);
+}
+
 function getAbsolutePath(context, request, sourceRoot) {
   if (isURL(sourceRoot)) {
     return new URL(request, sourceRoot).toString();
@@ -118,6 +122,7 @@ function fetchFromDataURL(loaderContext, sourceURL) {
     // https://tools.ietf.org/html/rfc4627
     // JSON text SHALL be encoded in Unicode. The default encoding is UTF-8.
     const encodingName =
+      // eslint-disable-next-line unicorn/text-encoding-identifier-case
       labelToName(dataURL.parameters.get("charset")) || "UTF-8";
 
     return decode(dataURL.body, encodingName);
@@ -146,6 +151,7 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
   } catch (error) {
     throw new Error(
       `Failed to parse source map from '${sourceURL}' file: ${error}`,
+      { cause: error },
     );
   }
 
@@ -166,7 +172,6 @@ async function fetchPathsFromFilesystem(
       errorsAccumulator,
     );
   } catch (error) {
-    // eslint-disable-next-line no-param-reassign
     errorsAccumulator += `${error.message}\n\n`;
 
     const [, ...tailPossibleRequests] = possibleRequests;
@@ -187,10 +192,6 @@ async function fetchPathsFromFilesystem(
   return result;
 }
 
-function isURL(value) {
-  return /^[a-z][a-z0-9+.-]*:/i.test(value) && !path.win32.isAbsolute(value);
-}
-
 async function fetchFromURL(
   loaderContext,
   context,
@@ -200,6 +201,7 @@ async function fetchFromURL(
 ) {
   // 1. It's an absolute url and it is not `windows` path like `C:\dir\file`
   if (isURL(url)) {
+    // eslint-disable-next-line n/no-deprecated-api
     const { protocol } = urlUtils.parse(url);
 
     if (protocol === "data:") {
@@ -280,4 +282,4 @@ async function fetchFromURL(
   return { sourceURL, sourceContent };
 }
 
-export { getSourceMappingURL, fetchFromURL, flattenSourceMap, isURL };
+export { fetchFromURL, flattenSourceMap, getSourceMappingURL, isURL };

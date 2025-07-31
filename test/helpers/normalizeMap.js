@@ -1,3 +1,31 @@
+function removeCWD(str) {
+  const isWin = process.platform === "win32";
+  let cwd = process.cwd();
+
+  if (isWin) {
+    str = str.replaceAll("\\", "/");
+    cwd = cwd.replaceAll("\\", "/");
+  }
+
+  return str.replaceAll(new RegExp(cwd, "g"), "");
+}
+
+function normalizeArr(arr) {
+  return arr.map((str) => {
+    const normilized = removeCWD(str);
+
+    if (str === normilized) {
+      return str;
+    }
+
+    if (str.replaceAll("\\", "/") === normilized) {
+      return normilized;
+    }
+
+    return `${normilized} - (normalized for test)`;
+  });
+}
+
 export default (map) => {
   const result = map;
 
@@ -15,32 +43,3 @@ export default (map) => {
 
   return result;
 };
-
-function normalizeArr(arr) {
-  return arr.map((str) => {
-    const normilized = removeCWD(str);
-
-    if (str === normilized) {
-      return str;
-    }
-
-    if (str.replace(/\\/g, "/") === normilized) {
-      return normilized;
-    }
-
-    return `${normilized} - (normalized for test)`;
-  });
-}
-
-function removeCWD(str) {
-  const isWin = process.platform === "win32";
-  let cwd = process.cwd();
-
-  if (isWin) {
-    // eslint-disable-next-line no-param-reassign
-    str = str.replace(/\\/g, "/");
-    cwd = cwd.replace(/\\/g, "/");
-  }
-
-  return str.replace(new RegExp(cwd, "g"), "");
-}
