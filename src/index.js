@@ -75,6 +75,7 @@ export default async function loader(input, inputMap) {
     this.emitWarning(
       new Error(
         `Failed to parse source map from '${sourceMappingURL}': ${err}`,
+        { cause: err },
       ),
     );
 

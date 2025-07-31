@@ -151,6 +151,7 @@ async function fetchFromFilesystem(loaderContext, sourceURL) {
   } catch (error) {
     throw new Error(
       `Failed to parse source map from '${sourceURL}' file: ${error}`,
+      { cause: error },
     );
   }
 

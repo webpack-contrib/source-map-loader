@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`source-map-loader should add only valid \`sources\` to dependencies: code 1`] = `
 "// Dependencies
@@ -134,6 +134,41 @@ exports[`source-map-loader should process absolute URL in sourceRoot: map 1`] = 
 
 exports[`source-map-loader should process absolute URL in sourceRoot: warnings 1`] = `[]`;
 
+exports[`source-map-loader should process css sourceMap and skip source content: code 1`] = `
+"// Skip SourcesContent in SourceMap
+// comment
+"
+`;
+
+exports[`source-map-loader should process css sourceMap and skip source content: errors 1`] = `[]`;
+
+exports[`source-map-loader should process css sourceMap and skip source content: map 1`] = `
+{
+  "mappings": "AAAA",
+  "sources": [
+    "/test/fixtures/normal-file.js - (normalized for test)",
+    "unresolved-file.js",
+    "/test/fixtures/normal-file2.js - (normalized for test)",
+  ],
+  "sourcesContent": [
+    "without SourceMap",
+    "",
+    "// without SourceMap
+anInvalidDirective = "\\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";
+// comment
+",
+  ],
+  "version": 3,
+}
+`;
+
+exports[`source-map-loader should process css sourceMap and skip source content: warnings 1`] = `
+[
+  "ModuleWarning: Module Warning (from \`replaced original path\`):
+Failed to parse source map from '/test/fixtures/unresolved-file.js' file: Error: ENOENT: no such file or directory, open '/test/fixtures/unresolved-file.js'",
+]
+`;
+
 exports[`source-map-loader should process css sourceMap: code 1`] = `
 "* {
   box-sizing: border-box; }
@@ -159,15 +194,7 @@ exports[`source-map-loader should process css sourceMap: code 1`] = `
 "
 `;
 
-exports[`source-map-loader should process css sourceMap: code 2`] = `
-"// Skip SourcesContent in SourceMap
-// comment
-"
-`;
-
 exports[`source-map-loader should process css sourceMap: errors 1`] = `[]`;
-
-exports[`source-map-loader should process css sourceMap: errors 2`] = `[]`;
 
 exports[`source-map-loader should process css sourceMap: map 1`] = `
 {
@@ -210,34 +237,7 @@ exports[`source-map-loader should process css sourceMap: map 1`] = `
 }
 `;
 
-exports[`source-map-loader should process css sourceMap: map 2`] = `
-{
-  "mappings": "AAAA",
-  "sources": [
-    "/test/fixtures/normal-file.js - (normalized for test)",
-    "unresolved-file.js",
-    "/test/fixtures/normal-file2.js - (normalized for test)",
-  ],
-  "sourcesContent": [
-    "without SourceMap",
-    "",
-    "// without SourceMap
-anInvalidDirective = "\\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";
-// comment
-",
-  ],
-  "version": 3,
-}
-`;
-
 exports[`source-map-loader should process css sourceMap: warnings 1`] = `[]`;
-
-exports[`source-map-loader should process css sourceMap: warnings 2`] = `
-[
-  "ModuleWarning: Module Warning (from \`replaced original path\`):
-Failed to parse source map from '/test/fixtures/unresolved-file.js' file: Error: ENOENT: no such file or directory, open '/test/fixtures/unresolved-file.js'",
-]
-`;
 
 exports[`source-map-loader should process external SourceMaps (external sources): code 1`] = `
 "with SourceMap
