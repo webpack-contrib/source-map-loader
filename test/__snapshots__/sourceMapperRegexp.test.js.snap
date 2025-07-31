@@ -1,26 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`source-map-loader should work with "
-    with SourceMap
-
-    // #sourceMappingURL = /sample-source-map.map
-    // comment
-    " url: result 1`] = `"/sample-source-map.map"`;
-
-exports[`source-map-loader should work with "
-    with SourceMap
-    // #sourceMappingURL = /sample-source-map-1.map
-    // #sourceMappingURL = /sample-source-map-2.map
-    // #sourceMappingURL = /sample-source-map-last.map
-    // comment
-    " url: result 1`] = `"/sample-source-map-last.map"`;
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`source-map-loader should work with " //  #  sourceMappingURL  =   absolute-sourceRoot-source-map.map  " url: result 1`] = `"absolute-sourceRoot-source-map.map"`;
 
 exports[`source-map-loader should work with " //  #sourceMappingURL=absolute-sourceRoot-source-map.map" url: result 1`] = `"absolute-sourceRoot-source-map.map"`;
 
-exports[`source-map-loader should work with ""
-    /*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";" url: result 1`] = `null`;
+exports[`source-map-loader should work with ""\\n    /*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";" url: result 1`] = `null`;
 
 exports[`source-map-loader should work with "/*  #sourceMappingURL=absolute-sourceRoot-source-map.map  */" url: result 1`] = `"absolute-sourceRoot-source-map.map"`;
 
@@ -37,5 +21,9 @@ exports[`source-map-loader should work with "// @sourceMappingURL=data:applicati
 exports[`source-map-loader should work with "//#sourceMappingURL=absolute-sourceRoot-source-map.map" url: result 1`] = `"absolute-sourceRoot-source-map.map"`;
 
 exports[`source-map-loader should work with "//@sourceMappingURL=absolute-sourceRoot-source-map.map" url: result 1`] = `"absolute-sourceRoot-source-map.map"`;
+
+exports[`source-map-loader should work with "\\n    with SourceMap\\n    // #sourceMappingURL = /sample-source-map-1.map\\n    // #sourceMappingURL = /sample-source-map-2.map\\n    // #sourceMappingURL = /sample-source-map-last.map\\n    // comment\\n    " url: result 1`] = `"/sample-source-map-last.map"`;
+
+exports[`source-map-loader should work with "\\n    with SourceMap\\n\\n    // #sourceMappingURL = /sample-source-map.map\\n    // comment\\n    " url: result 1`] = `"/sample-source-map.map"`;
 
 exports[`source-map-loader should work with "anInvalidDirective = "\\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))))+" */";" url: result 1`] = `null`;
