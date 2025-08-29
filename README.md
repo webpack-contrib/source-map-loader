@@ -1,3 +1,9 @@
+# DEPRECATED
+
+Please use https://github.com/webpack/webpack/tree/main/examples/source-mapping-url
+
+---
+
 <div align="center">
   <a href="https://github.com/webpack/webpack">
     <img width="200" height="200" src="https://webpack.js.org/assets/icon-square-big.svg">
